@@ -231,4 +231,4 @@ Die V1.19 nimmt einen kleinen Layoutfix und Detailkorrekturen auf:
 - Das Ueber-diese-Anwendung-Panel ist bei kleinen Fensterhoehen scrollbar und per Escape schliessbar.
 - Das Formularjahr fuer neue Lizenzvermerke wird dynamisch aus dem aktuellen Kalenderjahr gesetzt.
 - Die Quellenwarnung ist fuer assistive Technologien besser erfassbar.
-- Der Footer benennt Codex/OpenAI konkret als eingesetzte KI-Unterstuetzung.
+- Der Footer benennt Claude/Anthropic und Codex/OpenAI konkret als eingesetzte KI-Unterstuetzung.

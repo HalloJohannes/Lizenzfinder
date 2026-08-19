@@ -2,7 +2,7 @@
 
 Stand: 2026-08-19
 
-Version: 1.20.20260819-codex
+Version: 1.21.20260819-codex
 
 ## Ziel
 

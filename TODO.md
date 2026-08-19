@@ -2,9 +2,9 @@
 
 Stand: 2026-08-19
 
-Aktuelle Version: 1.20.20260819-codex
+Aktuelle Version: 1.21.20260819-codex
 
-Status: Release Candidate nach V1.20-Link- und Entstehungsergaenzung
+Status: Release Candidate nach V1.21-Footer-Transparenzkorrektur
 
 ## Erledigt
 
@@ -57,11 +57,13 @@ Status: Release Candidate nach V1.20-Link- und Entstehungsergaenzung
 - [x] V1.19: Sichtbares Copyright-Zeichen aus About- und Footer-Fliesstext entfernt; MIT-Copyright-Zeile bleibt erhalten.
 - [x] V1.19: About-Panel bei kleinen Fensterhoehen scrollbar gemacht.
 - [x] V1.19: Escape-Schliessen mit Fokusrueckgabe fuer About-Panel ergaenzt.
-- [x] V1.19: Footer benennt Codex/OpenAI konkret.
+- [x] V1.19: Footer benennt Claude/Anthropic und Codex/OpenAI konkret.
 - [x] V1.19: Jahresvorschlag im Vermerkformular dynamisch gesetzt.
 - [x] V1.19: Quellenwarnung mit `role="status"`, `aria-live` und `aria-invalid` verbessert.
 - [x] V1.20: MIT License im About-Panel mit der OSI-Lizenzseite verlinkt.
 - [x] V1.20: Entstehungsabschnitt zu Vibe-Coding, Claude, Codex und redaktioneller Verantwortung ergaenzt.
+- [x] V1.21: Footer- und Transparenztexte nennen Claude/Anthropic und Codex/OpenAI.
+- [x] V1.21: "Ueber diese Anwendung" an BITTE-STIL-Aufbau angeglichen und About-Button in die Fusszeile verschoben.
 - [x] GitHub-Pages-Einstieg `index.html` und Workflow vorbereitet.
 - [x] README fuer GitHub verstaendlich und professionell ueberarbeitet.
 - [x] GitHub-Issue- und PR-Vorlagen ergaenzt.

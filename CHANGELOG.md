@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.21.20260819-codex
+
+- Footer- und Transparenztexte ergaenzt: Die KI-Unterstuetzung nennt nun Claude/Anthropic und Codex/OpenAI.
+- "Ueber diese Anwendung" strukturell an den BITTE-STIL-Baukasten angeglichen.
+- Fester schwebender About-Button entfernt; About-Button sitzt nun in der Fusszeile und oeffnet einen zentralen Dialog.
+- Release-Dateien und Browsercheck auf V1.21 aktualisiert.
+
 ## 1.20.20260819-codex
 
 - MIT License im Bereich „Über diese Anwendung“ mit der Open-Source-Initiative-Quelle verlinkt.
@@ -11,7 +18,7 @@
 - Sichtbares Copyright-Zeichen aus About- und Footer-Fliesstext entfernt; die MIT-Zeile `Copyright (c) 2026 Johannes Koch` bleibt erhalten.
 - Ueber-diese-Anwendung-Panel bei kleinen Fensterhoehen scrollbar gemacht und verschachtelte Scrollbegrenzung im MIT-Text entfernt.
 - Escape-Schliessen des About-Panels mit Fokusrueckgabe an den Button ergaenzt.
-- Footer benennt das KI-Werkzeug konkret als Codex/OpenAI.
+- Footer benennt Claude/Anthropic und Codex/OpenAI konkret.
 - Formularjahr im Lizenzvermerk dynamisch aus dem aktuellen Kalenderjahr vorbelegt; feste Credit- und Lizenzjahre bleiben 2026.
 - Quellenwarnung fuer Screenreader verbessert: `role="status"`, `aria-live="polite"` und `aria-invalid`.
 - Release- und Browserchecks auf V1.19 erweitert.

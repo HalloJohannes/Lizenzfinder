@@ -94,8 +94,8 @@ title(
   "Arbeitsstand, Versionierung und naechste Schritte fuer das neue Tool.",
 );
 summary.getRange("A4:B10").values = [
-  ["Aktuelle Version", "1.20.20260819-codex"],
-  ["Status", "Release Candidate nach V1.20-Link- und Entstehungsergaenzung"],
+  ["Aktuelle Version", "1.21.20260819-codex"],
+  ["Status", "Release Candidate nach V1.21-Footer-Transparenzkorrektur"],
   ["Letzte Aenderung", new Date("2026-08-19T00:00:00")],
   ["Primaeres Werkzeug", "codex"],
   ["Zielgruppe", "Selbst erstellte Inhalte allgemein"],
@@ -389,10 +389,23 @@ history.getRange("A2:K20").values = [
     20,
     "codex",
     "Johannes Koch / Codex",
-    "Freigabekandidat",
+    "Archiviert",
     "MIT License im About-Panel mit der OSI-Lizenzseite verlinkt; Entstehungsabschnitt zu Vibe-Coding, Claude, Codex und redaktioneller Verantwortung ergaenzt; Browsercheck-Pfade aktualisiert.",
     "Text; Lizenz; Transparenz; GitHub; Versionierung",
     "Build-, Release- und Browserpruefung bestanden; MIT-Link, Entstehungsabschnitt, Sprachumschaltung und bestehende Kernlogik geprueft",
+    "Durch V1.21 abgeloest",
+  ],
+  [
+    "1.21.20260819-codex",
+    new Date("2026-08-19T00:00:00"),
+    1,
+    21,
+    "codex",
+    "Johannes Koch / Codex",
+    "Freigabekandidat",
+    "Footer- und Transparenztexte nennen Claude/Anthropic und Codex/OpenAI; App-Name bleibt Lizenzfinder; About-Bereich an BITTE-STIL-Struktur angeglichen und Button in die Fusszeile verschoben.",
+    "Text; Lizenz; Transparenz; GitHub; Versionierung",
+    "Build-, Release- und Browserpruefung bestanden; Footer-Text, About-Dialog, englische Ansicht und bestehende Kernlogik geprueft",
     "Fachliche Endabnahme und manuelle Tastatur-/Fokuspruefung nach Freigabe",
   ],
 ];
@@ -596,6 +609,15 @@ audits.getRange("A2:G20").values = [
     "mit Auflagen",
     "MIT-Link und Entstehungsabschnitt umgesetzt; Build-, Release- und Browserpruefung bestanden; fachliche Endabnahme und manuelle Tastatur-/Fokuspruefung bleiben offen.",
     "audits/RELEASE_AUDIT_V1_20_20260819.md; Lizenzfinder-App-V1_20_20260819-codex.html",
+  ],
+  [
+    "A-021",
+    new Date("2026-08-19T00:00:00"),
+    "1.21.20260819-codex",
+    "Release",
+    "mit Auflagen",
+    "Footer- und Transparenztexte auf Claude/Anthropic und Codex/OpenAI erweitert; About-Dialog an BITTE-STIL-Struktur angeglichen; App-Name Lizenzfinder beibehalten; Build-, Release- und Browserpruefung bestanden.",
+    "audits/RELEASE_AUDIT_V1_21_20260819.md; Lizenzfinder-App-V1_21_20260819-codex.html",
   ],
 ];
 body(audits.getRange("A2:G40"));

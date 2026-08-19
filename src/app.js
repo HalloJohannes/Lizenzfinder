@@ -76,6 +76,7 @@ let lang = (navigator.language || "de").toLowerCase().startsWith("en") ? "en" : 
       document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
       document.querySelectorAll("[data-i18n-html]").forEach(el => { el.innerHTML = t(el.dataset.i18nHtml); });
       document.querySelectorAll("[data-placeholder-de]").forEach(el => { el.placeholder = lang === "en" ? el.dataset.placeholderEn : el.dataset.placeholderDe; });
+      document.getElementById("sidehelpClose").setAttribute("aria-label", lang === "en" ? "Close dialog" : "Fenster schließen");
       document.getElementById("lang-de").setAttribute("aria-pressed", lang === "de");
       document.getElementById("lang-en").setAttribute("aria-pressed", lang === "en");
       updateLinks();
@@ -395,8 +396,19 @@ let lang = (navigator.language || "de").toLowerCase().startsWith("en") ? "en" : 
     }
     function toggleSideHelp() {
       const box = document.getElementById("sidehelp");
-      box.classList.toggle("open");
-      document.getElementById("sidehelpHandle").setAttribute("aria-expanded", box.classList.contains("open"));
+      if (box.classList.contains("open")) {
+        closeSideHelp();
+        return;
+      }
+      box.classList.add("open");
+      document.getElementById("sidehelpHandle").setAttribute("aria-expanded", "true");
+      document.getElementById("sidehelpClose").focus();
+    }
+    function closeSideHelp() {
+      const box = document.getElementById("sidehelp");
+      box.classList.remove("open");
+      document.getElementById("sidehelpHandle").setAttribute("aria-expanded", "false");
+      document.getElementById("sidehelpHandle").focus();
     }
     function toast(msg) {
       const el = document.getElementById("toast");
@@ -409,8 +421,7 @@ let lang = (navigator.language || "de").toLowerCase().startsWith("en") ? "en" : 
       if (event.key !== "Escape") return;
       const box = document.getElementById("sidehelp");
       if (!box.classList.contains("open")) return;
-      toggleSideHelp();
-      document.getElementById("sidehelpHandle").focus();
+      closeSideHelp();
     });
 
     document.documentElement.dataset.readable = "off";

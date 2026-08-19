@@ -4,8 +4,8 @@ import vm from "node:vm";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const version = "1.20.20260819-codex";
-const releaseName = "Lizenzfinder-App-V1_20_20260819-codex.html";
+const version = "1.21.20260819-codex";
+const releaseName = "Lizenzfinder-App-V1_21_20260819-codex.html";
 const release = path.join(root, releaseName);
 const current = path.join(root, "versions", "aktuell", releaseName);
 const index = path.join(root, "index.html");
@@ -34,6 +34,8 @@ assert(!html.includes("WORKFLOW_EXPORT_B64"), "Die alte Exportmechanik ist noch 
 assert(!html.includes("downloadWorkflowExport"), "Die alte Export-Downloadfunktion ist noch enthalten.");
 assert(!html.includes("themeBtn"), "Dark-Mode-Schalter ist noch enthalten.");
 assert(!html.includes("toggleTheme"), "Dark-Mode-Logik ist noch enthalten.");
+assert(!html.includes("sidehelp-handle"), "Fester About-Button ist noch enthalten.");
+assert(html.includes("footer-about-button"), "About-Button in der Fusszeile fehlt.");
 assert(html.includes("MIT License"), "MIT-Lizenzhinweis fehlt.");
 assert(html.includes("https://opensource.org/license/mit"), "MIT-Lizenzlink fehlt.");
 assert(html.includes('data-i18n-html="aboutLicenseP"'), "HTML-faehiger About-Lizenztext fehlt.");
@@ -59,7 +61,7 @@ assert(html.includes('role="status" aria-live="polite"'), "ARIA-Live-Hinweis fue
 assert(html.includes("copyManual"), "Manueller Kopierhinweis fehlt.");
 assert(html.includes("const currentYear = String(new Date().getFullYear())"), "Dynamische Jahreskonstante fehlt.");
 assert(!html.includes('id="year" oninput="renderNotice()" value="2026"'), "Jahr-Feld hat noch festes value-Attribut.");
-assert(html.includes('footCreditB: "mit Unterstützung von KI (Codex/OpenAI)'), "Footer benennt Codex/OpenAI nicht.");
+assert(html.includes('footCreditB: "mithilfe von KI (Claude/Anthropic, Codex/OpenAI)'), "Footer benennt Claude/Anthropic und Codex/OpenAI nicht.");
 assert(html.includes("document.addEventListener(\"keydown\""), "Escape-Handler fehlt.");
 scripts(html).forEach(script => new Function(script));
 
@@ -113,4 +115,4 @@ for (const [name, actual, expectedPath, expectedBest] of cases) {
 }
 assert(context.localStorage.removed.length === 4, "Alte localStorage-Schluessel wurden nicht einmalig entfernt.");
 
-console.log(JSON.stringify({ ok: true, checks: cases.length + 34, version }, null, 2));
+console.log(JSON.stringify({ ok: true, checks: cases.length + 36, version }, null, 2));

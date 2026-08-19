@@ -35,9 +35,9 @@ async function launchBrowser() {
   }
 }
 
-const releasePath = path.join(root, "Lizenzfinder-App-V1_20_20260819-codex.html");
+const releasePath = path.join(root, "Lizenzfinder-App-V1_21_20260819-codex.html");
 const file = `file://${releasePath}`;
-const outDir = path.join(root, "work", "previews", "v1_20");
+const outDir = path.join(root, "work", "previews", "v1_21");
 fs.mkdirSync(outDir, { recursive: true });
 
 const browser = await launchBrowser();
@@ -115,15 +115,15 @@ await page.locator(".license-text").evaluate(el => el.setAttribute("open", ""));
 const compactPanel = await page.evaluate(() => {
   const panel = document.getElementById("sidehelpPanel");
   const title = document.getElementById("aboutTitle");
-  const handle = document.getElementById("sidehelpHandle");
+  const close = document.getElementById("sidehelpClose");
   panel.scrollTop = 0;
   const titleAtTop = title.getBoundingClientRect().top >= 0;
   const canScroll = panel.scrollHeight > panel.clientHeight;
   panel.scrollTop = panel.scrollHeight;
   const text = panel.textContent || "";
   const endReadable = text.includes("THE SOFTWARE") && text.includes("SOFTWARE.");
-  const handleVisible = handle.getBoundingClientRect().bottom <= window.innerHeight;
-  return { canScroll, titleAtTop, endReadable, handleVisible, panelHeight: panel.clientHeight, scrollHeight: panel.scrollHeight };
+  const closeVisible = close.getBoundingClientRect().bottom <= window.innerHeight;
+  return { canScroll, titleAtTop, endReadable, closeVisible, panelHeight: panel.clientHeight, scrollHeight: panel.scrollHeight };
 });
 await page.keyboard.press("Escape");
 const escapeState = await page.evaluate(() => ({
@@ -179,8 +179,8 @@ if (!["0", undefined].includes(modes.externalResources)) throw new Error(`Automa
 if (modes.localStorageKeys.length) throw new Error(`Persistente lf-Keys gefunden: ${JSON.stringify(modes.localStorageKeys)}`);
 if (!modes.fetchAvailable || !modes.cookieReadable || !modes.sendBeaconAvailable) throw new Error(`Browser-APIs wurden unerwartet deaktiviert: ${JSON.stringify(modes)}`);
 if (!aboutVisible || !aboutLicense?.includes("MIT License")) throw new Error("Über-diese-Anwendung-Panel oder MIT-Lizenzhinweis fehlt.");
-if (!footerText?.includes("Codex/OpenAI")) throw new Error("Footer nennt Codex/OpenAI nicht in der englischen Ansicht.");
-if (!compactPanel.canScroll || !compactPanel.titleAtTop || !compactPanel.endReadable || !compactPanel.handleVisible) throw new Error(`Kompaktes About-Panel nicht sauber scrollbar: ${JSON.stringify(compactPanel)}`);
+if (!footerText?.includes("Claude/Anthropic") || !footerText?.includes("Codex/OpenAI")) throw new Error("Footer nennt Claude/Anthropic und Codex/OpenAI nicht in der englischen Ansicht.");
+if (!compactPanel.canScroll || !compactPanel.titleAtTop || !compactPanel.endReadable || !compactPanel.closeVisible) throw new Error(`Kompaktes About-Panel nicht sauber scrollbar: ${JSON.stringify(compactPanel)}`);
 if (escapeState.open || escapeState.focused !== "sidehelpHandle") throw new Error(`Escape schliesst Panel nicht mit Fokusrueckgabe: ${JSON.stringify(escapeState)}`);
 if (!sandboxTitle?.includes("Passende Lizenz")) throw new Error(`Sandbox-iframe rendert nicht korrekt: ${sandboxTitle}`);
 if (futureYear !== "2027" || !futureAbout?.includes("2026")) throw new Error(`Dynamisches Jahr oder feste Credit-Jahreszahl falsch: ${JSON.stringify({ futureYear, futureAbout })}`);
