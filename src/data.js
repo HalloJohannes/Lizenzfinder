@@ -1,6 +1,6 @@
 const VERSION_METADATA = {
-      version: "1.21.20260819-codex",
-      revision: 21,
+      version: "1.22.20260819-codex",
+      revision: 22,
       revisionDate: "2026-08-19",
       attribution: {
         de: "Lizenzfinder von Johannes Koch, 2026. Quellcode: MIT License. Redaktionelle Inhalte: CC0 1.0.",

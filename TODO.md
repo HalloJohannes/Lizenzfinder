@@ -2,9 +2,9 @@
 
 Stand: 2026-08-19
 
-Aktuelle Version: 1.21.20260819-codex
+Aktuelle Version: 1.22.20260819-codex
 
-Status: Release Candidate nach V1.21-Footer-Transparenzkorrektur
+Status: Release Candidate nach V1.22-Dialogskalierung
 
 ## Erledigt
 
@@ -64,6 +64,7 @@ Status: Release Candidate nach V1.21-Footer-Transparenzkorrektur
 - [x] V1.20: Entstehungsabschnitt zu Vibe-Coding, Claude, Codex und redaktioneller Verantwortung ergaenzt.
 - [x] V1.21: Footer- und Transparenztexte nennen Claude/Anthropic und Codex/OpenAI.
 - [x] V1.21: "Ueber diese Anwendung" an BITTE-STIL-Aufbau angeglichen und About-Button in die Fusszeile verschoben.
+- [x] V1.22: "Ueber diese Anwendung" kleiner skaliert und naeher an BITTE-STIL-Dialoggroesse angepasst.
 - [x] GitHub-Pages-Einstieg `index.html` und Workflow vorbereitet.
 - [x] README fuer GitHub verstaendlich und professionell ueberarbeitet.
 - [x] GitHub-Issue- und PR-Vorlagen ergaenzt.

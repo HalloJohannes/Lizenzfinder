@@ -2,9 +2,9 @@
 
 Stand: 2026-08-19
 
-Aktuelle Version: 1.21.20260819-codex
+Aktuelle Version: 1.22.20260819-codex
 
-Status: Release Candidate nach V1.21-Footer-Transparenzkorrektur
+Status: Release Candidate nach V1.22-Dialogskalierung
 
 ## Ziel
 
@@ -51,10 +51,11 @@ Die Anwendung bietet Orientierung und keine Rechtsberatung.
 - V1.20: Entstehungsabschnitt zu Vibe-Coding, Claude, Codex und redaktioneller Verantwortung ergaenzt.
 - V1.21: Footer- und Transparenztexte nennen Claude/Anthropic und Codex/OpenAI.
 - V1.21: "Ueber diese Anwendung" an den BITTE-STIL-Aufbau angeglichen und Button in die Fusszeile verschoben.
+- V1.22: "Ueber diese Anwendung" kompakter skaliert und naeher an die Dialoggroesse des BITTE-STIL-Baukastens gefuehrt.
 - GitHub-Pages-Einstieg ueber `index.html`, Pages-Workflow und GitHub-Vorlagen sind vorbereitet.
 - Die fruehere Export-/Einbettungsfunktion ist ab V1.15 nicht mehr Teil der aktiven App.
 
-## Technische Pruefung V1.21
+## Technische Pruefung V1.22
 
 - Build aus modularer Quelle erfolgreich.
 - Hauptdatei und Datei in `versions/aktuell/` sind identisch.
@@ -71,12 +72,12 @@ Die Anwendung bietet Orientierung und keine Rechtsberatung.
 - About-Panel bei 500 px Fensterhoehe scrollbar; Escape schliesst mit Fokusrueckgabe.
 - Dynamisches Formularjahr mit simuliertem Datum 2027 geprueft; feste Credit- und Lizenzjahre bleiben 2026.
 - Browsercheck mit Playwright bestanden: Empfehlung, Lizenzfeld-Sync, manueller Copy-Fallback, CC0-Zero-Icon, EN-Umschaltung, Lesbarkeitsmodus, Ueber-diese-Anwendung-Panel, sandboxed iframe und keine automatischen externen Ressourcen.
-- Screenshots liegen lokal unter `work/previews/v1_21/`.
-- GitHub-Commit lokal vorbereitet; Push auf `main` scheitert aktuell an fehlenden GitHub-Zugangsdaten im Terminal.
+- Screenshots liegen lokal unter `work/previews/v1_22/`.
+- GitHub-Repository ist angebunden; Veraenderungen werden lokal und auf `main` gepflegt.
 
 ## Projektstruktur
 
-- `Lizenzfinder-App-V1_21_20260819-codex.html`: aktuelle Hauptdatei auf oberster Ebene.
+- `Lizenzfinder-App-V1_22_20260819-codex.html`: aktuelle Hauptdatei auf oberster Ebene.
 - `src/`: modulare Arbeitsquelle aus HTML-Struktur, Styling, Daten und App-Logik.
 - `index.html`: GitHub-Pages-Einstieg, identisch mit der aktuellen App.
 - `.github/`: Pages-Workflow sowie Issue- und PR-Vorlagen.
@@ -111,4 +112,4 @@ Vor einer finalen Weitergabe sollten noch geprueft werden:
 
 ## Naechster Schritt
 
-Nach fachlicher Endpruefung und manueller Tastatur-/Fokuspruefung kann aus V1.21 eine finale Freigabeversion erstellt werden.
+Nach fachlicher Endpruefung und manueller Tastatur-/Fokuspruefung kann aus V1.22 eine finale Freigabeversion erstellt werden.

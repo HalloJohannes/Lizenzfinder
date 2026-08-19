@@ -94,8 +94,8 @@ title(
   "Arbeitsstand, Versionierung und naechste Schritte fuer das neue Tool.",
 );
 summary.getRange("A4:B10").values = [
-  ["Aktuelle Version", "1.21.20260819-codex"],
-  ["Status", "Release Candidate nach V1.21-Footer-Transparenzkorrektur"],
+  ["Aktuelle Version", "1.22.20260819-codex"],
+  ["Status", "Release Candidate nach V1.22-Dialogskalierung"],
   ["Letzte Aenderung", new Date("2026-08-19T00:00:00")],
   ["Primaeres Werkzeug", "codex"],
   ["Zielgruppe", "Selbst erstellte Inhalte allgemein"],
@@ -402,10 +402,23 @@ history.getRange("A2:K20").values = [
     21,
     "codex",
     "Johannes Koch / Codex",
-    "Freigabekandidat",
+    "Archiviert",
     "Footer- und Transparenztexte nennen Claude/Anthropic und Codex/OpenAI; App-Name bleibt Lizenzfinder; About-Bereich an BITTE-STIL-Struktur angeglichen und Button in die Fusszeile verschoben.",
     "Text; Lizenz; Transparenz; GitHub; Versionierung",
     "Build-, Release- und Browserpruefung bestanden; Footer-Text, About-Dialog, englische Ansicht und bestehende Kernlogik geprueft",
+    "Durch V1.22 abgeloest",
+  ],
+  [
+    "1.22.20260819-codex",
+    new Date("2026-08-19T00:00:00"),
+    1,
+    22,
+    "codex",
+    "Johannes Koch / Codex",
+    "Freigabekandidat",
+    "Dialog 'Ueber diese Anwendung' kleiner skaliert und visuell enger an den BITTE-STIL-Baukasten angeglichen; Footer-Button-Struktur bleibt erhalten.",
+    "UX; Gestaltung; Versionierung",
+    "Build-, Release- und Browserpruefung bestanden; About-Dialog, Sprachumschaltung und bestehende Kernlogik geprueft",
     "Fachliche Endabnahme und manuelle Tastatur-/Fokuspruefung nach Freigabe",
   ],
 ];
@@ -618,6 +631,15 @@ audits.getRange("A2:G20").values = [
     "mit Auflagen",
     "Footer- und Transparenztexte auf Claude/Anthropic und Codex/OpenAI erweitert; About-Dialog an BITTE-STIL-Struktur angeglichen; App-Name Lizenzfinder beibehalten; Build-, Release- und Browserpruefung bestanden.",
     "audits/RELEASE_AUDIT_V1_21_20260819.md; Lizenzfinder-App-V1_21_20260819-codex.html",
+  ],
+  [
+    "A-022",
+    new Date("2026-08-19T00:00:00"),
+    "1.22.20260819-codex",
+    "Release",
+    "mit Auflagen",
+    "About-Dialog auf BITTE-STIL-naehere Groesse reduziert; Build-, Release- und Browserpruefung bestanden; fachliche Endabnahme und manuelle Tastatur-/Fokuspruefung bleiben offen.",
+    "audits/RELEASE_AUDIT_V1_22_20260819.md; Lizenzfinder-App-V1_22_20260819-codex.html",
   ],
 ];
 body(audits.getRange("A2:G40"));

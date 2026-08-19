@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.22.20260819-codex
+
+- Dialog „Über diese Anwendung“ kleiner skaliert und visuell enger an den BITTE-STIL-Baukasten angeglichen.
+- Dialogbreite, Schriftgroessen, Abstaende und Schliessen-Button reduziert; Footer-Button-Struktur bleibt erhalten.
+- Release-Dateien und Browsercheck auf V1.22 aktualisiert.
+
 ## 1.21.20260819-codex
 
 - Footer- und Transparenztexte ergaenzt: Die KI-Unterstuetzung nennt nun Claude/Anthropic und Codex/OpenAI.

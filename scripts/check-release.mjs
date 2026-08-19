@@ -4,8 +4,8 @@ import vm from "node:vm";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const version = "1.21.20260819-codex";
-const releaseName = "Lizenzfinder-App-V1_21_20260819-codex.html";
+const version = "1.22.20260819-codex";
+const releaseName = "Lizenzfinder-App-V1_22_20260819-codex.html";
 const release = path.join(root, releaseName);
 const current = path.join(root, "versions", "aktuell", releaseName);
 const index = path.join(root, "index.html");

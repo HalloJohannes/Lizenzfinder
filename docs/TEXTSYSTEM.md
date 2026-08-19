@@ -11,19 +11,19 @@ Die Markdown-Dateien im Ordner `content/` enthalten bewusst nur redaktionelle Te
 
 - `src/data.js`, falls Texte, Fragen, FAQ oder Lizenzdaten betroffen sind
 - `src/index.html`, falls sichtbare Strukturtexte betroffen sind
-- `Lizenzfinder-App-V1_21_20260819-codex.html`
+- `Lizenzfinder-App-V1_22_20260819-codex.html`
 - `versions/aktuell/...`
 - bei Bedarf `content/redaktionstexte.en.md`
 - Versionshistorie und Audit-Register
 
-## Stand V1.21
+## Stand V1.22
 
 Die aktuellen redaktionellen Arbeitsdateien sind:
 
 - `content/redaktionstexte.de.md`
 - `content/redaktionstexte.en.md`
 
-Sie spiegeln den Stand der modularen V1.21-Fassung. Kleinere Textaenderungen koennen weiterhin im Chat beschrieben werden. Groessere Textaenderungen koennen direkt in den Markdown-Dateien vorbereitet werden.
+Sie spiegeln den Stand der modularen V1.22-Fassung. Kleinere Textaenderungen koennen weiterhin im Chat beschrieben werden. Groessere Textaenderungen koennen direkt in den Markdown-Dateien vorbereitet werden.
 
 Bei jeder Uebertragung in die App muessen mindestens diese Dateien synchronisiert werden:
 

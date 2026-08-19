@@ -1,6 +1,6 @@
 # Lizenzfinder
 
-Stand: 19. August 2026 · Version 1.21.20260819-codex
+Stand: 19. August 2026 · Version 1.22.20260819-codex
 
 Der Lizenzfinder ist eine schlanke Web-Anwendung, die bei der Auswahl einer passenden Creative-Commons-Lizenz hilft und anschließend einen passenden Lizenzvermerk erstellt. **Direkt online verwenden:** <https://hallojohannes.github.io/Lizenzfinder/>
 
@@ -24,7 +24,7 @@ Der Lizenzfinder ersetzt keine Rechtsberatung. Er ist als praktische Orientierun
 ## Direkt verwenden oder herunterladen
 
 - **Online:** <https://hallojohannes.github.io/Lizenzfinder/>
-- **Offline:** `Lizenzfinder-App-V1_21_20260819-codex.html` herunterladen und im Browser öffnen
+- **Offline:** `Lizenzfinder-App-V1_22_20260819-codex.html` herunterladen und im Browser öffnen
 - **GitHub Pages:** `index.html` ist identisch mit der aktuellen App-Datei und dient als direkter Einstieg
 
 Die Anwendung ist eine einzelne statische HTML-Datei. Sie benötigt keinen Server, keine Anmeldung und keine Installation.
@@ -50,7 +50,7 @@ Die Anwendung enthält mehrere Schutz- und Bedienbarkeitsmaßnahmen:
 ## Projektstruktur
 
 - `index.html`: GitHub-Pages-Einstieg, identisch mit der aktuellen App
-- `Lizenzfinder-App-V1_21_20260819-codex.html`: aktuelle versionierte Single-HTML-Datei
+- `Lizenzfinder-App-V1_22_20260819-codex.html`: aktuelle versionierte Single-HTML-Datei
 - `src/`: führende Arbeitsquelle aus Struktur, Styling, Daten und Logik
 - `scripts/`: Build- und Prüfscripte
 - `docs/`: Anforderungen, Architektur, Linkmatrix und Textsystem
