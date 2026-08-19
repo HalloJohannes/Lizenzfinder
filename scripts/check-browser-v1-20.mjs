@@ -35,9 +35,9 @@ async function launchBrowser() {
   }
 }
 
-const releasePath = path.join(root, "Lizenzfinder-App-V1_19_20260819-codex.html");
+const releasePath = path.join(root, "Lizenzfinder-App-V1_20_20260819-codex.html");
 const file = `file://${releasePath}`;
-const outDir = path.join(root, "work", "previews", "v1_19");
+const outDir = path.join(root, "work", "previews", "v1_20");
 fs.mkdirSync(outDir, { recursive: true });
 
 const browser = await launchBrowser();

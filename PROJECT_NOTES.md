@@ -2,9 +2,9 @@
 
 Stand: 2026-08-19
 
-Aktuelle Version: 1.19.20260819-codex
+Aktuelle Version: 1.20.20260819-codex
 
-Status: Release Candidate nach V1.19-Feinschliff, Browserpruefung und Doku-Update
+Status: Release Candidate nach V1.20-Link- und Entstehungsergaenzung
 
 ## Ziel
 
@@ -47,10 +47,12 @@ Die Anwendung bietet Orientierung und keine Rechtsberatung.
 - V1.19: About-Panel ist bei kleinen Fensterhoehen scrollbar und per Escape schliessbar.
 - V1.19: Das Jahr im Vermerkformular wird dynamisch aus dem aktuellen Kalenderjahr vorbelegt.
 - V1.19: Sichtbare Copyright-Zeichen wurden auf den MIT-Lizenzblock beschraenkt; im Fliesstext bleibt nur die Namensnennung.
+- V1.20: MIT License im About-Panel mit der OSI-Lizenzseite verlinkt.
+- V1.20: Entstehungsabschnitt zu Vibe-Coding, Claude, Codex und redaktioneller Verantwortung ergaenzt.
 - GitHub-Pages-Einstieg ueber `index.html`, Pages-Workflow und GitHub-Vorlagen sind vorbereitet.
 - Die fruehere Export-/Einbettungsfunktion ist ab V1.15 nicht mehr Teil der aktiven App.
 
-## Technische Pruefung V1.19
+## Technische Pruefung V1.20
 
 - Build aus modularer Quelle erfolgreich.
 - Hauptdatei und Datei in `versions/aktuell/` sind identisch.
@@ -67,12 +69,12 @@ Die Anwendung bietet Orientierung und keine Rechtsberatung.
 - About-Panel bei 500 px Fensterhoehe scrollbar; Escape schliesst mit Fokusrueckgabe.
 - Dynamisches Formularjahr mit simuliertem Datum 2027 geprueft; feste Credit- und Lizenzjahre bleiben 2026.
 - Browsercheck mit Playwright bestanden: Empfehlung, Lizenzfeld-Sync, manueller Copy-Fallback, CC0-Zero-Icon, EN-Umschaltung, Lesbarkeitsmodus, Ueber-diese-Anwendung-Panel, sandboxed iframe und keine automatischen externen Ressourcen.
-- Screenshots liegen lokal unter `work/previews/v1_19/`.
+- Screenshots liegen lokal unter `work/previews/v1_20/`.
 - GitHub-Commit lokal vorbereitet; Push auf `main` scheitert aktuell an fehlenden GitHub-Zugangsdaten im Terminal.
 
 ## Projektstruktur
 
-- `Lizenzfinder-App-V1_19_20260819-codex.html`: aktuelle Hauptdatei auf oberster Ebene.
+- `Lizenzfinder-App-V1_20_20260819-codex.html`: aktuelle Hauptdatei auf oberster Ebene.
 - `src/`: modulare Arbeitsquelle aus HTML-Struktur, Styling, Daten und App-Logik.
 - `index.html`: GitHub-Pages-Einstieg, identisch mit der aktuellen App.
 - `.github/`: Pages-Workflow sowie Issue- und PR-Vorlagen.
@@ -107,4 +109,4 @@ Vor einer finalen Weitergabe sollten noch geprueft werden:
 
 ## Naechster Schritt
 
-Nach fachlicher Endpruefung und manueller Tastatur-/Fokuspruefung kann aus V1.19 eine finale Freigabeversion erstellt werden.
+Nach fachlicher Endpruefung und manueller Tastatur-/Fokuspruefung kann aus V1.20 eine finale Freigabeversion erstellt werden.

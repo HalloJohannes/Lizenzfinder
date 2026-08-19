@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.20.20260819-codex
+
+- MIT License im Bereich „Über diese Anwendung“ mit der Open-Source-Initiative-Quelle verlinkt.
+- Entstehungsabschnitt zu Vibe-Coding, Claude, Codex und redaktioneller Verantwortung ergänzt.
+- Release-Dateien und Browsercheck auf V1.20 aktualisiert.
+
 ## 1.19.20260819-codex
 
 - Sichtbares Copyright-Zeichen aus About- und Footer-Fliesstext entfernt; die MIT-Zeile `Copyright (c) 2026 Johannes Koch` bleibt erhalten.

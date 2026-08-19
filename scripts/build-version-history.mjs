@@ -94,8 +94,8 @@ title(
   "Arbeitsstand, Versionierung und naechste Schritte fuer das neue Tool.",
 );
 summary.getRange("A4:B10").values = [
-  ["Aktuelle Version", "1.19.20260819-codex"],
-  ["Status", "Release Candidate nach V1.19-Feinschliff, Browserpruefung und Doku-Update"],
+  ["Aktuelle Version", "1.20.20260819-codex"],
+  ["Status", "Release Candidate nach V1.20-Link- und Entstehungsergaenzung"],
   ["Letzte Aenderung", new Date("2026-08-19T00:00:00")],
   ["Primaeres Werkzeug", "codex"],
   ["Zielgruppe", "Selbst erstellte Inhalte allgemein"],
@@ -376,11 +376,24 @@ history.getRange("A2:K20").values = [
     19,
     "codex",
     "Johannes Koch / Codex",
-    "Freigabekandidat",
+    "Archiviert",
     "Copyright-Zeichen auf MIT-Lizenztext beschraenkt; About-Panel scrollbar und per Escape schliessbar gemacht; Footer benennt Codex/OpenAI; dynamisches Jahr und verbesserte Quellenwarnung ergaenzt; GitHub-Pages-Einstieg, Workflow, README und Vorlagen vorbereitet.",
     "Text; Barrierearmut; UX; Lizenz; Datenschutz; GitHub; Versionierung",
     "Build-, Release- und Browserpruefung bestanden; Copyright-Suche, 500px-Panel, Escape-Fokus, 2027-Jahr, aria-invalid, Pages-index und V1.18-Regressionen geprueft",
-    "Fachliche Endabnahme, manuelle Tastatur-/Fokuspruefung und GitHub-Push nach Freigabe",
+    "Durch V1.20 abgeloest",
+  ],
+  [
+    "1.20.20260819-codex",
+    new Date("2026-08-19T00:00:00"),
+    1,
+    20,
+    "codex",
+    "Johannes Koch / Codex",
+    "Freigabekandidat",
+    "MIT License im About-Panel mit der OSI-Lizenzseite verlinkt; Entstehungsabschnitt zu Vibe-Coding, Claude, Codex und redaktioneller Verantwortung ergaenzt; Browsercheck-Pfade aktualisiert.",
+    "Text; Lizenz; Transparenz; GitHub; Versionierung",
+    "Build-, Release- und Browserpruefung bestanden; MIT-Link, Entstehungsabschnitt, Sprachumschaltung und bestehende Kernlogik geprueft",
+    "Fachliche Endabnahme und manuelle Tastatur-/Fokuspruefung nach Freigabe",
   ],
 ];
 body(history.getRange("A2:K30"));
@@ -574,6 +587,15 @@ audits.getRange("A2:G20").values = [
     "mit Auflagen",
     "V1.19-Feinschliff und GitHub-Pages-Vorbereitung umgesetzt; Build-, Release- und Browserpruefung bestanden; fachliche Endabnahme und manuelle Tastatur-/Fokuspruefung bleiben offen.",
     "audits/RELEASE_AUDIT_V1_19_20260819.md; Lizenzfinder-App-V1_19_20260819-codex.html",
+  ],
+  [
+    "A-020",
+    new Date("2026-08-19T00:00:00"),
+    "1.20.20260819-codex",
+    "Release",
+    "mit Auflagen",
+    "MIT-Link und Entstehungsabschnitt umgesetzt; Build-, Release- und Browserpruefung bestanden; fachliche Endabnahme und manuelle Tastatur-/Fokuspruefung bleiben offen.",
+    "audits/RELEASE_AUDIT_V1_20_20260819.md; Lizenzfinder-App-V1_20_20260819-codex.html",
   ],
 ];
 body(audits.getRange("A2:G40"));

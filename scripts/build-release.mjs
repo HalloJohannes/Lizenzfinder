@@ -3,8 +3,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const version = "1.19.20260819-codex";
-const fileName = "Lizenzfinder-App-V1_19_20260819-codex.html";
+const version = "1.20.20260819-codex";
+const fileName = "Lizenzfinder-App-V1_20_20260819-codex.html";
 
 const template = fs.readFileSync(path.join(root, "src", "index.html"), "utf8");
 const css = fs.readFileSync(path.join(root, "src", "styles.css"), "utf8");

@@ -74,6 +74,7 @@ let lang = (navigator.language || "de").toLowerCase().startsWith("en") ? "en" : 
       lang = next;
       document.documentElement.lang = lang;
       document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
+      document.querySelectorAll("[data-i18n-html]").forEach(el => { el.innerHTML = t(el.dataset.i18nHtml); });
       document.querySelectorAll("[data-placeholder-de]").forEach(el => { el.placeholder = lang === "en" ? el.dataset.placeholderEn : el.dataset.placeholderDe; });
       document.getElementById("lang-de").setAttribute("aria-pressed", lang === "de");
       document.getElementById("lang-en").setAttribute("aria-pressed", lang === "en");

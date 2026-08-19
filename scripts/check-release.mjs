@@ -4,8 +4,8 @@ import vm from "node:vm";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const version = "1.19.20260819-codex";
-const releaseName = "Lizenzfinder-App-V1_19_20260819-codex.html";
+const version = "1.20.20260819-codex";
+const releaseName = "Lizenzfinder-App-V1_20_20260819-codex.html";
 const release = path.join(root, releaseName);
 const current = path.join(root, "versions", "aktuell", releaseName);
 const index = path.join(root, "index.html");
@@ -36,6 +36,9 @@ assert(!html.includes("themeBtn"), "Dark-Mode-Schalter ist noch enthalten.");
 assert(!html.includes("toggleTheme"), "Dark-Mode-Logik ist noch enthalten.");
 assert(html.includes("MIT License"), "MIT-Lizenzhinweis fehlt.");
 assert(html.includes("https://opensource.org/license/mit"), "MIT-Lizenzlink fehlt.");
+assert(html.includes('data-i18n-html="aboutLicenseP"'), "HTML-faehiger About-Lizenztext fehlt.");
+assert(html.includes("Entstanden im Vibe-Coding"), "Entstehungsabschnitt fehlt.");
+assert(html.includes("Created through vibe coding"), "Englischer Entstehungsabschnitt fehlt.");
 assert(html.includes('name="licensefinder:content-license" content="CC0-1.0"'), "Content-Lizenz-Metatag fehlt.");
 assert(html.includes('name="dcterms.rights"'), "Doppellizenz-Hinweis in dcterms.rights fehlt.");
 assert(html.includes("Content-Security-Policy"), "Content-Security-Policy fehlt.");
@@ -110,4 +113,4 @@ for (const [name, actual, expectedPath, expectedBest] of cases) {
 }
 assert(context.localStorage.removed.length === 4, "Alte localStorage-Schluessel wurden nicht einmalig entfernt.");
 
-console.log(JSON.stringify({ ok: true, checks: cases.length + 31, version }, null, 2));
+console.log(JSON.stringify({ ok: true, checks: cases.length + 34, version }, null, 2));
