@@ -1,0 +1,1281 @@
+<!doctype html>
+<html lang="de" data-readable="off">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' data:; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="application-name" content="Lizenzfinder">
+  <meta name="description" content="Eine kleine Anwendung zur Orientierung bei Creative-Commons-Lizenzen und zum Erstellen von Lizenzvermerken.">
+  <meta name="author" content="Johannes Koch">
+  <meta name="dcterms.title" content="Lizenzfinder">
+  <meta name="dcterms.creator" content="Johannes Koch">
+  <meta name="dcterms.created" content="2026-06-27">
+  <meta name="dcterms.modified" content="2026-08-19">
+  <meta name="dcterms.license" content="https://opensource.org/license/mit">
+  <meta name="licensefinder:version" content="1.17.20260819-codex">
+  <meta name="licensefinder:version-line" content="1">
+  <meta name="licensefinder:revision" content="17">
+  <meta name="licensefinder:revision-date" content="2026-08-19">
+  <meta name="licensefinder:responsible-editor" content="Johannes Koch">
+  <meta name="licensefinder:license" content="MIT">
+  <title>Lizenzfinder</title>
+  <style>
+:root {
+      --paper: #f7fcfb;
+      --surface: #ffffff;
+      --surface-soft: #edf7f5;
+      --mint: #dff4ef;
+      --mint-deep: #badfd8;
+      --teal: #1a9b93;
+      --teal-dark: #13756f;
+      --petrol: #123c4a;
+      --petrol-soft: #315b65;
+      --ink: #203036;
+      --muted: #60757c;
+      --line: #d8e8e4;
+      --lime: #dce84f;
+      --rose: #e85d68;
+      --amber: #fff4c4;
+      --shadow: 14px 14px 0 -5px var(--mint-deep);
+      --shadow-hard: 14px 14px 0 -5px var(--mint-deep);
+      --radius: 2px;
+      --radius-sm: 2px;
+      --max: 1180px;
+      --font: "Outfit", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --fs: 16px;
+      --leading: 1.58;
+    }
+
+    html[data-readable="on"] {
+      --font: Verdana, "Segoe UI", system-ui, sans-serif;
+      --leading: 1.85;
+      --fs: 17px;
+    }
+
+    * { box-sizing: border-box; }
+    html { font-size: var(--fs); scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--ink);
+      background:
+        linear-gradient(135deg, rgba(26, 155, 147, .09), transparent 34%),
+        radial-gradient(circle at 92% 12%, rgba(220, 232, 79, .22), transparent 24%),
+        var(--paper);
+      line-height: var(--leading);
+      letter-spacing: 0;
+    }
+
+    a { color: var(--teal-dark); font-weight: 700; }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    :focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; border-radius: 2px; }
+    .skip { position: absolute; left: -999px; top: 0; z-index: 999; background: var(--petrol); color: var(--surface); padding: 10px 14px; }
+    .skip:focus { left: 12px; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+    .hidden { display: none !important; }
+
+    header.app { padding: 12px 0 0; }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 9px 0;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 10px;
+      color: var(--petrol);
+      text-decoration: none;
+    }
+
+    .brand b { font-size: 1.32rem; letter-spacing: -.01em; }
+    .tools { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    .seg, .control {
+      display: inline-flex;
+      align-items: center;
+      border: 1.5px solid var(--mint-deep);
+      background: rgba(255, 255, 255, .62);
+      color: var(--petrol);
+      border-radius: 999px;
+      overflow: hidden;
+      box-shadow: 0 8px 22px -20px rgba(18, 60, 74, .45);
+    }
+    .seg button, .control {
+      border: 0;
+      min-height: 38px;
+      padding: 8px 14px;
+      background: transparent;
+      color: inherit;
+      font-weight: 700;
+      font-size: .86rem;
+    }
+    .seg button[aria-pressed="true"], .control[aria-pressed="true"] {
+      background: var(--petrol);
+      color: var(--surface);
+    }
+
+    .intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(250px, 330px);
+      gap: 24px;
+      align-items: center;
+      padding: 24px 0 25px;
+    }
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .78rem;
+      color: var(--teal-dark);
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .kicker::before { content: ""; width: 34px; height: 2px; background: var(--teal); }
+    h1 {
+      margin: 0;
+      max-width: 900px;
+      color: var(--petrol);
+      font-size: clamp(2rem, 4.5vw, 4.15rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+    h1 em { color: var(--teal); font-style: normal; }
+    .lead {
+      max-width: 760px;
+      margin: 15px 0 0;
+      color: var(--petrol-soft);
+      font-size: 1.12rem;
+    }
+    .intro-panel {
+      border: 1.5px solid var(--petrol);
+      background: rgba(255, 255, 255, .72);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-hard);
+      padding: 18px;
+    }
+    .intro-panel b { display: block; color: var(--petrol); font-size: 1.05rem; margin-bottom: 8px; }
+    .intro-panel p { margin: 0; color: var(--muted); font-size: .92rem; }
+
+    nav.tabs {
+      position: relative;
+      z-index: 2;
+      background: color-mix(in srgb, var(--paper) 84%, transparent);
+      border-block: 1px solid rgba(18, 60, 74, .08);
+    }
+    .tab-row { display: flex; gap: 10px; overflow-x: auto; padding: 10px 0; }
+    .tab {
+      border: 1.5px solid transparent;
+      border-radius: 999px;
+      color: var(--petrol);
+      background: transparent;
+      padding: 9px 17px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .tab[aria-selected="true"] {
+      background: var(--surface);
+      border-color: var(--mint-deep);
+      box-shadow: 0 12px 30px -24px rgba(18, 60, 74, .55);
+    }
+
+    main.wrap { padding-top: 54px; padding-bottom: 96px; }
+    .section-intro { margin-bottom: 24px; }
+    .section-intro h2 { margin: 0 0 8px; color: var(--petrol); font-size: 1.75rem; line-height: 1.08; }
+    .section-intro p { margin: 0; color: var(--muted); max-width: 820px; }
+    .data-flow { display: grid; gap: 22px; }
+    .flow-step {
+      display: grid;
+      grid-template-columns: 52px minmax(0, 1fr);
+      gap: 18px;
+      border: 1.5px solid var(--petrol);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, .82);
+      box-shadow: var(--shadow-hard);
+      padding: 24px;
+    }
+    .flow-num {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius);
+      background: var(--petrol);
+      color: var(--surface);
+      font-weight: 900;
+    }
+    .flow-icon { width: 23px; height: 23px; }
+    .flow-step h3 { margin: 0 0 4px; color: var(--petrol); font-size: 1.22rem; }
+    .flow-step > div > p, .flow-copy { margin: 0 0 18px; color: var(--muted); }
+    .flow-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; align-items: center; }
+    .flow-note { margin-top: 10px; color: var(--muted); font-size: .85rem; }
+    .publish-note {
+      display: block;
+      margin-top: 20px;
+      padding: 0;
+      border-left: 0;
+      background: transparent;
+      border-radius: 0;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+    .publish-note strong { color: var(--petrol); font-weight: 800; margin-right: 6px; }
+    .publish-note span { margin-right: 6px; }
+    .publish-note a { font-weight: 800; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+
+    fieldset.question { border: 0; margin: 0; padding: 8px 0 0; }
+    fieldset.question legend { padding: 0; }
+    fieldset.question h4 { margin: 0; color: var(--petrol); font-size: 1.18rem; }
+    .hint { color: var(--muted); margin: 4px 0 0; font-size: .94rem; }
+    .q-info { margin: 10px 0 0; color: var(--muted); font-size: .9rem; max-width: 78ch; }
+    .q-info strong { color: var(--teal-dark); }
+    .options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
+    .choice {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px;
+      align-items: start;
+      min-height: 58px;
+      border: 1.5px solid var(--line);
+      background: var(--surface);
+      border-radius: var(--radius-sm);
+      padding: 14px 15px;
+      color: var(--petrol);
+    }
+    .choice:hover, .choice:has(input:checked) {
+      border-color: var(--teal);
+      background: var(--surface-soft);
+    }
+    .choice input { margin-top: 5px; accent-color: var(--teal-dark); }
+    .choice strong { display: block; line-height: 1.35; }
+
+    .result-placeholder {
+      border: 1.5px dashed var(--petrol);
+      border-radius: var(--radius-sm);
+      color: var(--muted);
+      padding: 15px;
+      background: rgba(255, 255, 255, .66);
+    }
+    .result-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 12px; }
+    .license-card {
+      position: relative;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+      border: 1.5px solid var(--petrol);
+      border-radius: var(--radius);
+      background: var(--surface);
+      padding: 19px;
+      box-shadow: var(--shadow-hard);
+    }
+    .license-card::before { content: ""; width: 42px; height: 3px; background: var(--teal); border-radius: 999px; }
+    .license-card.alt::before { background: var(--lime); }
+    .license-card.bad::before { background: var(--rose); }
+    .eyebrow { color: var(--muted); font-size: .76rem; text-transform: uppercase; letter-spacing: .13em; font-weight: 900; }
+    .license-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .license-name { color: var(--petrol); font-size: 1.25rem; font-weight: 900; }
+    .license-card img, .overview-card img { width: 88px; height: 31px; border-radius: 2px; background: #fff; object-fit: contain; }
+    .license-card p { margin: 0; color: var(--muted); font-size: .92rem; }
+    .module-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .module-chip {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--mint-deep);
+      border-radius: 999px;
+      background: var(--surface-soft);
+      color: var(--petrol);
+      padding: 3px 9px;
+      font-size: .76rem;
+      font-weight: 900;
+    }
+    .license-links { display: flex; gap: 12px; flex-wrap: wrap; font-size: .86rem; }
+
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { display: block; margin-bottom: 6px; color: var(--petrol); font-weight: 800; font-size: .92rem; }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      min-height: 42px;
+      border: 1.5px solid var(--petrol);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      color: var(--ink);
+      padding: 10px 12px;
+    }
+    .field small { display: block; margin-top: 5px; color: var(--muted); font-size: .78rem; }
+    .custom-medium { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) minmax(120px, .5fr); gap: 12px; }
+    .software-notice {
+      display: none;
+      margin: 14px 0 0;
+      color: var(--petrol-soft);
+      border-left: 3px solid var(--rose);
+      padding-left: 14px;
+      font-size: .9rem;
+    }
+    .software-notice.show { display: block; }
+    .outputs { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+    .output-card {
+      display: grid;
+      gap: 10px;
+      border: 1.5px solid var(--petrol);
+      border-radius: var(--radius);
+      background: var(--surface);
+      padding: 16px;
+      box-shadow: none;
+    }
+    .output-card h4 { margin: 0; color: var(--petrol); }
+    .output-card textarea { width: 100%; min-height: 96px; resize: vertical; color: var(--ink); background: var(--paper); border: 1.5px solid var(--line); border-radius: var(--radius-sm); padding: 10px; }
+    details.template-details {
+      margin-top: 16px;
+      border: 1.5px solid var(--petrol);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: none;
+      overflow: hidden;
+    }
+    details.template-details > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 15px 17px;
+      color: var(--petrol);
+      font-weight: 900;
+    }
+    details.template-details > summary::-webkit-details-marker { display: none; }
+    details.template-details > summary::before { content: "+"; color: var(--teal); font-size: 1.25rem; font-weight: 900; margin-right: 9px; }
+    details.template-details[open] > summary::before { content: "-"; }
+    details.template-details .outputs { margin: 0; padding: 0 16px 16px; }
+
+    .badge-box {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 18px;
+      padding: 16px;
+      border: 1.5px solid var(--petrol);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: none;
+    }
+    .badge-box img { width: 88px; height: 31px; background: #fff; border-radius: 3px; object-fit: contain; }
+
+    .overview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 18px; }
+    .overview-card {
+      border: 1.5px solid var(--petrol);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, .76);
+      box-shadow: var(--shadow-hard);
+      overflow: hidden;
+    }
+    .overview-card > summary { list-style: none; cursor: pointer; padding: 20px; display: grid; gap: 12px; }
+    .overview-card > summary::-webkit-details-marker { display: none; }
+    .overview-card h3 { margin: 0; color: var(--petrol); font-size: 1.24rem; }
+    .overview-card p { margin: 0; color: var(--muted); font-size: .9rem; }
+    .overview-head { display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; }
+    .overview-detail { border-top: 1px solid var(--line); padding: 16px 20px 20px; display: grid; gap: 12px; }
+    .module-list { display: grid; gap: 8px; }
+    .module {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      background: var(--surface-soft);
+      padding: 10px;
+      font-size: .86rem;
+    }
+    .module b { color: var(--petrol); display: block; }
+    .software-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; margin-top: 26px; }
+    .software-card { border: 1.5px solid var(--petrol); border-radius: var(--radius); background: var(--surface); padding: 17px; box-shadow: var(--shadow-hard); }
+    .software-card b { display: block; color: var(--petrol); margin-bottom: 4px; }
+    .software-card p { margin: 0 0 10px; color: var(--muted); font-size: .9rem; }
+
+    .service-box { border: 1.5px solid var(--petrol); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow-hard); padding: 18px; margin: 0 0 20px; }
+    .service-box h3 { margin: 0 0 6px; color: var(--petrol); }
+    .service-box p { margin: 0 0 12px; color: var(--muted); }
+    .service-links { display: flex; flex-wrap: wrap; gap: 13px; }
+    details.qa { border: 1.5px solid var(--petrol); border-radius: var(--radius); background: var(--surface); margin-bottom: 10px; overflow: hidden; box-shadow: var(--shadow-hard); }
+    details.qa > summary { list-style: none; cursor: pointer; padding: 15px 18px; font-weight: 900; color: var(--petrol); }
+    details.qa > summary::-webkit-details-marker { display: none; }
+    details.qa > summary::before { content: "+"; color: var(--teal); font-size: 1.2rem; margin-right: 8px; }
+    details.qa[open] > summary::before { content: "-"; }
+    .qa-body { padding: 0 18px 18px; color: var(--muted); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 42px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--petrol);
+      color: var(--surface);
+      padding: 10px 18px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    .btn:hover { background: var(--teal-dark); transform: translateY(-1px); }
+    .btn.outline { background: transparent; color: var(--petrol); border: 1.5px solid var(--mint-deep); }
+    .btn.accent { background: var(--lime); color: #24301e; }
+
+    .sidehelp {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 80;
+      width: min(340px, calc(100vw - 36px));
+      pointer-events: none;
+    }
+    .sidehelp-handle {
+      pointer-events: auto;
+      float: right;
+      border: 0;
+      border-radius: 999px;
+      background: var(--petrol);
+      color: var(--surface);
+      padding: 11px 18px;
+      font-weight: 900;
+      box-shadow: 0 18px 40px -22px rgba(18, 60, 74, .75);
+    }
+    .sidehelp-panel {
+      display: none;
+      pointer-events: auto;
+      clear: both;
+      margin-bottom: 12px;
+      border: 1.5px solid var(--petrol);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow-hard);
+      padding: 18px;
+    }
+    .sidehelp.open .sidehelp-panel { display: block; }
+    .sidehelp-panel h3 { margin: 0 0 6px; color: var(--petrol); }
+    .sidehelp-panel p { margin: 0 0 10px; color: var(--muted); font-size: .9rem; }
+    .about-meta { display: grid; gap: 8px; margin: 12px 0; }
+    .about-meta div { border-top: 1px solid var(--line); padding-top: 8px; }
+    .about-meta dt { color: var(--petrol); font-weight: 900; font-size: .82rem; }
+    .about-meta dd { margin: 2px 0 0; color: var(--muted); font-size: .88rem; }
+    .license-text { border-top: 1px solid var(--line); padding-top: 8px; }
+    .license-text summary { cursor: pointer; color: var(--petrol); font-weight: 900; }
+    .license-text pre { max-height: 210px; overflow: auto; white-space: pre-wrap; font-size: .72rem; line-height: 1.35; background: var(--paper); border: 1px solid var(--line); padding: 10px; }
+
+    footer.site {
+      border-top: 1px solid var(--line);
+      background: transparent;
+      padding: 20px 0 58px;
+      color: var(--muted);
+    }
+    footer p { margin: 0; font-size: .83rem; }
+    .lic-line { margin: 0; padding: 0; }
+    .version-line { color: var(--petrol); font-weight: 800; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 20px;
+      transform: translateX(-50%);
+      z-index: 100;
+      background: var(--petrol);
+      color: var(--surface);
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-weight: 800;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s;
+    }
+    .toast.show { opacity: 1; }
+
+    @media (max-width: 920px) {
+      .intro { grid-template-columns: 1fr; }
+      .result-grid, .outputs, .form-grid, .options { grid-template-columns: 1fr; }
+      .custom-medium { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .wrap { padding: 0 16px; }
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .tools { justify-content: flex-start; }
+      .flow-step { grid-template-columns: 1fr; padding: 18px; }
+      main.wrap { padding-top: 42px; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main" data-i18n="skip">Zum Inhalt springen</a>
+  <header class="app">
+    <div class="wrap">
+      <div class="topbar">
+        <a class="brand" href="#main" aria-label="Lizenzfinder">
+          <b>Lizenzfinder</b>
+        </a>
+        <div class="tools" role="group" aria-label="Einstellungen">
+          <div class="seg" role="group" aria-label="Sprache">
+            <button id="lang-de" type="button" aria-pressed="true" onclick="setLang('de')">DE</button>
+            <button id="lang-en" type="button" aria-pressed="false" onclick="setLang('en')">EN</button>
+          </div>
+          <button class="control" id="readBtn" type="button" aria-pressed="false" onclick="toggleReadable()" data-i18n="readable">Bessere Lesbarkeit</button>
+          <div class="seg" role="group" aria-label="Schriftgröße">
+            <button type="button" onclick="setFont(-1)" aria-label="Schrift verkleinern">A−</button>
+            <button type="button" onclick="setFont(1)" aria-label="Schrift vergrößern">A+</button>
+          </div>
+        </div>
+      </div>
+      <section class="intro" aria-labelledby="appTitle">
+        <div>
+          <div class="kicker" data-i18n="kicker">Offene Materialien</div>
+          <h1 id="appTitle"><span data-i18n="heroA">Passende Lizenz finden.</span> <em data-i18n="heroB">Vermerk mitnehmen.</em></h1>
+          <p class="lead" data-i18n="appSub">Eine kurze, einfache Orientierung für selbst erstellte Materialien: Lizenzidee klären, Empfehlung verstehen und den passenden Vermerk erstellen.</p>
+        </div>
+        <aside class="intro-panel">
+          <b data-i18n="panelH">In drei klaren Schritten</b>
+          <p data-i18n="panelP">Der Fragebogen führt zur Empfehlung. Danach bleibt die Vermerk-Maske direkt sichtbar. Für Softwarecode gibt es einen eigenen Hinweisbereich.</p>
+        </aside>
+      </section>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Bereiche">
+    <div class="wrap tab-row" role="tablist">
+      <button class="tab" id="tab-finder" type="button" role="tab" aria-selected="true" aria-controls="panel-finder" onclick="showPanel('finder')" data-i18n="tabFinder">Lizenz finden</button>
+      <button class="tab" id="tab-overview" type="button" role="tab" aria-selected="false" aria-controls="panel-overview" onclick="showPanel('overview')" data-i18n="tabOverview">Lizenzen im Überblick</button>
+      <button class="tab" id="tab-help" type="button" role="tab" aria-selected="false" aria-controls="panel-help" onclick="showPanel('help')" data-i18n="tabHelp">Hilfe & Quellen</button>
+    </div>
+  </nav>
+
+  <main id="main" class="wrap">
+    <section id="panel-finder" role="tabpanel" aria-labelledby="tab-finder">
+      <div class="section-intro">
+        <h2 data-i18n="finderH">Offenheit sichtbar machen</h2>
+        <p data-i18n="finderP">Vom eigenen Material zur Lizenzempfehlung und direkt weiter zum passenden Vermerk.</p>
+      </div>
+      <div class="data-flow" aria-label="Lizenz-Workflow">
+        <section class="flow-step" id="flowQuestions">
+          <div class="flow-num" aria-hidden="true">1</div>
+          <div>
+            <h3 data-i18n="flowAskH">Passende Lizenz finden</h3>
+            <p data-i18n="flowAskP">Ein kurzer Fragebogen klärt, welche Creative-Commons-Lizenz am besten passt.</p>
+            <div id="questionHost"></div>
+            <div class="flow-actions">
+              <button class="btn outline" type="button" onclick="prevQuestion()" data-i18n="back">Zurück</button>
+              <button class="btn" type="button" onclick="nextQuestion()" data-i18n="next">Weiter</button>
+              <button class="btn outline" type="button" onclick="resetAll()" data-i18n="reset">Neu starten</button>
+            </div>
+            <div class="flow-note" id="progressText"></div>
+          </div>
+        </section>
+
+        <section class="flow-step" id="flowResult">
+          <div class="flow-num" aria-hidden="true">2</div>
+          <div>
+            <h3 data-i18n="resultH">Lizenzempfehlung</h3>
+            <p data-i18n="resultP">Nachfolgend stehen drei Lizenzen: zwei gut geeignete Vorschläge und eine Lizenz, die den Antworten aus dem Fragebogen eher entgegensteht.</p>
+            <div id="resultPlaceholder" class="result-placeholder" data-i18n="resultPlaceholder">Noch keine Empfehlung: Beantworte die Fragen in Schritt 1.</div>
+            <div id="resultSection" class="hidden" aria-live="polite">
+              <div class="result-grid">
+                <article class="license-card best">
+                  <div class="eyebrow" data-i18n="best">Empfehlung</div>
+                  <div class="license-head"><div class="license-name" id="bestName"></div><img id="bestBadge" alt=""></div>
+                  <p id="bestWhy"></p><div class="module-row" id="bestModules"></div><div class="license-links" id="bestLinks"></div>
+                </article>
+                <article class="license-card alt">
+                  <div class="eyebrow" data-i18n="also">Auch möglich</div>
+                  <div class="license-head"><div class="license-name" id="altName"></div><img id="altBadge" alt=""></div>
+                  <p id="altWhy"></p><div class="module-row" id="altModules"></div><div class="license-links" id="altLinks"></div>
+                </article>
+                <article class="license-card bad">
+                  <div class="eyebrow" data-i18n="least">Eher weniger passend</div>
+                  <div class="license-head"><div class="license-name" id="badName"></div><img id="badBadge" alt=""></div>
+                  <p id="badWhy"></p><div class="module-row" id="badModules"></div><div class="license-links" id="badLinks"></div>
+                </article>
+              </div>
+              <div class="publish-note" id="publishNote">
+                <strong data-i18n="publishH">Direkt weiter zu twillo</strong>
+                <span data-i18n="publishP">Wenn diese Lizenz passt und alle Rechte geklärt sind, kann das Material bei twillo veröffentlicht oder verlinkt werden.</span>
+                <a data-link="twilloShare" href="https://www.twillo.de/oer-teilen/" target="_blank" rel="noopener" data-i18n="publishLink">Material auf twillo veröffentlichen</a>
+              </div>
+              <div class="flow-actions">
+                <button class="btn outline" type="button" onclick="editAnswers()" data-i18n="editAnswers">Antworten anpassen</button>
+                <button class="btn" type="button" onclick="scrollToNotice()" data-i18n="noticeJump">Zum Vermerk</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="flow-step" id="noticeSection">
+          <div class="flow-num" aria-hidden="true">3</div>
+          <div>
+            <h3 data-i18n="noticeH">Lizenzvermerk erstellen</h3>
+            <div class="form-grid">
+              <div class="field full">
+                <label for="mediumPreset" data-i18n="fieldMedium">Welcher Medientyp ist es?</label>
+                <div class="custom-medium">
+                  <select id="mediumPreset" onchange="toggleCustomMedium();renderNotice()"></select>
+                  <input id="mediumCustom" class="hidden" oninput="renderNotice()" data-placeholder-de="z. B. Podcastfolge, Checkliste" data-placeholder-en="e.g. podcast episode, checklist" placeholder="z. B. Podcastfolge, Checkliste">
+                  <select id="mediumArticle" class="hidden" onchange="renderNotice()"></select>
+                </div>
+                <p class="software-notice" id="softwareNotice" data-i18n="softwareNotice">Für Softwarecode sind Creative-Commons-Lizenzen in der Regel nicht die passende Wahl. Nutze den Vermerk für Dokumentation, begleitende Materialien oder sichtbare Inhalte; für Quellcode helfen die Hinweise im Lizenzüberblick.</p>
+              </div>
+              <div class="field"><label for="workTitle" data-i18n="fieldTitle">Wie heißt dein Material?</label><input id="workTitle" oninput="renderNotice()" data-placeholder-de="z. B. Einführung in OER" data-placeholder-en="e.g. Introduction to OER" placeholder="z. B. Einführung in OER"></div>
+              <div class="field"><label for="author" data-i18n="fieldAuthor">Wer soll genannt werden?</label><input id="author" oninput="renderNotice()" data-placeholder-de="Name / Organisation" data-placeholder-en="Name / organization" placeholder="Name / Organisation"></div>
+              <div class="field"><label for="year" data-i18n="fieldYear">Jahr</label><input id="year" oninput="renderNotice()" value="2026"></div>
+              <div class="field"><label for="licenseSelect" data-i18n="fieldLicense">Welche Lizenz?</label><select id="licenseSelect" onchange="setManualLicense()"></select></div>
+              <div class="field full"><label for="sourceUrl" data-i18n="fieldSource">Wo liegt das Original?</label><input id="sourceUrl" oninput="renderNotice()" placeholder="https://..."><small data-i18n="fieldSourceHint">Optional, aber sehr hilfreich für Nachnutzung.</small></div>
+              <div class="field"><label for="changed" data-i18n="fieldChanged">Wurde etwas verändert?</label><select id="changed" onchange="renderNotice()"><option value="no" data-i18n="changedNo">Nein</option><option value="yes" data-i18n="changedYes">Ja</option></select></div>
+              <div class="field"><label for="changeText" data-i18n="fieldChangeText">Bearbeitung kurz beschreiben</label><input id="changeText" oninput="renderNotice()" data-placeholder-de="gekürzt, übersetzt, ergänzt" data-placeholder-en="shortened, translated, expanded" placeholder="gekürzt, übersetzt, ergänzt"></div>
+            </div>
+            <div class="outputs">
+              <article class="output-card"><h4 data-i18n="outShort">Kurzvermerk</h4><textarea id="outShort" readonly></textarea><button class="btn outline" type="button" onclick="copyOut('outShort')" data-i18n="copy">Kopieren</button></article>
+              <article class="output-card"><h4 data-i18n="outReuse">Empfohlene Angabe</h4><textarea id="outReuse" readonly></textarea><button class="btn outline" type="button" onclick="copyOut('outReuse')" data-i18n="copy">Kopieren</button></article>
+            </div>
+            <details class="template-details">
+              <summary data-i18n="templatesSummary">Markdown und HTML anzeigen</summary>
+              <div class="outputs">
+                <article class="output-card"><h4>Markdown</h4><textarea id="outMd" readonly></textarea><button class="btn outline" type="button" onclick="copyOut('outMd')" data-i18n="copy">Kopieren</button></article>
+                <article class="output-card"><h4>HTML</h4><textarea id="outHtml" readonly></textarea><button class="btn outline" type="button" onclick="copyOut('outHtml')" data-i18n="copy">Kopieren</button></article>
+              </div>
+            </details>
+            <div class="badge-box">
+              <img id="badgeImg" alt="Creative-Commons-Lizenzbutton" src="">
+              <div>
+                <b data-i18n="badgeH">Creative-Commons-Badge</b>
+                <p style="margin:.2rem 0 .6rem;color:var(--muted)" data-i18n="badgeP">Nutze den Badge für Wiedererkennung. Die offizielle Downloadseite bietet weitere Formate.</p>
+                <a id="badgeDirect" class="btn outline" target="_blank" rel="noopener" data-i18n="badgeOpen">Badge öffnen</a>
+                <a id="badgeDownloads" class="btn outline" target="_blank" rel="noopener" href="https://creativecommons.org/mission/downloads/" data-i18n="badgeDownloads">CC-Downloads</a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section id="panel-overview" role="tabpanel" aria-labelledby="tab-overview" class="hidden">
+      <div class="section-intro">
+        <h2 data-i18n="overviewH">Lizenzen im Überblick</h2>
+        <p data-i18n="overviewP">Kurz nachsehen, wie Creative-Commons-Lizenzen aufgebaut sind und wann Software-Lizenzen die bessere Spur sind.</p>
+      </div>
+      <div class="overview-grid" id="overviewGrid"></div>
+      <div class="section-intro" style="margin-top:34px">
+        <h2 data-i18n="softwareH">Software-Lizenzen</h2>
+        <p data-i18n="softwareP">Für Quellcode sind Creative-Commons-Lizenzen meist nicht gedacht. Software-Lizenzen regeln zum Beispiel Quellcode, Haftung, Patente und Weitergabe genauer.</p>
+      </div>
+      <div class="software-grid" id="softwareGrid"></div>
+    </section>
+
+    <section id="panel-help" role="tabpanel" aria-labelledby="tab-help" class="hidden">
+      <div class="section-intro">
+        <h2 data-i18n="helpH">Hilfe & Quellen</h2>
+        <p data-i18n="helpP">Kurz und verständlich, mit Verweisen auf vertiefende Informationen von twillo, Creative Commons und Choose a License.</p>
+      </div>
+      <article class="service-box">
+        <h3 data-i18n="serviceH">Unterstützung und Vertiefung</h3>
+        <p data-i18n="serviceP">Für Fragen zu Open Educational Resources, Lizenzangaben oder zur Veröffentlichung von Materialien bietet der twillo-Service weiterführende Unterstützung.</p>
+        <div class="service-links">
+          <a data-link="twilloFaq" href="https://www.twillo.de/helpcenter/?_kategorie=grundlagen-von-oer" target="_blank" rel="noopener" data-i18n="serviceHelp">twillo-Helpcenter</a>
+          <a data-link="twilloEvents" href="https://www.twillo.de/veranstaltungen/" target="_blank" rel="noopener" data-i18n="serviceEvents">twillo-Veranstaltungen</a>
+          <a data-link="twilloContact" href="https://www.twillo.de/kontakt/" target="_blank" rel="noopener" data-i18n="contact">Kontakt</a>
+        </div>
+      </article>
+      <div id="faqList"></div>
+    </section>
+  </main>
+
+  <div class="sidehelp" id="sidehelp">
+    <div class="sidehelp-panel" id="sidehelpPanel" role="region" aria-labelledby="aboutTitle">
+      <h3 id="aboutTitle" data-i18n="sideH">Über diese Anwendung</h3>
+      <p>
+        <span data-i18n="aboutCreditA">Dieses Tool Lizenzfinder von</span>
+        <a data-link="linkedin" href="https://de.linkedin.com/in/johannes-koch-1964a3240" target="_blank" rel="noopener">Johannes Koch</a><span data-i18n="aboutCreditB"> 2026.</span>
+      </p>
+      <dl class="about-meta">
+        <div><dt data-i18n="aboutVersion">Produktversion</dt><dd>1.17.20260819-codex</dd></div>
+        <div><dt data-i18n="aboutNetwork">Netzwerk</dt><dd data-i18n="aboutNetworkP">Statische HTML-Anwendung mit externen Quellenlinks. Ein Netzwerk-Wächter blockiert automatische Verbindungen.</dd></div>
+        <div><dt data-i18n="aboutFont">Schrift</dt><dd data-i18n="aboutFontP">Systemschrift-Stapel: Outfit, Segoe UI und systemeigene serifenlose Schriften; keine Schriftdateien eingebettet.</dd></div>
+        <div><dt data-i18n="aboutLicense">Lizenz der Anwendung</dt><dd data-i18n="aboutLicenseP">Lizenzfinder von Johannes Koch, 2026, steht unter der MIT License. Nutzung, Bearbeitung, Weitergabe und Einbindung sind erlaubt, sofern Copyright- und Lizenzhinweis erhalten bleiben.</dd></div>
+      </dl>
+      <details class="license-text">
+        <summary data-i18n="aboutLicenseText">Lizenztext anzeigen</summary>
+        <pre>MIT License
+
+Copyright (c) 2026 Johannes Koch
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</pre>
+      </details>
+    </div>
+    <button class="sidehelp-handle" id="sidehelpHandle" type="button" onclick="toggleSideHelp()" aria-expanded="false" aria-controls="sidehelpPanel" data-i18n="sideHandle">Über diese Anwendung</button>
+  </div>
+
+  <footer class="site">
+    <div class="wrap">
+      <div class="lic-line">
+        <p>
+          <span data-i18n="footCreditA">Konzept, fachliche und redaktionelle Gestaltung:</span>
+          <a data-link="linkedin" href="https://de.linkedin.com/in/johannes-koch-1964a3240" target="_blank" rel="noopener">Johannes Koch</a><span data-i18n="footCreditB">.</span>
+          <span data-i18n="footCreditC">Technische Umsetzung mit KI-Unterstützung.</span>
+          <a data-link="appLicense" href="https://opensource.org/license/mit" target="_blank" rel="noopener">MIT License</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+const VERSION_METADATA = {
+      version: "1.17.20260819-codex",
+      revision: 17,
+      revisionDate: "2026-08-19",
+      attribution: {
+        de: "Lizenzfinder von Johannes Koch, 2026, steht unter der MIT License.",
+        en: "License Finder by Johannes Koch, 2026, is licensed under the MIT License."
+      }
+    };
+
+    const strings = {
+      de: {
+        skip: "Zum Inhalt springen", readable: "Bessere Lesbarkeit", kicker: "Offene Materialien",
+        heroA: "Passende Lizenz finden.", heroB: "Vermerk mitnehmen.",
+        appSub: "Eine kurze, einfache Orientierung für selbst erstellte Materialien: Lizenzidee klären, Empfehlung verstehen und den passenden Vermerk erstellen.",
+        panelH: "In drei klaren Schritten", panelP: "Der Fragebogen führt zur Empfehlung. Danach bleibt die Vermerk-Maske direkt sichtbar. Für Softwarecode gibt es einen eigenen Hinweisbereich.",
+        tabFinder: "Lizenz finden", tabOverview: "Lizenzen im Überblick", tabHelp: "Hilfe & Quellen",
+        finderH: "Offenheit sichtbar machen", finderP: "Vom eigenen Material zur Lizenzempfehlung und direkt weiter zum passenden Vermerk.",
+        flowAskH: "Passende Lizenz finden", flowAskP: "Ein kurzer Fragebogen klärt, welche Creative-Commons-Lizenz am besten passt.",
+        back: "Zurück", next: "Weiter", reset: "Neu starten", info: "Info",
+        resultH: "Lizenzempfehlung", resultP: "Nachfolgend stehen drei Lizenzen: zwei gut geeignete Vorschläge und eine Lizenz, die den Antworten aus dem Fragebogen eher entgegensteht.",
+        resultPlaceholder: "Noch keine Empfehlung: Beantworte die Fragen in Schritt 1.", best: "Empfehlung", also: "Auch möglich", least: "Eher weniger passend",
+        publishH: "Direkt weiter zu twillo", publishP: "Wenn diese Lizenz passt und die Rechte geklärt sind, kann das Material bei twillo veröffentlicht oder verlinkt werden.", publishLink: "Material auf twillo veröffentlichen",
+        editAnswers: "Antworten anpassen", noticeJump: "Zum Vermerk", noticeH: "Lizenzvermerk erstellen",
+        fieldMedium: "Welcher Medientyp ist es?", softwareNotice: "Für Softwarecode sind Creative-Commons-Lizenzen in der Regel nicht die passende Wahl. Nutze den Vermerk für Dokumentation, begleitende Materialien oder sichtbare Inhalte; für Quellcode helfen die Hinweise im Lizenzüberblick.",
+        fieldTitle: "Wie heißt dein Material?", fieldAuthor: "Wer soll genannt werden?", fieldYear: "Jahr", fieldLicense: "Welche Lizenz?", fieldSource: "Wo liegt das Original?", fieldSourceHint: "Optional, aber sehr hilfreich für Nachnutzung.",
+        fieldChanged: "Wurde etwas verändert?", changedNo: "Nein", changedYes: "Ja", fieldChangeText: "Bearbeitung kurz beschreiben",
+        outShort: "Kurzvermerk", outReuse: "Empfohlene Angabe", copy: "Kopieren", copied: "Kopiert", templatesSummary: "Markdown und HTML anzeigen",
+        badgeH: "Creative-Commons-Badge", badgeP: "Nutze den Badge für Wiedererkennung. Die offizielle Downloadseite bietet weitere Formate.", badgeOpen: "Badge öffnen", badgeDownloads: "CC-Downloads",
+        overviewH: "Lizenzen im Überblick", overviewP: "Kurz nachsehen, wie Creative-Commons-Lizenzen aufgebaut sind und wann Software-Lizenzen die bessere Spur sind.",
+        softwareH: "Software-Lizenzen", softwareP: "Für Quellcode sind Creative-Commons-Lizenzen meist nicht gedacht. Software-Lizenzen regeln zum Beispiel Quellcode, Haftung, Patente und Weitergabe genauer.",
+        helpH: "Hilfe & Quellen", helpP: "Kurz und verständlich, mit Verweisen auf vertiefende Informationen von twillo, Creative Commons und Choose a License.",
+        serviceH: "Unterstützung und Vertiefung", serviceP: "Für Fragen zu Open Educational Resources, Lizenzangaben oder zur Veröffentlichung von Materialien bietet der twillo-Service weiterführende Unterstützung.", serviceHelp: "twillo-Helpcenter", serviceEvents: "twillo-Veranstaltungen",
+        sideHandle: "Über diese Anwendung", sideH: "Über diese Anwendung", aboutCreditA: "Dieses Tool Lizenzfinder von", aboutCreditB: " 2026.", aboutVersion: "Produktversion", aboutNetwork: "Netzwerk", aboutNetworkP: "Statische HTML-Anwendung mit externen Quellenlinks. Ein Netzwerk-Wächter blockiert automatische Verbindungen.", aboutFont: "Schrift", aboutFontP: "Systemschrift-Stapel: Outfit, Segoe UI und systemeigene serifenlose Schriften; keine Schriftdateien eingebettet.", aboutLicense: "Lizenz der Anwendung", aboutLicenseP: "Lizenzfinder von Johannes Koch, 2026, steht unter der MIT License. Nutzung, Bearbeitung, Weitergabe und Einbindung sind erlaubt, sofern Copyright- und Lizenzhinweis erhalten bleiben.", aboutLicenseText: "Lizenztext anzeigen", contact: "Kontakt",
+        footCreditA: "Konzept, fachliche und redaktionelle Gestaltung:", footCreditB: ".", footCreditC: "Technische Umsetzung mit KI-Unterstützung.",
+        deed: "Deed", legal: "Legal Code", badge: "Badge"
+      },
+      en: {
+        skip: "Skip to content", readable: "Readable mode", kicker: "Open materials",
+        heroA: "Find a fitting license.", heroB: "Take the attribution with you.",
+        appSub: "A short, simple orientation for self-created materials: clarify the license idea, understand the recommendation, and create the attribution notice.",
+        panelH: "Three clear steps", panelP: "The questionnaire leads to a recommendation. The attribution form remains directly visible. Software code has its own guidance area.",
+        tabFinder: "Find a license", tabOverview: "License overview", tabHelp: "Help & sources",
+        finderH: "Make openness visible", finderP: "From your material to a license recommendation and directly to the matching attribution notice.",
+        flowAskH: "Find a fitting license", flowAskP: "A short questionnaire clarifies which Creative Commons license fits best.",
+        back: "Back", next: "Next", reset: "Restart", info: "Info",
+        resultH: "License recommendation", resultP: "Below are three licenses: two suitable suggestions and one license that contrasts with the questionnaire answers.",
+        resultPlaceholder: "No recommendation yet: answer the questions in step 1.", best: "Recommendation", also: "Also possible", least: "Less suitable",
+        publishH: "Continue with twillo", publishP: "If this license fits and rights are cleared, the material can be published or linked on twillo.", publishLink: "Publish material on twillo",
+        editAnswers: "Adjust answers", noticeJump: "To attribution", noticeH: "Create attribution notice",
+        fieldMedium: "What type of material is it?", softwareNotice: "Creative Commons licenses are usually not the right choice for software code. Use the notice for documentation, accompanying materials, or visible content; for source code, see the software license notes in the overview.",
+        fieldTitle: "What is the title of your material?", fieldAuthor: "Who should be credited?", fieldYear: "Year", fieldLicense: "Which license?", fieldSource: "Where is the original?", fieldSourceHint: "Optional, but very helpful for reuse.",
+        fieldChanged: "Was anything changed?", changedNo: "No", changedYes: "Yes", fieldChangeText: "Briefly describe the adaptation",
+        outShort: "Short notice", outReuse: "Recommended attribution", copy: "Copy", copied: "Copied", templatesSummary: "Show Markdown and HTML",
+        badgeH: "Creative Commons badge", badgeP: "Use the badge for recognition. The official download page offers more formats.", badgeOpen: "Open badge", badgeDownloads: "CC downloads",
+        overviewH: "License overview", overviewP: "Quickly see how Creative Commons licenses are built and when software licenses are the better path.",
+        softwareH: "Software licenses", softwareP: "Creative Commons licenses are usually not intended for source code. Software licenses address source code, liability, patents, and distribution more specifically.",
+        helpH: "Help & sources", helpP: "Short and understandable, with links to more detailed information from twillo, Creative Commons, and Choose a License.",
+        serviceH: "Support and further reading", serviceP: "For questions about Open Educational Resources, attribution notices, or publishing materials, the twillo service offers further support.", serviceHelp: "twillo help center", serviceEvents: "twillo events",
+        sideHandle: "About this app", sideH: "About this app", aboutCreditA: "This tool License Finder by", aboutCreditB: " 2026.", aboutVersion: "Product version", aboutNetwork: "Network", aboutNetworkP: "Static HTML application with external source links. A network guard blocks automatic connections.", aboutFont: "Typography", aboutFontP: "System font stack: Outfit, Segoe UI, and local sans-serif system fonts; no font files are embedded.", aboutLicense: "Application license", aboutLicenseP: "License Finder by Johannes Koch, 2026, is licensed under the MIT License. Use, modification, distribution, and embedding are allowed if the copyright and license notice are preserved.", aboutLicenseText: "Show license text", contact: "Contact",
+        footCreditA: "Concept, subject-matter and editorial design:", footCreditB: ".", footCreditC: "Technical implementation with AI support.",
+        deed: "Deed", legal: "Legal code", badge: "Badge"
+      }
+    };
+
+    const questions = [
+      { id: "attribution", type: "single", q: { de: "Soll sichtbar bleiben, von wem das Material stammt?", en: "Should it remain visible who created the material?" }, hint: { de: "Es geht darum, ob Nachnutzende dich im Lizenzvermerk nennen müssen.", en: "This asks whether reusers must credit you in the attribution notice." }, info: { de: "Bei den meisten CC-Lizenzen ist Namensnennung Pflicht. Wenn du darauf verzichten möchtest, führt der Weg zu CC0.", en: "Most CC licenses require attribution. If you want to waive that requirement, the path leads to CC0." }, options: [["yes", { de: "Ja, mein Name oder meine Organisation soll genannt werden.", en: "Yes, my name or organization should be credited." }], ["no", { de: "Nein, das Material darf ohne Namensnennung genutzt werden.", en: "No, the material may be used without attribution." }]] },
+      { id: "adapt", type: "single", q: { de: "Dürfen andere das Material bearbeiten?", en: "May others adapt the material?" }, hint: { de: "Bearbeiten meint z. B. übersetzen, kürzen, remixen oder für eine Lehrveranstaltung anpassen.", en: "Adaptation includes translating, shortening, remixing, or tailoring it for a course." }, info: { de: "Wenn Bearbeitungen ausgeschlossen werden, wird das Material weniger offen nutzbar. Für OER sind Bearbeitungen oft wichtig.", en: "If adaptations are excluded, reuse becomes less open. For OER, adaptation is often important." }, options: [["yes", { de: "Ja, Bearbeitungen sollen möglich sein.", en: "Yes, adaptations should be possible." }], ["no", { de: "Nein, das Material soll nur unverändert weitergegeben werden.", en: "No, the material should only be shared unchanged." }]] },
+      { id: "commercial", type: "single", q: { de: "Dürfen andere das Material auch kommerziell nutzen?", en: "May others also use the material commercially?" }, hint: { de: "Kommerziell kann schon bedeuten, dass eine Organisation Geld für ihre Dienstleistung nimmt.", en: "Commercial can already mean that an organization charges for its service." }, info: { de: "Das betrifft nicht nur Unternehmen, die Material verkaufen. Auch Volkshochschulen, private Hochschulen oder Nachhilfeangebote können kommerziell handeln, weil sie Gebühren oder Entgelte nehmen.", en: "This is not only about companies selling material. Adult education centers, private universities, or tutoring services can also count as commercial if they charge fees." }, options: [["yes", { de: "Ja, kommerzielle Nutzung darf möglich sein.", en: "Yes, commercial use may be possible." }], ["no", { de: "Nein, kommerzielle Nutzung möchte ich ausschließen.", en: "No, I want to exclude commercial use." }]] },
+      { id: "sharealike", type: "single", q: { de: "Sollen Bearbeitungen wieder unter derselben Lizenz geteilt werden?", en: "Should adaptations be shared under the same license?" }, hint: { de: "Das koppelt neue Fassungen an dieselben Lizenzbedingungen.", en: "This ties adapted versions to the same license terms." }, info: { de: "Bearbeitungen müssen dann wieder unter derselben Lizenz geteilt werden. Das schützt Offenheit, kann Nachnutzung aber etwas weniger flexibel machen.", en: "Adaptations must then be shared under the same license. This protects openness, but can make reuse less flexible." }, options: [["yes", { de: "Ja, Bearbeitungen sollen offen weitergegeben werden.", en: "Yes, adaptations should remain open." }], ["no", { de: "Nein, das möchte ich nicht vorgeben.", en: "No, I do not want to require that." }]] }
+    ];
+
+    const licenses = {
+      cc0: { name: "CC0 1.0", badge: "https://mirrors.creativecommons.org/presskit/icons/zero.xlarge.png", modules: ["CC0"], deed: { de: "https://creativecommons.org/publicdomain/zero/1.0/deed.de", en: "https://creativecommons.org/publicdomain/zero/1.0/" }, legal: { de: "https://creativecommons.org/publicdomain/zero/1.0/legalcode.de", en: "https://creativecommons.org/publicdomain/zero/1.0/legalcode.en" }, summary: { de: "So frei wie möglich: andere können das Material ohne Namensnennungspflicht nutzen, bearbeiten und weitergeben.", en: "As free as possible: others can use, adapt, and share the material without an attribution requirement." } },
+      by: { name: "CC BY 4.0", badge: "https://licensebuttons.net/l/by/4.0/88x31.png", modules: ["BY"], deed: { de: "https://creativecommons.org/licenses/by/4.0/deed.de", en: "https://creativecommons.org/licenses/by/4.0/" }, legal: { de: "https://creativecommons.org/licenses/by/4.0/legalcode.de", en: "https://creativecommons.org/licenses/by/4.0/legalcode.en" }, summary: { de: "Sehr offen: Nutzung, Bearbeitung und Weitergabe sind erlaubt, solange der Name genannt wird.", en: "Very open: use, adaptation, and sharing are allowed as long as attribution is provided." } },
+      bysa: { name: "CC BY-SA 4.0", badge: "https://licensebuttons.net/l/by-sa/4.0/88x31.png", modules: ["BY", "SA"], deed: { de: "https://creativecommons.org/licenses/by-sa/4.0/deed.de", en: "https://creativecommons.org/licenses/by-sa/4.0/" }, legal: { de: "https://creativecommons.org/licenses/by-sa/4.0/legalcode.de", en: "https://creativecommons.org/licenses/by-sa/4.0/legalcode.en" }, summary: { de: "Offen mit Weitergabe-Regel: Bearbeitungen müssen wieder unter derselben Lizenz geteilt werden.", en: "Open with a share-alike rule: adaptations must be shared under the same license." } },
+      bync: { name: "CC BY-NC 4.0", badge: "https://licensebuttons.net/l/by-nc/4.0/88x31.png", modules: ["BY", "NC"], deed: { de: "https://creativecommons.org/licenses/by-nc/4.0/deed.de", en: "https://creativecommons.org/licenses/by-nc/4.0/" }, legal: { de: "https://creativecommons.org/licenses/by-nc/4.0/legalcode.de", en: "https://creativecommons.org/licenses/by-nc/4.0/legalcode.en" }, summary: { de: "Namensnennung ja, kommerzielle Nutzung nein. Für breite OER-Nachnutzung oft einschränkend.", en: "Attribution yes, commercial use no. Often limiting for broad OER reuse." } },
+      byncsa: { name: "CC BY-NC-SA 4.0", badge: "https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png", modules: ["BY", "NC", "SA"], deed: { de: "https://creativecommons.org/licenses/by-nc-sa/4.0/deed.de", en: "https://creativecommons.org/licenses/by-nc-sa/4.0/" }, legal: { de: "https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.de", en: "https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.en" }, summary: { de: "Nicht-kommerziell und Weitergabe unter gleicher Lizenz. Offen, aber mit deutlichen Leitplanken.", en: "Non-commercial and share-alike. Open, but with clear constraints." } },
+      bynd: { name: "CC BY-ND 4.0", badge: "https://licensebuttons.net/l/by-nd/4.0/88x31.png", modules: ["BY", "ND"], deed: { de: "https://creativecommons.org/licenses/by-nd/4.0/deed.de", en: "https://creativecommons.org/licenses/by-nd/4.0/" }, legal: { de: "https://creativecommons.org/licenses/by-nd/4.0/legalcode.de", en: "https://creativecommons.org/licenses/by-nd/4.0/legalcode.en" }, summary: { de: "Weitergabe nur unverändert. Geeignet, wenn Bearbeitungen bewusst nicht erlaubt sein sollen.", en: "Sharing only unchanged. Suitable when adaptations should intentionally not be allowed." } },
+      byncnd: { name: "CC BY-NC-ND 4.0", badge: "https://licensebuttons.net/l/by-nc-nd/4.0/88x31.png", modules: ["BY", "NC", "ND"], deed: { de: "https://creativecommons.org/licenses/by-nc-nd/4.0/deed.de", en: "https://creativecommons.org/licenses/by-nc-nd/4.0/" }, legal: { de: "https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode.de", en: "https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode.en" }, summary: { de: "Die restriktivste CC-Lizenz: nicht-kommerziell und keine Bearbeitung.", en: "The most restrictive CC license: non-commercial and no adaptations." } }
+    };
+
+    const moduleInfo = {
+      CC0: { de: { title: "CC0", body: "Auf die meisten Rechte wird soweit möglich verzichtet." }, en: { title: "CC0", body: "Most rights are waived as far as possible." } },
+      BY: { de: { title: "BY", body: "Namensnennung ist erforderlich." }, en: { title: "BY", body: "Attribution is required." } },
+      NC: { de: { title: "NC", body: "Kommerzielle Nutzung ist ausgeschlossen." }, en: { title: "NC", body: "Commercial use is excluded." } },
+      SA: { de: { title: "SA", body: "Bearbeitungen müssen unter derselben Lizenz geteilt werden." }, en: { title: "SA", body: "Adaptations must be shared under the same license." } },
+      ND: { de: { title: "ND", body: "Bearbeitete Fassungen dürfen nicht veröffentlicht werden." }, en: { title: "ND", body: "Adapted versions may not be published." } }
+    };
+
+    const softwareLicenses = [
+      { name: "MIT License", url: "https://choosealicense.com/licenses/mit/", de: "Sehr kurz und freigiebig. Erlaubt Nutzung, Änderung und Weitergabe, auch in proprietärer Software.", en: "Short and permissive. Allows use, modification, and distribution, including in proprietary software." },
+      { name: "Apache License 2.0", url: "https://choosealicense.com/licenses/apache-2.0/", de: "Freigiebig wie MIT, zusätzlich mit ausdrücklicher Patentregelung.", en: "Permissive like MIT, with an explicit patent grant." },
+      { name: "GNU GPLv3", url: "https://choosealicense.com/licenses/gpl-3.0/", de: "Starkes Copyleft: Verbreitete Änderungen müssen wieder offen unter GPL geteilt werden.", en: "Strong copyleft: distributed modifications must be shared openly under the GPL." },
+      { name: "GNU AGPLv3", url: "https://choosealicense.com/licenses/agpl-3.0/", de: "Wie GPL, zusätzlich relevant für Netzwerkdienste und Webanwendungen.", en: "Like the GPL, with additional relevance for network services and web applications." }
+    ];
+
+    const mediumOptions = [
+      { value: "presentation", de: "Präsentation", en: "presentation", article: { de: "Diese", en: "This" } },
+      { value: "image", de: "Abbildung", en: "image", article: { de: "Diese", en: "This" } },
+      { value: "workmaterial", de: "Arbeitsmaterial", en: "worksheet", article: { de: "Dieses", en: "This" } },
+      { value: "audio", de: "Audio", en: "audio", article: { de: "Dieses", en: "This" } },
+      { value: "data", de: "Daten", en: "data set", article: { de: "Diese", en: "This" } },
+      { value: "course", de: "Kursmaterial", en: "course material", article: { de: "Dieses", en: "This" } },
+      { value: "game", de: "Lernspiel", en: "learning game", article: { de: "Dieses", en: "This" } },
+      { value: "simulation", de: "Simulation", en: "simulation", article: { de: "Diese", en: "This" } },
+      { value: "script", de: "Skript", en: "script", article: { de: "Dieses", en: "This" } },
+      { value: "software", de: "Softwareanwendung", en: "software application", article: { de: "Diese", en: "This" } },
+      { value: "document", de: "Dokument", en: "document", article: { de: "Dieses", en: "This" } },
+      { value: "video", de: "Video", en: "video", article: { de: "Dieses", en: "This" } },
+      { value: "website", de: "Website", en: "website", article: { de: "Diese", en: "This" } },
+      { value: "exercise", de: "Übung", en: "exercise", article: { de: "Diese", en: "This" } },
+      { value: "custom", de: "Eigener Medientyp", en: "Custom type", article: { de: "Dieses", en: "This" } }
+    ];
+
+    const articleOptions = [
+      { value: "Dieses", de: "Dieses", en: "This" },
+      { value: "Diese", de: "Diese", en: "This" },
+      { value: "Dieser", de: "Dieser", en: "This" },
+      { value: "Dieser Beitrag", de: "Dieser Beitrag", en: "This item" },
+      { value: "", de: "Ohne Artikel", en: "No article" }
+    ];
+
+    const faqs = {
+      de: [
+        { q: "Warum ist ein Lizenzvermerk wichtig?", a: "Ohne erkennbare Lizenz bleiben in der Regel alle Rechte vorbehalten. Ein Vermerk zeigt, was andere dürfen und wie das Material genannt werden soll." },
+        { q: "Passt Creative Commons auch für Software?", a: "Für Softwarecode empfiehlt Creative Commons selbst in der Regel Software-Lizenzen statt CC-Lizenzen. CC-Lizenzen können aber für Dokumentation, Bilder, Musik oder begleitende Materialien passend sein." },
+        { q: "Wo geht es nach der Lizenzwahl weiter?", a: "Wenn das Material offen lizenziert ist und alle Rechte geklärt sind, kann es im twillo-Workspace über + Neu hochgeladen oder verlinkt werden." }
+      ],
+      en: [
+        { q: "Why is an attribution notice important?", a: "Without a visible license, all rights are usually reserved. A notice shows what others may do and how the material should be credited." },
+        { q: "Does Creative Commons fit software?", a: "For software code, Creative Commons itself usually recommends software licenses instead of CC licenses. CC licenses can still fit documentation, images, music, or accompanying materials." },
+        { q: "What comes after choosing a license?", a: "If the material is openly licensed and rights are cleared, it can be uploaded or linked in the twillo workspace via + New." }
+      ]
+    };
+
+const NETWORK_POLICY = Object.freeze({
+      id: "network-guard-v1",
+      mode: "no-automatic-connections",
+      externalLinks: "user-initiated",
+      cookies: false,
+      analytics: false,
+      telemetry: false
+    });
+
+    function installNetworkGuard() {
+      if (typeof window === "undefined" || typeof document === "undefined") return;
+      let blocks = 0;
+      const mark = () => {
+        document.documentElement.setAttribute("data-network-policy", NETWORK_POLICY.id);
+        document.documentElement.setAttribute("data-network-blocks", String(blocks));
+      };
+      const block = (kind, target = "") => {
+        blocks += 1;
+        mark();
+        return Promise.reject(new TypeError(`Network guard blocked ${kind}: ${target}`));
+      };
+      mark();
+      Object.defineProperty(window, "LIZENZFINDER_NETWORK_POLICY", { value: NETWORK_POLICY, writable: false, configurable: false, enumerable: true });
+      try { Object.defineProperty(window, "fetch", { value: (input) => block("fetch", String(input || "")), writable: false, configurable: false }); } catch (error) {}
+      try { XMLHttpRequest.prototype.open = function guardedOpen(method, url) { block("xhr", String(url || "")); throw new TypeError("Network guard active"); }; } catch (error) {}
+      ["WebSocket", "EventSource"].forEach(name => {
+        try {
+          Object.defineProperty(window, name, { value: function guarded(url) { block(name.toLowerCase(), String(url || "")); throw new TypeError("Network guard active"); }, writable: false, configurable: false });
+        } catch (error) {}
+      });
+      try { Object.defineProperty(Navigator.prototype, "sendBeacon", { value: () => false, writable: false, configurable: false }); } catch (error) {}
+      try { Object.defineProperty(Document.prototype, "cookie", { get: () => "", set: () => "", configurable: false }); } catch (error) {}
+      const onLoad = window.addEventListener || (() => {});
+      onLoad.call(window, "load", () => {
+        try {
+          const external = performance.getEntriesByType("resource").filter(entry => {
+            const value = String(entry.name || "");
+            if (/^(?:data:|blob:)/i.test(value)) return false;
+            return new URL(value, location.href).origin !== location.origin;
+          });
+          document.documentElement.setAttribute("data-network-external-resources", String(external.length));
+        } catch (error) {
+          document.documentElement.setAttribute("data-network-external-resources", "unavailable");
+        }
+      }, { once: true });
+    }
+
+    installNetworkGuard();
+
+const storedLang = localStorage.getItem("lf-lang");
+let lang = storedLang || ((navigator.language || "de").toLowerCase().startsWith("en") ? "en" : "de");
+    let fontStep = Number(localStorage.getItem("lf-font-step") || 0);
+    let answers = JSON.parse(localStorage.getItem("lf-answers") || "{}");
+    let qIndex = 0;
+    let currentLicense = "by";
+    let manualLicense = false;
+
+
+    function t(key) { return strings[lang][key] || strings.de[key] || key; }
+    function esc(value) {
+      return String(value ?? "").replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[char]));
+    }
+    function svgData(svg) {
+      return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+    }
+    function badgeImage(key, lic) {
+      if (key === "cc0") {
+        return svgData(`<svg xmlns="http://www.w3.org/2000/svg" width="88" height="31" viewBox="0 0 88 31"><rect width="88" height="31" rx="2" fill="#fff"/><rect x=".75" y=".75" width="86.5" height="29.5" rx="2" fill="none" stroke="#123c4a" stroke-width="1.5"/><circle cx="20" cy="15.5" r="10.5" fill="#000"/><text x="20" y="20" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" font-weight="700" fill="#fff">0</text><text x="40" y="19" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#123c4a">CC0</text></svg>`);
+      }
+      const modules = lic.modules.join(" ");
+      return svgData(`<svg xmlns="http://www.w3.org/2000/svg" width="88" height="31" viewBox="0 0 88 31"><rect width="88" height="31" rx="2" fill="#fff"/><rect x=".75" y=".75" width="86.5" height="29.5" rx="2" fill="none" stroke="#123c4a" stroke-width="1.5"/><rect x="4" y="4" width="80" height="23" rx="2" fill="#000"/><circle cx="17" cy="15.5" r="8" fill="#fff"/><text x="17" y="19" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" font-weight="700" fill="#000">CC</text><text x="33" y="19" font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#fff">${esc(modules)}</text></svg>`);
+    }
+
+    function setLang(next) {
+      lang = next;
+      localStorage.setItem("lf-lang", lang);
+      document.documentElement.lang = lang;
+      document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
+      document.querySelectorAll("[data-placeholder-de]").forEach(el => { el.placeholder = lang === "en" ? el.dataset.placeholderEn : el.dataset.placeholderDe; });
+      document.getElementById("lang-de").setAttribute("aria-pressed", lang === "de");
+      document.getElementById("lang-en").setAttribute("aria-pressed", lang === "en");
+      updateLinks();
+      renderQuestion();
+      renderResult();
+      fillLicenseSelect();
+      fillMediumSelect();
+      fillArticleSelect();
+      renderOverview();
+      renderSoftware();
+      buildFAQ();
+      renderNotice();
+    }
+
+    function updateLinks() {
+      const links = {
+        twillo: lang === "en" ? "https://www.twillo.de/en/" : "https://www.twillo.de",
+        twilloFaq: lang === "en" ? "https://www.twillo.de/en/helpcenter/" : "https://www.twillo.de/helpcenter/?_kategorie=grundlagen-von-oer",
+        twilloContact: lang === "en" ? "https://www.twillo.de/en/contact/" : "https://www.twillo.de/kontakt/",
+        twilloEvents: lang === "en" ? "https://www.twillo.de/en/events/" : "https://www.twillo.de/veranstaltungen/",
+        twilloShare: lang === "en" ? "https://www.twillo.de/en/share-oer/" : "https://www.twillo.de/oer-teilen/",
+        appLicense: "https://opensource.org/license/mit",
+        linkedin: "https://de.linkedin.com/in/johannes-koch-1964a3240"
+      };
+      Object.entries(links).forEach(([name, url]) => document.querySelectorAll(`[data-link="${name}"]`).forEach(a => a.href = url));
+    }
+
+    function setFont(delta) {
+      fontStep = Math.max(-2, Math.min(3, fontStep + delta));
+      localStorage.setItem("lf-font-step", fontStep);
+      applyFont();
+    }
+    function applyFont() { document.documentElement.style.setProperty("--fs", `${16 + fontStep}px`); }
+    function toggleReadable() {
+      const on = document.documentElement.dataset.readable !== "on";
+      document.documentElement.dataset.readable = on ? "on" : "off";
+      localStorage.setItem("lf-readable", on ? "on" : "off");
+      document.getElementById("readBtn").setAttribute("aria-pressed", on);
+    }
+
+    function showPanel(id) {
+      ["finder", "overview", "help"].forEach(panel => {
+        document.getElementById(`panel-${panel}`).classList.toggle("hidden", panel !== id);
+        const tab = document.getElementById(`tab-${panel}`);
+        tab.setAttribute("aria-selected", panel === id);
+        tab.tabIndex = panel === id ? 0 : -1;
+      });
+      if (id === "overview") { renderOverview(); renderSoftware(); }
+      if (id === "help") buildFAQ();
+      const html = document.documentElement;
+      const previousScrollBehavior = html.style.scrollBehavior;
+      html.style.scrollBehavior = "auto";
+      window.scrollTo(0, 0);
+      html.style.scrollBehavior = previousScrollBehavior;
+    }
+
+    function renderQuestion() {
+      const q = questions[qIndex];
+      const saved = answers[q.id] || "";
+      const visible = relevantQuestions();
+      const position = Math.max(0, visible.findIndex(item => item.id === q.id));
+      document.getElementById("progressText").textContent = lang === "de" ? `Frage ${position + 1} von ${visible.length}` : `Question ${position + 1} of ${visible.length}`;
+      document.getElementById("questionHost").innerHTML = `
+        <fieldset class="question">
+          <legend><h4>${esc(q.q[lang])}</h4></legend>
+          <p class="hint">${esc(q.hint[lang])}</p>
+          <p class="q-info"><strong>${esc(t("info"))}:</strong> ${esc(q.info[lang])}</p>
+          <div class="options">
+            ${q.options.map(([value, label]) => `
+              <label class="choice">
+                <input type="radio" name="${esc(q.id)}" value="${esc(value)}" ${saved === value ? "checked" : ""} onchange="saveAnswer('${q.id}')">
+                <span><strong>${esc(label[lang])}</strong></span>
+              </label>
+            `).join("")}
+          </div>
+        </fieldset>`;
+    }
+
+    function saveAnswer(id) {
+      const picked = document.querySelector(`[name="${id}"]:checked`);
+      answers[id] = picked ? picked.value : "";
+      localStorage.setItem("lf-answers", JSON.stringify(answers));
+    }
+    function isRelevant(q) {
+      if (answers.attribution === "no" && q.id !== "attribution") return false;
+      if (q.id === "sharealike" && answers.adapt === "no") return false;
+      return true;
+    }
+    function relevantQuestions() { return questions.filter(isRelevant); }
+    function nextRelevantIndex(from) {
+      for (let i = from + 1; i < questions.length; i += 1) if (isRelevant(questions[i])) return i;
+      return -1;
+    }
+    function prevRelevantIndex(from) {
+      for (let i = from - 1; i >= 0; i -= 1) if (isRelevant(questions[i])) return i;
+      return -1;
+    }
+    function nextQuestion() {
+      const q = questions[qIndex];
+      saveAnswer(q.id);
+      if (!answers[q.id]) { toast(lang === "de" ? "Bitte eine Antwort auswählen." : "Please choose an answer."); return; }
+      const next = nextRelevantIndex(qIndex);
+      if (next > -1) { qIndex = next; renderQuestion(); return; }
+      showResult();
+    }
+    function prevQuestion() {
+      const prev = prevRelevantIndex(qIndex);
+      if (prev > -1) { qIndex = prev; renderQuestion(); }
+    }
+    function showResult() {
+      manualLicense = false;
+      document.getElementById("resultPlaceholder").classList.add("hidden");
+      document.getElementById("resultSection").classList.remove("hidden");
+      renderResult();
+      document.getElementById("flowResult").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    function editAnswers() {
+      manualLicense = false;
+      document.getElementById("resultSection").classList.add("hidden");
+      document.getElementById("resultPlaceholder").classList.remove("hidden");
+      qIndex = 0;
+      renderQuestion();
+      document.getElementById("flowQuestions").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function decide() {
+      if (answers.attribution === "no") return { best: "cc0", alt: "by", bad: "byncnd" };
+      if (answers.adapt === "no") return { best: answers.commercial === "no" ? "byncnd" : "bynd", alt: answers.commercial === "no" ? "bync" : "by", bad: "bysa" };
+      if (answers.commercial === "no") return { best: answers.sharealike === "yes" ? "byncsa" : "bync", alt: "by", bad: "cc0" };
+      if (answers.sharealike === "yes") return { best: "bysa", alt: "by", bad: "bynd" };
+      return { best: "by", alt: "bysa", bad: "byncnd" };
+    }
+    function character(key, role) {
+      const base = licenses[key].summary[lang];
+      if (role === 0) return base;
+      if (role === 1) return lang === "de" ? `Auch diese Lizenz kann passen: ${base}` : `This license can also fit: ${base}`;
+      const bad = {
+        de: {
+          cc0: "Diese Lizenz verzichtet auf die Pflicht zur Namensnennung. Sie passt weniger, wenn sichtbar bleiben soll, von wem das Material stammt.",
+          by: "Diese Lizenz ist sehr offen. Sie passt weniger, wenn du kommerzielle Nutzung oder Bearbeitung bewusst ausschließen möchtest.",
+          bysa: "Diese Lizenz setzt voraus, dass Bearbeitungen wieder unter derselben Lizenz geteilt werden. Sie passt weniger, wenn du diese Kopplung nicht möchtest.",
+          bync: "Diese Lizenz schließt kommerzielle Nutzung aus. Sie passt weniger, wenn möglichst breite OER-Nachnutzung wichtig ist.",
+          byncsa: "Diese Lizenz kombiniert nicht-kommerziell und Share Alike. Sie passt weniger, wenn Nachnutzung möglichst einfach bleiben soll.",
+          bynd: "Diese Lizenz erlaubt Weitergabe nur unverändert. Sie passt weniger, wenn Anpassung, Übersetzung oder Remix möglich sein sollen.",
+          byncnd: "Diese Lizenz ist sehr restriktiv: nicht-kommerziell und keine Bearbeitung. Sie passt weniger, wenn Offenheit und Anpassbarkeit wichtig sind."
+        },
+        en: {
+          cc0: "This license waives the attribution requirement. It fits less well if creator credit should remain visible.",
+          by: "This license is very open. It fits less well if you intentionally want to exclude commercial use or adaptation.",
+          bysa: "This license requires adaptations to be shared under the same license. It fits less well if you do not want that tie.",
+          bync: "This license excludes commercial use. It fits less well if broad OER reuse matters.",
+          byncsa: "This license combines non-commercial use and share-alike. It fits less well if reuse should remain simple.",
+          bynd: "This license only allows unchanged sharing. It fits less well if adaptation, translation, or remix should be possible.",
+          byncnd: "This license is highly restrictive: non-commercial and no adaptations. It fits less well if openness and adaptability matter."
+        }
+      };
+      return bad[lang][key];
+    }
+
+    function moduleChips(key) {
+      return licenses[key].modules.map(m => `<span class="module-chip">${esc(m)}</span>`).join("");
+    }
+    function linksHTML(lic) {
+      return `<a href="${lic.deed[lang]}" target="_blank" rel="noopener">${t("deed")}</a><a href="${lic.legal[lang]}" target="_blank" rel="noopener">${t("legal")}</a><a href="${lic.badge}" target="_blank" rel="noopener">${t("badge")}</a>`;
+    }
+    function renderResult() {
+      if (document.getElementById("resultSection").classList.contains("hidden")) return;
+      const decision = decide();
+      if (!manualLicense) currentLicense = decision.best;
+      [["best", decision.best, 0], ["alt", decision.alt, 1], ["bad", decision.bad, 2]].forEach(([slot, key, role]) => {
+        const lic = licenses[key];
+        document.getElementById(`${slot}Name`).textContent = lic.name;
+        document.getElementById(`${slot}Why`).textContent = character(key, role);
+        document.getElementById(`${slot}Badge`).src = badgeImage(key, lic);
+        document.getElementById(`${slot}Badge`).alt = lic.name;
+        document.getElementById(`${slot}Modules`).innerHTML = moduleChips(key);
+        document.getElementById(`${slot}Links`).innerHTML = linksHTML(lic);
+      });
+      fillLicenseSelect();
+      renderNotice();
+    }
+
+    function fillLicenseSelect() {
+      const sel = document.getElementById("licenseSelect");
+      const selected = currentLicense;
+      sel.innerHTML = "";
+      Object.entries(licenses).forEach(([key, value]) => sel.add(new Option(value.name, key)));
+      sel.value = licenses[selected] ? selected : "by";
+    }
+    function fillMediumSelect() {
+      const sel = document.getElementById("mediumPreset");
+      const selected = sel.value || "workmaterial";
+      sel.innerHTML = "";
+      mediumOptions.forEach(m => sel.add(new Option(m[lang], m.value)));
+      sel.value = mediumOptions.some(m => m.value === selected) ? selected : "workmaterial";
+      toggleCustomMedium(false);
+    }
+    function fillArticleSelect() {
+      const sel = document.getElementById("mediumArticle");
+      const selected = sel.value || "Dieses";
+      sel.innerHTML = "";
+      articleOptions.forEach(a => sel.add(new Option(a[lang], a.value)));
+      sel.value = articleOptions.some(a => a.value === selected) ? selected : "Dieses";
+    }
+    function toggleCustomMedium(shouldRender = true) {
+      const preset = document.getElementById("mediumPreset");
+      const custom = preset.value === "custom";
+      document.getElementById("mediumCustom").classList.toggle("hidden", !custom);
+      document.getElementById("mediumArticle").classList.toggle("hidden", !custom);
+      document.getElementById("softwareNotice").classList.toggle("show", preset.value === "software");
+      if (shouldRender) renderNotice();
+    }
+    function getMedium() {
+      const preset = document.getElementById("mediumPreset");
+      const item = mediumOptions.find(m => m.value === preset.value) || mediumOptions[2];
+      if (item.value === "custom") {
+        const custom = document.getElementById("mediumCustom").value.trim();
+        if (custom) return { label: custom, article: lang === "de" ? document.getElementById("mediumArticle").value : "This" };
+      }
+      return { label: item[lang], article: item.article[lang] };
+    }
+    function mediumPhrase(medium) { return [medium.article, medium.label].filter(Boolean).join(" "); }
+    function quoteTitle(title) { return lang === "de" ? `„${title}“` : `“${title}”`; }
+    function setManualLicense() {
+      manualLicense = true;
+      currentLicense = document.getElementById("licenseSelect").value;
+      renderNotice();
+    }
+    function scrollToNotice() {
+      document.getElementById("noticeSection").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    function renderNotice() {
+      const medium = getMedium();
+      const mediumText = mediumPhrase(medium);
+      const title = document.getElementById("workTitle").value || "[Titel]";
+      const titleText = quoteTitle(title);
+      const author = document.getElementById("author").value || (lang === "de" ? "[Urheber:in]" : "[Creator]");
+      const year = document.getElementById("year").value || "2026";
+      const source = document.getElementById("sourceUrl").value || "";
+      const changed = document.getElementById("changed").value === "yes";
+      const changeText = document.getElementById("changeText").value || (lang === "de" ? "bearbeitet" : "adapted");
+      const key = document.getElementById("licenseSelect").value || currentLicense;
+      const lic = licenses[key] || licenses.by;
+      const deed = lic.deed[lang];
+      const bear = changed ? (lang === "de" ? ` Bearbeitung: ${changeText}.` : ` Adaptation: ${changeText}.`) : "";
+      const src = source ? ` ${lang === "de" ? "Ursprungsort" : "Source"}: ${source}.` : "";
+      const short = lang === "de"
+        ? `${mediumText}, ${titleText}, von ${author}, ${year}, steht unter ${lic.name}: ${deed}.${src}${bear}`
+        : `${mediumText}, ${titleText}, by ${author}, ${year}, is licensed under ${lic.name}: ${deed}.${src}${bear}`;
+      const reuse = lang === "de"
+        ? `Wir empfehlen folgende Angabe bei Nachnutzung: ${author} (${year}): ${titleText}. ${medium.label}. Lizenz: ${lic.name}, ${deed}.${source ? ` Online: ${source}.` : ""}${bear}`
+        : `Recommended attribution: ${author} (${year}): ${titleText}. ${medium.label}. License: ${lic.name}, ${deed}.${source ? ` Online: ${source}.` : ""}${bear}`;
+      const md = (lang === "de"
+        ? `${mediumText}, [${titleText}](${source || deed}), von ${author}, ${year}, steht unter [${lic.name}](${deed}).`
+        : `${mediumText}, [${titleText}](${source || deed}), by ${author}, ${year}, is licensed under [${lic.name}](${deed}).`) + bear;
+      const html = lang === "de"
+        ? `<p>${esc(mediumText)}, <a href="${esc(source || deed)}">${esc(titleText)}</a>, von ${esc(author)}, ${esc(year)}, steht unter <a href="${esc(deed)}">${esc(lic.name)}</a>.${esc(bear)}</p>`
+        : `<p>${esc(mediumText)}, <a href="${esc(source || deed)}">${esc(titleText)}</a>, by ${esc(author)}, ${esc(year)}, is licensed under <a href="${esc(deed)}">${esc(lic.name)}</a>.${esc(bear)}</p>`;
+      [["outShort", short], ["outReuse", reuse], ["outMd", md], ["outHtml", html]].forEach(([id, value]) => { document.getElementById(id).value = value; });
+      document.getElementById("badgeImg").src = badgeImage(key, lic);
+      document.getElementById("badgeDirect").href = lic.badge;
+    }
+
+    function renderOverview() {
+      const host = document.getElementById("overviewGrid");
+      host.innerHTML = Object.entries(licenses).map(([key, lic]) => `
+        <details class="overview-card">
+          <summary>
+            <div class="overview-head">
+              <div><h3>${esc(lic.name)}</h3><p>${esc(lic.summary[lang])}</p></div>
+              <img src="${esc(badgeImage(key, lic))}" alt="${esc(lic.name)}">
+            </div>
+            <div class="module-row">${moduleChips(key)}</div>
+          </summary>
+          <div class="overview-detail">
+            <div class="module-list">${lic.modules.map(code => `<div class="module"><b>${esc(moduleInfo[code][lang].title)}</b>${esc(moduleInfo[code][lang].body)}</div>`).join("")}</div>
+            <div class="license-links">${linksHTML(lic)}</div>
+          </div>
+        </details>`).join("");
+    }
+    function renderSoftware() {
+      const host = document.getElementById("softwareGrid");
+      host.innerHTML = softwareLicenses.map(lic => `<article class="software-card"><b>${esc(lic.name)}</b><p>${esc(lic[lang])}</p><a href="${lic.url}" target="_blank" rel="noopener">${lang === "de" ? "Mehr bei Choose a License" : "More at Choose a License"}</a></article>`).join("");
+    }
+    function buildFAQ() {
+      const host = document.getElementById("faqList");
+      host.innerHTML = faqs[lang].map((item, index) => `<details class="qa" ${index === 0 ? "open" : ""}><summary>${esc(item.q)}</summary><div class="qa-body">${esc(item.a)}</div></details>`).join("");
+    }
+    function copyOut(id) {
+      navigator.clipboard?.writeText(document.getElementById(id).value);
+      toast(t("copied"));
+    }
+    function resetAll() {
+      answers = {};
+      localStorage.removeItem("lf-answers");
+      qIndex = 0;
+      currentLicense = "by";
+      manualLicense = false;
+      document.getElementById("resultSection").classList.add("hidden");
+      document.getElementById("resultPlaceholder").classList.remove("hidden");
+      renderQuestion();
+      fillLicenseSelect();
+      renderNotice();
+    }
+    function toggleSideHelp() {
+      const box = document.getElementById("sidehelp");
+      box.classList.toggle("open");
+      document.getElementById("sidehelpHandle").setAttribute("aria-expanded", box.classList.contains("open"));
+    }
+    function toast(msg) {
+      const el = document.getElementById("toast");
+      el.textContent = msg;
+      el.classList.add("show");
+      setTimeout(() => el.classList.remove("show"), 1800);
+    }
+
+    document.documentElement.dataset.readable = localStorage.getItem("lf-readable") || "off";
+    document.getElementById("readBtn").setAttribute("aria-pressed", document.documentElement.dataset.readable === "on");
+    applyFont();
+    fillLicenseSelect();
+    fillMediumSelect();
+    fillArticleSelect();
+    setLang(lang);
+  </script>
+</body>
+</html>

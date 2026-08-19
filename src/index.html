@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="de" data-readable="off">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' data:; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="application-name" content="Lizenzfinder">
+  <meta name="description" content="Eine kleine Anwendung zur Orientierung bei Creative-Commons-Lizenzen und zum Erstellen von Lizenzvermerken.">
+  <meta name="author" content="Johannes Koch">
+  <meta name="dcterms.title" content="Lizenzfinder">
+  <meta name="dcterms.creator" content="Johannes Koch">
+  <meta name="dcterms.created" content="2026-06-27">
+  <meta name="dcterms.modified" content="2026-08-19">
+  <meta name="dcterms.license" content="https://opensource.org/license/mit">
+  <meta name="licensefinder:version" content="1.17.20260819-codex">
+  <meta name="licensefinder:version-line" content="1">
+  <meta name="licensefinder:revision" content="17">
+  <meta name="licensefinder:revision-date" content="2026-08-19">
+  <meta name="licensefinder:responsible-editor" content="Johannes Koch">
+  <meta name="licensefinder:license" content="MIT">
+  <title>Lizenzfinder</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="skip" href="#main" data-i18n="skip">Zum Inhalt springen</a>
+  <header class="app">
+    <div class="wrap">
+      <div class="topbar">
+        <a class="brand" href="#main" aria-label="Lizenzfinder">
+          <b>Lizenzfinder</b>
+        </a>
+        <div class="tools" role="group" aria-label="Einstellungen">
+          <div class="seg" role="group" aria-label="Sprache">
+            <button id="lang-de" type="button" aria-pressed="true" onclick="setLang('de')">DE</button>
+            <button id="lang-en" type="button" aria-pressed="false" onclick="setLang('en')">EN</button>
+          </div>
+          <button class="control" id="readBtn" type="button" aria-pressed="false" onclick="toggleReadable()" data-i18n="readable">Bessere Lesbarkeit</button>
+          <div class="seg" role="group" aria-label="Schriftgröße">
+            <button type="button" onclick="setFont(-1)" aria-label="Schrift verkleinern">A−</button>
+            <button type="button" onclick="setFont(1)" aria-label="Schrift vergrößern">A+</button>
+          </div>
+        </div>
+      </div>
+      <section class="intro" aria-labelledby="appTitle">
+        <div>
+          <div class="kicker" data-i18n="kicker">Offene Materialien</div>
+          <h1 id="appTitle"><span data-i18n="heroA">Passende Lizenz finden.</span> <em data-i18n="heroB">Vermerk mitnehmen.</em></h1>
+          <p class="lead" data-i18n="appSub">Eine kurze, einfache Orientierung für selbst erstellte Materialien: Lizenzidee klären, Empfehlung verstehen und den passenden Vermerk erstellen.</p>
+        </div>
+        <aside class="intro-panel">
+          <b data-i18n="panelH">In drei klaren Schritten</b>
+          <p data-i18n="panelP">Der Fragebogen führt zur Empfehlung. Danach bleibt die Vermerk-Maske direkt sichtbar. Für Softwarecode gibt es einen eigenen Hinweisbereich.</p>
+        </aside>
+      </section>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Bereiche">
+    <div class="wrap tab-row" role="tablist">
+      <button class="tab" id="tab-finder" type="button" role="tab" aria-selected="true" aria-controls="panel-finder" onclick="showPanel('finder')" data-i18n="tabFinder">Lizenz finden</button>
+      <button class="tab" id="tab-overview" type="button" role="tab" aria-selected="false" aria-controls="panel-overview" onclick="showPanel('overview')" data-i18n="tabOverview">Lizenzen im Überblick</button>
+      <button class="tab" id="tab-help" type="button" role="tab" aria-selected="false" aria-controls="panel-help" onclick="showPanel('help')" data-i18n="tabHelp">Hilfe & Quellen</button>
+    </div>
+  </nav>
+
+  <main id="main" class="wrap">
+    <section id="panel-finder" role="tabpanel" aria-labelledby="tab-finder">
+      <div class="section-intro">
+        <h2 data-i18n="finderH">Offenheit sichtbar machen</h2>
+        <p data-i18n="finderP">Vom eigenen Material zur Lizenzempfehlung und direkt weiter zum passenden Vermerk.</p>
+      </div>
+      <div class="data-flow" aria-label="Lizenz-Workflow">
+        <section class="flow-step" id="flowQuestions">
+          <div class="flow-num" aria-hidden="true">1</div>
+          <div>
+            <h3 data-i18n="flowAskH">Passende Lizenz finden</h3>
+            <p data-i18n="flowAskP">Ein kurzer Fragebogen klärt, welche Creative-Commons-Lizenz am besten passt.</p>
+            <div id="questionHost"></div>
+            <div class="flow-actions">
+              <button class="btn outline" type="button" onclick="prevQuestion()" data-i18n="back">Zurück</button>
+              <button class="btn" type="button" onclick="nextQuestion()" data-i18n="next">Weiter</button>
+              <button class="btn outline" type="button" onclick="resetAll()" data-i18n="reset">Neu starten</button>
+            </div>
+            <div class="flow-note" id="progressText"></div>
+          </div>
+        </section>
+
+        <section class="flow-step" id="flowResult">
+          <div class="flow-num" aria-hidden="true">2</div>
+          <div>
+            <h3 data-i18n="resultH">Lizenzempfehlung</h3>
+            <p data-i18n="resultP">Nachfolgend stehen drei Lizenzen: zwei gut geeignete Vorschläge und eine Lizenz, die den Antworten aus dem Fragebogen eher entgegensteht.</p>
+            <div id="resultPlaceholder" class="result-placeholder" data-i18n="resultPlaceholder">Noch keine Empfehlung: Beantworte die Fragen in Schritt 1.</div>
+            <div id="resultSection" class="hidden" aria-live="polite">
+              <div class="result-grid">
+                <article class="license-card best">
+                  <div class="eyebrow" data-i18n="best">Empfehlung</div>
+                  <div class="license-head"><div class="license-name" id="bestName"></div><img id="bestBadge" alt=""></div>
+                  <p id="bestWhy"></p><div class="module-row" id="bestModules"></div><div class="license-links" id="bestLinks"></div>
+                </article>
+                <article class="license-card alt">
+                  <div class="eyebrow" data-i18n="also">Auch möglich</div>
+                  <div class="license-head"><div class="license-name" id="altName"></div><img id="altBadge" alt=""></div>
+                  <p id="altWhy"></p><div class="module-row" id="altModules"></div><div class="license-links" id="altLinks"></div>
+                </article>
+                <article class="license-card bad">
+                  <div class="eyebrow" data-i18n="least">Eher weniger passend</div>
+                  <div class="license-head"><div class="license-name" id="badName"></div><img id="badBadge" alt=""></div>
+                  <p id="badWhy"></p><div class="module-row" id="badModules"></div><div class="license-links" id="badLinks"></div>
+                </article>
+              </div>
+              <div class="publish-note" id="publishNote">
+                <strong data-i18n="publishH">Direkt weiter zu twillo</strong>
+                <span data-i18n="publishP">Wenn diese Lizenz passt und alle Rechte geklärt sind, kann das Material bei twillo veröffentlicht oder verlinkt werden.</span>
+                <a data-link="twilloShare" href="https://www.twillo.de/oer-teilen/" target="_blank" rel="noopener" data-i18n="publishLink">Material auf twillo veröffentlichen</a>
+              </div>
+              <div class="flow-actions">
+                <button class="btn outline" type="button" onclick="editAnswers()" data-i18n="editAnswers">Antworten anpassen</button>
+                <button class="btn" type="button" onclick="scrollToNotice()" data-i18n="noticeJump">Zum Vermerk</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="flow-step" id="noticeSection">
+          <div class="flow-num" aria-hidden="true">3</div>
+          <div>
+            <h3 data-i18n="noticeH">Lizenzvermerk erstellen</h3>
+            <div class="form-grid">
+              <div class="field full">
+                <label for="mediumPreset" data-i18n="fieldMedium">Welcher Medientyp ist es?</label>
+                <div class="custom-medium">
+                  <select id="mediumPreset" onchange="toggleCustomMedium();renderNotice()"></select>
+                  <input id="mediumCustom" class="hidden" oninput="renderNotice()" data-placeholder-de="z. B. Podcastfolge, Checkliste" data-placeholder-en="e.g. podcast episode, checklist" placeholder="z. B. Podcastfolge, Checkliste">
+                  <select id="mediumArticle" class="hidden" onchange="renderNotice()"></select>
+                </div>
+                <p class="software-notice" id="softwareNotice" data-i18n="softwareNotice">Für Softwarecode sind Creative-Commons-Lizenzen in der Regel nicht die passende Wahl. Nutze den Vermerk für Dokumentation, begleitende Materialien oder sichtbare Inhalte; für Quellcode helfen die Hinweise im Lizenzüberblick.</p>
+              </div>
+              <div class="field"><label for="workTitle" data-i18n="fieldTitle">Wie heißt dein Material?</label><input id="workTitle" oninput="renderNotice()" data-placeholder-de="z. B. Einführung in OER" data-placeholder-en="e.g. Introduction to OER" placeholder="z. B. Einführung in OER"></div>
+              <div class="field"><label for="author" data-i18n="fieldAuthor">Wer soll genannt werden?</label><input id="author" oninput="renderNotice()" data-placeholder-de="Name / Organisation" data-placeholder-en="Name / organization" placeholder="Name / Organisation"></div>
+              <div class="field"><label for="year" data-i18n="fieldYear">Jahr</label><input id="year" oninput="renderNotice()" value="2026"></div>
+              <div class="field"><label for="licenseSelect" data-i18n="fieldLicense">Welche Lizenz?</label><select id="licenseSelect" onchange="setManualLicense()"></select></div>
+              <div class="field full"><label for="sourceUrl" data-i18n="fieldSource">Wo liegt das Original?</label><input id="sourceUrl" oninput="renderNotice()" placeholder="https://..."><small data-i18n="fieldSourceHint">Optional, aber sehr hilfreich für Nachnutzung.</small></div>
+              <div class="field"><label for="changed" data-i18n="fieldChanged">Wurde etwas verändert?</label><select id="changed" onchange="renderNotice()"><option value="no" data-i18n="changedNo">Nein</option><option value="yes" data-i18n="changedYes">Ja</option></select></div>
+              <div class="field"><label for="changeText" data-i18n="fieldChangeText">Bearbeitung kurz beschreiben</label><input id="changeText" oninput="renderNotice()" data-placeholder-de="gekürzt, übersetzt, ergänzt" data-placeholder-en="shortened, translated, expanded" placeholder="gekürzt, übersetzt, ergänzt"></div>
+            </div>
+            <div class="outputs">
+              <article class="output-card"><h4 data-i18n="outShort">Kurzvermerk</h4><textarea id="outShort" readonly></textarea><button class="btn outline" type="button" onclick="copyOut('outShort')" data-i18n="copy">Kopieren</button></article>
+              <article class="output-card"><h4 data-i18n="outReuse">Empfohlene Angabe</h4><textarea id="outReuse" readonly></textarea><button class="btn outline" type="button" onclick="copyOut('outReuse')" data-i18n="copy">Kopieren</button></article>
+            </div>
+            <details class="template-details">
+              <summary data-i18n="templatesSummary">Markdown und HTML anzeigen</summary>
+              <div class="outputs">
+                <article class="output-card"><h4>Markdown</h4><textarea id="outMd" readonly></textarea><button class="btn outline" type="button" onclick="copyOut('outMd')" data-i18n="copy">Kopieren</button></article>
+                <article class="output-card"><h4>HTML</h4><textarea id="outHtml" readonly></textarea><button class="btn outline" type="button" onclick="copyOut('outHtml')" data-i18n="copy">Kopieren</button></article>
+              </div>
+            </details>
+            <div class="badge-box">
+              <img id="badgeImg" alt="Creative-Commons-Lizenzbutton" src="">
+              <div>
+                <b data-i18n="badgeH">Creative-Commons-Badge</b>
+                <p style="margin:.2rem 0 .6rem;color:var(--muted)" data-i18n="badgeP">Nutze den Badge für Wiedererkennung. Die offizielle Downloadseite bietet weitere Formate.</p>
+                <a id="badgeDirect" class="btn outline" target="_blank" rel="noopener" data-i18n="badgeOpen">Badge öffnen</a>
+                <a id="badgeDownloads" class="btn outline" target="_blank" rel="noopener" href="https://creativecommons.org/mission/downloads/" data-i18n="badgeDownloads">CC-Downloads</a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section id="panel-overview" role="tabpanel" aria-labelledby="tab-overview" class="hidden">
+      <div class="section-intro">
+        <h2 data-i18n="overviewH">Lizenzen im Überblick</h2>
+        <p data-i18n="overviewP">Kurz nachsehen, wie Creative-Commons-Lizenzen aufgebaut sind und wann Software-Lizenzen die bessere Spur sind.</p>
+      </div>
+      <div class="overview-grid" id="overviewGrid"></div>
+      <div class="section-intro" style="margin-top:34px">
+        <h2 data-i18n="softwareH">Software-Lizenzen</h2>
+        <p data-i18n="softwareP">Für Quellcode sind Creative-Commons-Lizenzen meist nicht gedacht. Software-Lizenzen regeln zum Beispiel Quellcode, Haftung, Patente und Weitergabe genauer.</p>
+      </div>
+      <div class="software-grid" id="softwareGrid"></div>
+    </section>
+
+    <section id="panel-help" role="tabpanel" aria-labelledby="tab-help" class="hidden">
+      <div class="section-intro">
+        <h2 data-i18n="helpH">Hilfe & Quellen</h2>
+        <p data-i18n="helpP">Kurz und verständlich, mit Verweisen auf vertiefende Informationen von twillo, Creative Commons und Choose a License.</p>
+      </div>
+      <article class="service-box">
+        <h3 data-i18n="serviceH">Unterstützung und Vertiefung</h3>
+        <p data-i18n="serviceP">Für Fragen zu Open Educational Resources, Lizenzangaben oder zur Veröffentlichung von Materialien bietet der twillo-Service weiterführende Unterstützung.</p>
+        <div class="service-links">
+          <a data-link="twilloFaq" href="https://www.twillo.de/helpcenter/?_kategorie=grundlagen-von-oer" target="_blank" rel="noopener" data-i18n="serviceHelp">twillo-Helpcenter</a>
+          <a data-link="twilloEvents" href="https://www.twillo.de/veranstaltungen/" target="_blank" rel="noopener" data-i18n="serviceEvents">twillo-Veranstaltungen</a>
+          <a data-link="twilloContact" href="https://www.twillo.de/kontakt/" target="_blank" rel="noopener" data-i18n="contact">Kontakt</a>
+        </div>
+      </article>
+      <div id="faqList"></div>
+    </section>
+  </main>
+
+  <div class="sidehelp" id="sidehelp">
+    <div class="sidehelp-panel" id="sidehelpPanel" role="region" aria-labelledby="aboutTitle">
+      <h3 id="aboutTitle" data-i18n="sideH">Über diese Anwendung</h3>
+      <p>
+        <span data-i18n="aboutCreditA">Dieses Tool Lizenzfinder von</span>
+        <a data-link="linkedin" href="https://de.linkedin.com/in/johannes-koch-1964a3240" target="_blank" rel="noopener">Johannes Koch</a><span data-i18n="aboutCreditB"> 2026.</span>
+      </p>
+      <dl class="about-meta">
+        <div><dt data-i18n="aboutVersion">Produktversion</dt><dd>1.17.20260819-codex</dd></div>
+        <div><dt data-i18n="aboutNetwork">Netzwerk</dt><dd data-i18n="aboutNetworkP">Statische HTML-Anwendung mit externen Quellenlinks. Ein Netzwerk-Wächter blockiert automatische Verbindungen.</dd></div>
+        <div><dt data-i18n="aboutFont">Schrift</dt><dd data-i18n="aboutFontP">Systemschrift-Stapel: Outfit, Segoe UI und systemeigene serifenlose Schriften; keine Schriftdateien eingebettet.</dd></div>
+        <div><dt data-i18n="aboutLicense">Lizenz der Anwendung</dt><dd data-i18n="aboutLicenseP">Lizenzfinder von Johannes Koch, 2026, steht unter der MIT License. Nutzung, Bearbeitung, Weitergabe und Einbindung sind erlaubt, sofern Copyright- und Lizenzhinweis erhalten bleiben.</dd></div>
+      </dl>
+      <details class="license-text">
+        <summary data-i18n="aboutLicenseText">Lizenztext anzeigen</summary>
+        <pre>MIT License
+
+Copyright (c) 2026 Johannes Koch
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</pre>
+      </details>
+    </div>
+    <button class="sidehelp-handle" id="sidehelpHandle" type="button" onclick="toggleSideHelp()" aria-expanded="false" aria-controls="sidehelpPanel" data-i18n="sideHandle">Über diese Anwendung</button>
+  </div>
+
+  <footer class="site">
+    <div class="wrap">
+      <div class="lic-line">
+        <p>
+          <span data-i18n="footCreditA">Konzept, fachliche und redaktionelle Gestaltung:</span>
+          <a data-link="linkedin" href="https://de.linkedin.com/in/johannes-koch-1964a3240" target="_blank" rel="noopener">Johannes Koch</a><span data-i18n="footCreditB">.</span>
+          <span data-i18n="footCreditC">Technische Umsetzung mit KI-Unterstützung.</span>
+          <a data-link="appLicense" href="https://opensource.org/license/mit" target="_blank" rel="noopener">MIT License</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="./data.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
