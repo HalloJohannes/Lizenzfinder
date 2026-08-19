@@ -2,7 +2,7 @@
 
 Stand: 2026-08-19
 
-Version: 1.17.20260819-codex
+Version: 1.19.20260819-codex
 
 ## Ziel
 
@@ -36,6 +36,11 @@ Die aktuelle Datei liegt danach:
 - Entfernung des Dark Mode
 - MIT-Lizenzhinweise
 - korrektes CC0-Zero-Icon
+- keine persistente Speicherung von Antworten oder Anzeigeeinstellungen
+- URL-Pruefung fuer Quellenangaben im Lizenzvermerk
+- Netzwerk-Selbsttest ohne Eingriff in Browser-APIs der Trägerseite
+- scrollbares und per Escape schliessbares About-Panel
+- dynamische Jahresvorbelegung fuer neu erstellte Lizenzvermerke
 - CSP und Netzwerk-Waechter gegen automatische externe Verbindungen
 - keine automatisch ladenden externen Bildquellen
 - JavaScript-Syntax der gebauten Datei

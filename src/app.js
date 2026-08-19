@@ -1,35 +1,23 @@
 const NETWORK_POLICY = Object.freeze({
-      id: "network-guard-v1",
-      mode: "no-automatic-connections",
+      id: "network-selfcheck-v1",
+      mode: "self-check",
       externalLinks: "user-initiated",
-      cookies: false,
+      storage: "none",
       analytics: false,
       telemetry: false
     });
 
-    function installNetworkGuard() {
+    function cleanupLegacyStorage() {
+      try {
+        ["lf-lang", "lf-answers", "lf-font-step", "lf-readable"].forEach(key => localStorage.removeItem(key));
+      } catch (error) {}
+    }
+
+    function installNetworkSelfCheck() {
       if (typeof window === "undefined" || typeof document === "undefined") return;
-      let blocks = 0;
-      const mark = () => {
-        document.documentElement.setAttribute("data-network-policy", NETWORK_POLICY.id);
-        document.documentElement.setAttribute("data-network-blocks", String(blocks));
-      };
-      const block = (kind, target = "") => {
-        blocks += 1;
-        mark();
-        return Promise.reject(new TypeError(`Network guard blocked ${kind}: ${target}`));
-      };
-      mark();
-      Object.defineProperty(window, "LIZENZFINDER_NETWORK_POLICY", { value: NETWORK_POLICY, writable: false, configurable: false, enumerable: true });
-      try { Object.defineProperty(window, "fetch", { value: (input) => block("fetch", String(input || "")), writable: false, configurable: false }); } catch (error) {}
-      try { XMLHttpRequest.prototype.open = function guardedOpen(method, url) { block("xhr", String(url || "")); throw new TypeError("Network guard active"); }; } catch (error) {}
-      ["WebSocket", "EventSource"].forEach(name => {
-        try {
-          Object.defineProperty(window, name, { value: function guarded(url) { block(name.toLowerCase(), String(url || "")); throw new TypeError("Network guard active"); }, writable: false, configurable: false });
-        } catch (error) {}
-      });
-      try { Object.defineProperty(Navigator.prototype, "sendBeacon", { value: () => false, writable: false, configurable: false }); } catch (error) {}
-      try { Object.defineProperty(Document.prototype, "cookie", { get: () => "", set: () => "", configurable: false }); } catch (error) {}
+      document.documentElement.setAttribute("data-network-policy", NETWORK_POLICY.id);
+      document.documentElement.setAttribute("data-network-external-resources", "pending");
+      try { Object.defineProperty(window, "LIZENZFINDER_NETWORK_POLICY", { value: NETWORK_POLICY, writable: false, configurable: false, enumerable: true }); } catch (error) {}
       const onLoad = window.addEventListener || (() => {});
       onLoad.call(window, "load", () => {
         try {
@@ -45,12 +33,13 @@ const NETWORK_POLICY = Object.freeze({
       }, { once: true });
     }
 
-    installNetworkGuard();
+    cleanupLegacyStorage();
+    installNetworkSelfCheck();
 
-const storedLang = localStorage.getItem("lf-lang");
-let lang = storedLang || ((navigator.language || "de").toLowerCase().startsWith("en") ? "en" : "de");
-    let fontStep = Number(localStorage.getItem("lf-font-step") || 0);
-    let answers = JSON.parse(localStorage.getItem("lf-answers") || "{}");
+let lang = (navigator.language || "de").toLowerCase().startsWith("en") ? "en" : "de";
+    const currentYear = String(new Date().getFullYear());
+    let fontStep = 0;
+    let answers = {};
     let qIndex = 0;
     let currentLicense = "by";
     let manualLicense = false;
@@ -59,6 +48,16 @@ let lang = storedLang || ((navigator.language || "de").toLowerCase().startsWith(
     function t(key) { return strings[lang][key] || strings.de[key] || key; }
     function esc(value) {
       return String(value ?? "").replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[char]));
+    }
+    function safeUrl(value) {
+      const raw = String(value || "").trim();
+      if (!raw) return "";
+      try {
+        const url = new URL(raw, location.href);
+        return /^https?:$/.test(url.protocol) ? url.href : "";
+      } catch (error) {
+        return "";
+      }
     }
     function svgData(svg) {
       return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
@@ -73,7 +72,6 @@ let lang = storedLang || ((navigator.language || "de").toLowerCase().startsWith(
 
     function setLang(next) {
       lang = next;
-      localStorage.setItem("lf-lang", lang);
       document.documentElement.lang = lang;
       document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
       document.querySelectorAll("[data-placeholder-de]").forEach(el => { el.placeholder = lang === "en" ? el.dataset.placeholderEn : el.dataset.placeholderDe; });
@@ -99,21 +97,20 @@ let lang = storedLang || ((navigator.language || "de").toLowerCase().startsWith(
         twilloEvents: lang === "en" ? "https://www.twillo.de/en/events/" : "https://www.twillo.de/veranstaltungen/",
         twilloShare: lang === "en" ? "https://www.twillo.de/en/share-oer/" : "https://www.twillo.de/oer-teilen/",
         appLicense: "https://opensource.org/license/mit",
-        linkedin: "https://de.linkedin.com/in/johannes-koch-1964a3240"
+        contentLicense: lang === "en" ? "https://creativecommons.org/publicdomain/zero/1.0/" : "https://creativecommons.org/publicdomain/zero/1.0/deed.de",
+        linkedin: "https://www.linkedin.com/in/johannes-koch-1964a3240"
       };
       Object.entries(links).forEach(([name, url]) => document.querySelectorAll(`[data-link="${name}"]`).forEach(a => a.href = url));
     }
 
     function setFont(delta) {
       fontStep = Math.max(-2, Math.min(3, fontStep + delta));
-      localStorage.setItem("lf-font-step", fontStep);
       applyFont();
     }
     function applyFont() { document.documentElement.style.setProperty("--fs", `${16 + fontStep}px`); }
     function toggleReadable() {
       const on = document.documentElement.dataset.readable !== "on";
       document.documentElement.dataset.readable = on ? "on" : "off";
-      localStorage.setItem("lf-readable", on ? "on" : "off");
       document.getElementById("readBtn").setAttribute("aria-pressed", on);
     }
 
@@ -158,7 +155,6 @@ let lang = storedLang || ((navigator.language || "de").toLowerCase().startsWith(
     function saveAnswer(id) {
       const picked = document.querySelector(`[name="${id}"]:checked`);
       answers[id] = picked ? picked.value : "";
-      localStorage.setItem("lf-answers", JSON.stringify(answers));
     }
     function isRelevant(q) {
       if (answers.attribution === "no" && q.id !== "attribution") return false;
@@ -314,27 +310,30 @@ let lang = storedLang || ((navigator.language || "de").toLowerCase().startsWith(
       const title = document.getElementById("workTitle").value || "[Titel]";
       const titleText = quoteTitle(title);
       const author = document.getElementById("author").value || (lang === "de" ? "[Urheber:in]" : "[Creator]");
-      const year = document.getElementById("year").value || "2026";
+      const year = document.getElementById("year").value || currentYear;
       const source = document.getElementById("sourceUrl").value || "";
+      const checkedSource = safeUrl(source);
+      document.getElementById("sourceInvalid").classList.toggle("hidden", !source.trim() || Boolean(checkedSource));
+      document.getElementById("sourceUrl").setAttribute("aria-invalid", String(Boolean(source.trim() && !checkedSource)));
       const changed = document.getElementById("changed").value === "yes";
       const changeText = document.getElementById("changeText").value || (lang === "de" ? "bearbeitet" : "adapted");
       const key = document.getElementById("licenseSelect").value || currentLicense;
       const lic = licenses[key] || licenses.by;
       const deed = lic.deed[lang];
       const bear = changed ? (lang === "de" ? ` Bearbeitung: ${changeText}.` : ` Adaptation: ${changeText}.`) : "";
-      const src = source ? ` ${lang === "de" ? "Ursprungsort" : "Source"}: ${source}.` : "";
+      const src = checkedSource ? ` ${lang === "de" ? "Ursprungsort" : "Source"}: ${checkedSource}.` : "";
       const short = lang === "de"
         ? `${mediumText}, ${titleText}, von ${author}, ${year}, steht unter ${lic.name}: ${deed}.${src}${bear}`
         : `${mediumText}, ${titleText}, by ${author}, ${year}, is licensed under ${lic.name}: ${deed}.${src}${bear}`;
       const reuse = lang === "de"
-        ? `Wir empfehlen folgende Angabe bei Nachnutzung: ${author} (${year}): ${titleText}. ${medium.label}. Lizenz: ${lic.name}, ${deed}.${source ? ` Online: ${source}.` : ""}${bear}`
-        : `Recommended attribution: ${author} (${year}): ${titleText}. ${medium.label}. License: ${lic.name}, ${deed}.${source ? ` Online: ${source}.` : ""}${bear}`;
+        ? `Wir empfehlen folgende Angabe bei Nachnutzung: ${author} (${year}): ${titleText}. ${medium.label}. Lizenz: ${lic.name}, ${deed}.${checkedSource ? ` Online: ${checkedSource}.` : ""}${bear}`
+        : `Recommended attribution: ${author} (${year}): ${titleText}. ${medium.label}. License: ${lic.name}, ${deed}.${checkedSource ? ` Online: ${checkedSource}.` : ""}${bear}`;
       const md = (lang === "de"
-        ? `${mediumText}, [${titleText}](${source || deed}), von ${author}, ${year}, steht unter [${lic.name}](${deed}).`
-        : `${mediumText}, [${titleText}](${source || deed}), by ${author}, ${year}, is licensed under [${lic.name}](${deed}).`) + bear;
+        ? `${mediumText}, [${titleText}](${checkedSource || deed}), von ${author}, ${year}, steht unter [${lic.name}](${deed}).`
+        : `${mediumText}, [${titleText}](${checkedSource || deed}), by ${author}, ${year}, is licensed under [${lic.name}](${deed}).`) + bear;
       const html = lang === "de"
-        ? `<p>${esc(mediumText)}, <a href="${esc(source || deed)}">${esc(titleText)}</a>, von ${esc(author)}, ${esc(year)}, steht unter <a href="${esc(deed)}">${esc(lic.name)}</a>.${esc(bear)}</p>`
-        : `<p>${esc(mediumText)}, <a href="${esc(source || deed)}">${esc(titleText)}</a>, by ${esc(author)}, ${esc(year)}, is licensed under <a href="${esc(deed)}">${esc(lic.name)}</a>.${esc(bear)}</p>`;
+        ? `<p>${esc(mediumText)}, <a href="${esc(checkedSource || deed)}">${esc(titleText)}</a>, von ${esc(author)}, ${esc(year)}, steht unter <a href="${esc(deed)}">${esc(lic.name)}</a>.${esc(bear)}</p>`
+        : `<p>${esc(mediumText)}, <a href="${esc(checkedSource || deed)}">${esc(titleText)}</a>, by ${esc(author)}, ${esc(year)}, is licensed under <a href="${esc(deed)}">${esc(lic.name)}</a>.${esc(bear)}</p>`;
       [["outShort", short], ["outReuse", reuse], ["outMd", md], ["outHtml", html]].forEach(([id, value]) => { document.getElementById(id).value = value; });
       document.getElementById("badgeImg").src = badgeImage(key, lic);
       document.getElementById("badgeDirect").href = lic.badge;
@@ -365,20 +364,32 @@ let lang = storedLang || ((navigator.language || "de").toLowerCase().startsWith(
       const host = document.getElementById("faqList");
       host.innerHTML = faqs[lang].map((item, index) => `<details class="qa" ${index === 0 ? "open" : ""}><summary>${esc(item.q)}</summary><div class="qa-body">${esc(item.a)}</div></details>`).join("");
     }
-    function copyOut(id) {
-      navigator.clipboard?.writeText(document.getElementById(id).value);
-      toast(t("copied"));
+    async function copyOut(id) {
+      const el = document.getElementById(id);
+      try {
+        if (!navigator.clipboard?.writeText) throw new Error("clipboard unavailable");
+        await navigator.clipboard.writeText(el.value);
+        toast(t("copied"));
+      } catch (error) {
+        el.focus();
+        el.select();
+        toast(t("copyManual"));
+      }
     }
     function resetAll() {
       answers = {};
-      localStorage.removeItem("lf-answers");
       qIndex = 0;
       currentLicense = "by";
       manualLicense = false;
+      ["workTitle", "author", "sourceUrl", "changeText", "mediumCustom"].forEach(id => { document.getElementById(id).value = ""; });
+      document.getElementById("year").value = currentYear;
+      document.getElementById("mediumPreset").value = "workmaterial";
+      document.getElementById("changed").value = "no";
       document.getElementById("resultSection").classList.add("hidden");
       document.getElementById("resultPlaceholder").classList.remove("hidden");
       renderQuestion();
       fillLicenseSelect();
+      toggleCustomMedium(false);
       renderNotice();
     }
     function toggleSideHelp() {
@@ -393,8 +404,17 @@ let lang = storedLang || ((navigator.language || "de").toLowerCase().startsWith(
       setTimeout(() => el.classList.remove("show"), 1800);
     }
 
-    document.documentElement.dataset.readable = localStorage.getItem("lf-readable") || "off";
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      const box = document.getElementById("sidehelp");
+      if (!box.classList.contains("open")) return;
+      toggleSideHelp();
+      document.getElementById("sidehelpHandle").focus();
+    });
+
+    document.documentElement.dataset.readable = "off";
     document.getElementById("readBtn").setAttribute("aria-pressed", document.documentElement.dataset.readable === "on");
+    document.getElementById("year").value = currentYear;
     applyFont();
     fillLicenseSelect();
     fillMediumSelect();

@@ -94,8 +94,8 @@ title(
   "Arbeitsstand, Versionierung und naechste Schritte fuer das neue Tool.",
 );
 summary.getRange("A4:B10").values = [
-  ["Aktuelle Version", "1.17.20260819-codex"],
-  ["Status", "Release Candidate nach Feinschliff, Netzwerk-Waechter und Doku-Update"],
+  ["Aktuelle Version", "1.19.20260819-codex"],
+  ["Status", "Release Candidate nach V1.19-Feinschliff, Browserpruefung und Doku-Update"],
   ["Letzte Aenderung", new Date("2026-08-19T00:00:00")],
   ["Primaeres Werkzeug", "codex"],
   ["Zielgruppe", "Selbst erstellte Inhalte allgemein"],
@@ -134,7 +134,7 @@ history.getRange("A1:K1").values = [[
   "Naechster Schritt",
 ]];
 header(history.getRange("A1:K1"));
-history.getRange("A2:K16").values = [
+history.getRange("A2:K20").values = [
   [
     "1.1.20260626-codex",
     new Date("2026-06-26T00:00:00"),
@@ -350,11 +350,37 @@ history.getRange("A2:K16").values = [
     17,
     "codex",
     "Johannes Koch / Codex",
-    "Freigabekandidat",
+    "Archiviert",
     "Feinabstand unter Navigation erhoeht; About- und Footer-Texte reduziert; Netzwerk-Waechter und CSP ergaenzt; sichtbare Badges lokal als SVG erzeugt; Schatten im Vermerkbereich entfernt; twillo-Hinweis ruhiger gestaltet.",
     "Design; Netzwerk; Lizenz; Barrierearmut; GitHub; Versionierung",
     "Build-, Release- und Browserpruefung vorgesehen; fachliche Endabnahme, manuelle Tastatur-/Fokuspruefung und GitHub-Push offen",
-    "GitHub veroeffentlichen, Remote pruefen und fachliche Endabnahme durchfuehren",
+    "Durch V1.18 abgeloest",
+  ],
+  [
+    "1.18.20260819-codex",
+    new Date("2026-08-19T00:00:00"),
+    1,
+    18,
+    "codex",
+    "Johannes Koch / Codex",
+    "Archiviert",
+    "Header-Infofeld entfernt; persistente Speicherung entfernt; Netzwerk-Waechter auf Selbsttest entschärft; URL-Validierung und Clipboard-Fallback ergaenzt; About/Footer und Doppellizenzierung nachgezogen.",
+    "Sicherheit; Datenschutz; Netzwerk; Lizenz; UX; Versionierung",
+    "Build-, Release- und Browserpruefung bestanden; sandboxed iframe, localStorage, URL-Schutz und Copy-Fallback geprueft; fachliche Endabnahme und manuelle Tastatur-/Fokuspruefung offen",
+    "Durch V1.19 abgeloest",
+  ],
+  [
+    "1.19.20260819-codex",
+    new Date("2026-08-19T00:00:00"),
+    1,
+    19,
+    "codex",
+    "Johannes Koch / Codex",
+    "Freigabekandidat",
+    "Copyright-Zeichen auf MIT-Lizenztext beschraenkt; About-Panel scrollbar und per Escape schliessbar gemacht; Footer benennt Codex/OpenAI; dynamisches Jahr und verbesserte Quellenwarnung ergaenzt; GitHub-Pages-Einstieg, Workflow, README und Vorlagen vorbereitet.",
+    "Text; Barrierearmut; UX; Lizenz; Datenschutz; GitHub; Versionierung",
+    "Build-, Release- und Browserpruefung bestanden; Copyright-Suche, 500px-Panel, Escape-Fokus, 2027-Jahr, aria-invalid, Pages-index und V1.18-Regressionen geprueft",
+    "Fachliche Endabnahme, manuelle Tastatur-/Fokuspruefung und GitHub-Push nach Freigabe",
   ],
 ];
 body(history.getRange("A2:K30"));
@@ -377,7 +403,7 @@ audits.getRange("A1:G1").values = [[
   "Ablageort",
 ]];
 header(audits.getRange("A1:G1"));
-audits.getRange("A2:G16").values = [
+audits.getRange("A2:G20").values = [
   [
     "A-001",
     new Date("2026-06-26T00:00:00"),
@@ -528,8 +554,26 @@ audits.getRange("A2:G16").values = [
     "1.17.20260819-codex",
     "Release",
     "mit Auflagen",
-    "Feinschliff und Netzwerk-Waechter umgesetzt; Build-, Release- und Browserpruefung vorgesehen; GitHub-Push bleibt bis zur Freigabe offen.",
+    "Feinschliff und Netzwerk-Waechter umgesetzt; durch V1.18 technisch entschaerft und abgeloest.",
     "audits/RELEASE_AUDIT_V1_17_20260819.md; Lizenzfinder-App-V1_17_20260819-codex.html",
+  ],
+  [
+    "A-018",
+    new Date("2026-08-19T00:00:00"),
+    "1.18.20260819-codex",
+    "Release",
+    "mit Auflagen",
+    "V1.18-Haertung umgesetzt; durch V1.19 mit About-Panel- und Textfeinschliff abgeloest.",
+    "audits/RELEASE_AUDIT_V1_18_20260819.md; Lizenzfinder-App-V1_18_20260819-codex.html",
+  ],
+  [
+    "A-019",
+    new Date("2026-08-19T00:00:00"),
+    "1.19.20260819-codex",
+    "Release",
+    "mit Auflagen",
+    "V1.19-Feinschliff und GitHub-Pages-Vorbereitung umgesetzt; Build-, Release- und Browserpruefung bestanden; fachliche Endabnahme und manuelle Tastatur-/Fokuspruefung bleiben offen.",
+    "audits/RELEASE_AUDIT_V1_19_20260819.md; Lizenzfinder-App-V1_19_20260819-codex.html",
   ],
 ];
 body(audits.getRange("A2:G40"));

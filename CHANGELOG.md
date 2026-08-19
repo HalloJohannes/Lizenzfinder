@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.19.20260819-codex
+
+- Sichtbares Copyright-Zeichen aus About- und Footer-Fliesstext entfernt; die MIT-Zeile `Copyright (c) 2026 Johannes Koch` bleibt erhalten.
+- Ueber-diese-Anwendung-Panel bei kleinen Fensterhoehen scrollbar gemacht und verschachtelte Scrollbegrenzung im MIT-Text entfernt.
+- Escape-Schliessen des About-Panels mit Fokusrueckgabe an den Button ergaenzt.
+- Footer benennt das KI-Werkzeug konkret als Codex/OpenAI.
+- Formularjahr im Lizenzvermerk dynamisch aus dem aktuellen Kalenderjahr vorbelegt; feste Credit- und Lizenzjahre bleiben 2026.
+- Quellenwarnung fuer Screenreader verbessert: `role="status"`, `aria-live="polite"` und `aria-invalid`.
+- Release- und Browserchecks auf V1.19 erweitert.
+- GitHub-Pages-Einstieg `index.html`, Pages-Workflow, README-Veröffentlichungstext, Projekt-Keywords sowie Issue- und PR-Vorlagen ergänzt.
+
+## 1.18.20260819-codex
+
+- Weißes Infofeld im Header entfernt und Headerlayout auf eine Spalte bereinigt.
+- Persistente Speicherung von Antworten und Anzeigeeinstellungen entfernt; alte `lf-*`-Schluessel werden nur einmalig bereinigt.
+- Netzwerk-Waechter auf reinen Selbsttest entschärft, damit eingebettete Trägerseiten nicht in `fetch`, Cookies oder `sendBeacon` beeinflusst werden.
+- Quellen-URL im Lizenzvermerk auf `http(s)` beschränkt und zweisprachigen Inline-Hinweis ergänzt.
+- Kopierfunktion meldet nur echten Clipboard-Erfolg; sonst wird der Text für manuelles Kopieren markiert.
+- Reset setzt nun auch die komplette Vermerk-Maske zurück.
+- Ueber-diese-Anwendung-Panel und Footer mit MIT-Code-Lizenz und CC0-Inhaltslizenz aktualisiert.
+- Release- und Browserchecks um sandboxed iframe, localStorage, URL-Schutz und Clipboard-Fallback erweitert.
+
 ## 1.17.20260819-codex
 
 - Abstand zwischen Navigation und Inhaltsbereich vergroessert.

@@ -12,12 +12,14 @@
   <meta name="dcterms.created" content="2026-06-27">
   <meta name="dcterms.modified" content="2026-08-19">
   <meta name="dcterms.license" content="https://opensource.org/license/mit">
-  <meta name="licensefinder:version" content="1.17.20260819-codex">
+  <meta name="dcterms.rights" content="Quellcode: MIT License. Redaktionelle Inhalte: CC0 1.0. Externe Quellen, Marken, Logos und Inhalte Dritter können eigenen Rechten unterliegen.">
+  <meta name="licensefinder:version" content="1.19.20260819-codex">
   <meta name="licensefinder:version-line" content="1">
-  <meta name="licensefinder:revision" content="17">
+  <meta name="licensefinder:revision" content="19">
   <meta name="licensefinder:revision-date" content="2026-08-19">
   <meta name="licensefinder:responsible-editor" content="Johannes Koch">
   <meta name="licensefinder:license" content="MIT">
+  <meta name="licensefinder:content-license" content="CC0-1.0">
   <title>Lizenzfinder</title>
   <link rel="stylesheet" href="./styles.css">
 </head>
@@ -47,10 +49,6 @@
           <h1 id="appTitle"><span data-i18n="heroA">Passende Lizenz finden.</span> <em data-i18n="heroB">Vermerk mitnehmen.</em></h1>
           <p class="lead" data-i18n="appSub">Eine kurze, einfache Orientierung für selbst erstellte Materialien: Lizenzidee klären, Empfehlung verstehen und den passenden Vermerk erstellen.</p>
         </div>
-        <aside class="intro-panel">
-          <b data-i18n="panelH">In drei klaren Schritten</b>
-          <p data-i18n="panelP">Der Fragebogen führt zur Empfehlung. Danach bleibt die Vermerk-Maske direkt sichtbar. Für Softwarecode gibt es einen eigenen Hinweisbereich.</p>
-        </aside>
       </section>
     </div>
   </header>
@@ -138,9 +136,9 @@
               </div>
               <div class="field"><label for="workTitle" data-i18n="fieldTitle">Wie heißt dein Material?</label><input id="workTitle" oninput="renderNotice()" data-placeholder-de="z. B. Einführung in OER" data-placeholder-en="e.g. Introduction to OER" placeholder="z. B. Einführung in OER"></div>
               <div class="field"><label for="author" data-i18n="fieldAuthor">Wer soll genannt werden?</label><input id="author" oninput="renderNotice()" data-placeholder-de="Name / Organisation" data-placeholder-en="Name / organization" placeholder="Name / Organisation"></div>
-              <div class="field"><label for="year" data-i18n="fieldYear">Jahr</label><input id="year" oninput="renderNotice()" value="2026"></div>
+              <div class="field"><label for="year" data-i18n="fieldYear">Jahr</label><input id="year" oninput="renderNotice()"></div>
               <div class="field"><label for="licenseSelect" data-i18n="fieldLicense">Welche Lizenz?</label><select id="licenseSelect" onchange="setManualLicense()"></select></div>
-              <div class="field full"><label for="sourceUrl" data-i18n="fieldSource">Wo liegt das Original?</label><input id="sourceUrl" oninput="renderNotice()" placeholder="https://..."><small data-i18n="fieldSourceHint">Optional, aber sehr hilfreich für Nachnutzung.</small></div>
+              <div class="field full"><label for="sourceUrl" data-i18n="fieldSource">Wo liegt das Original?</label><input id="sourceUrl" oninput="renderNotice()" placeholder="https://..."><small data-i18n="fieldSourceHint">Optional, aber sehr hilfreich für Nachnutzung.</small><small id="sourceInvalid" class="field-warning hidden" role="status" aria-live="polite" data-i18n="sourceInvalid">Bitte eine vollständige Adresse mit https:// angeben.</small></div>
               <div class="field"><label for="changed" data-i18n="fieldChanged">Wurde etwas verändert?</label><select id="changed" onchange="renderNotice()"><option value="no" data-i18n="changedNo">Nein</option><option value="yes" data-i18n="changedYes">Ja</option></select></div>
               <div class="field"><label for="changeText" data-i18n="fieldChangeText">Bearbeitung kurz beschreiben</label><input id="changeText" oninput="renderNotice()" data-placeholder-de="gekürzt, übersetzt, ergänzt" data-placeholder-en="shortened, translated, expanded" placeholder="gekürzt, übersetzt, ergänzt"></div>
             </div>
@@ -204,14 +202,16 @@
     <div class="sidehelp-panel" id="sidehelpPanel" role="region" aria-labelledby="aboutTitle">
       <h3 id="aboutTitle" data-i18n="sideH">Über diese Anwendung</h3>
       <p>
-        <span data-i18n="aboutCreditA">Dieses Tool Lizenzfinder von</span>
-        <a data-link="linkedin" href="https://de.linkedin.com/in/johannes-koch-1964a3240" target="_blank" rel="noopener">Johannes Koch</a><span data-i18n="aboutCreditB"> 2026.</span>
+        <span data-i18n="aboutCreditA">Der Lizenzfinder wurde entwickelt von</span>
+        <a data-link="linkedin" href="https://www.linkedin.com/in/johannes-koch-1964a3240" target="_blank" rel="noopener">Johannes Koch</a><span data-i18n="aboutCreditB">, 2026.</span>
       </p>
       <dl class="about-meta">
-        <div><dt data-i18n="aboutVersion">Produktversion</dt><dd>1.17.20260819-codex</dd></div>
-        <div><dt data-i18n="aboutNetwork">Netzwerk</dt><dd data-i18n="aboutNetworkP">Statische HTML-Anwendung mit externen Quellenlinks. Ein Netzwerk-Wächter blockiert automatische Verbindungen.</dd></div>
-        <div><dt data-i18n="aboutFont">Schrift</dt><dd data-i18n="aboutFontP">Systemschrift-Stapel: Outfit, Segoe UI und systemeigene serifenlose Schriften; keine Schriftdateien eingebettet.</dd></div>
-        <div><dt data-i18n="aboutLicense">Lizenz der Anwendung</dt><dd data-i18n="aboutLicenseP">Lizenzfinder von Johannes Koch, 2026, steht unter der MIT License. Nutzung, Bearbeitung, Weitergabe und Einbindung sind erlaubt, sofern Copyright- und Lizenzhinweis erhalten bleiben.</dd></div>
+        <div><dt data-i18n="aboutVersion">Produktversion</dt><dd>1.19.20260819-codex</dd></div>
+        <div><dt data-i18n="aboutNetwork">Netzwerk</dt><dd data-i18n="aboutNetworkP">Einzelne HTML-Datei ohne externe Ressourcen: keine Schriftdateien, Skripte oder Bilder von fremden Servern. Eine Content-Security-Policy unterbindet ausgehende Verbindungen. Externe Links öffnen sich ausschließlich nach Klick.</dd></div>
+        <div><dt data-i18n="aboutStorage">Speicherung</dt><dd data-i18n="aboutStorageP">Die Anwendung speichert nichts. Antworten und Anzeigeeinstellungen bestehen nur während des Seitenaufrufs und sind nach dem Schließen oder Neuladen verworfen. Es werden keine Cookies gesetzt und keine Analyse- oder Tracking-Dienste eingebunden.</dd></div>
+        <div><dt data-i18n="aboutFont">Schrift</dt><dd data-i18n="aboutFontP">Es werden keine Schriftdateien eingebettet oder nachgeladen. Die Darstellung nutzt lokal vorhandene Schriften (Outfit, sofern installiert, sonst Segoe UI bzw. die serifenlose Systemschrift).</dd></div>
+        <div><dt data-i18n="aboutLicense">Lizenz der Anwendung</dt><dd data-i18n="aboutLicenseP">Der Quellcode des Lizenzfinders steht unter der MIT License: Nutzung, Bearbeitung, Weitergabe und Einbindung sind erlaubt, solange der Lizenzhinweis mit Urheberangabe erhalten bleibt. Die redaktionellen Inhalte (Fragen, Erläuterungen, FAQ) stehen unter CC0 1.0 und können ohne Namensnennung nachgenutzt werden.</dd></div>
+        <div><dt data-i18n="aboutDisclaimer">Hinweis</dt><dd data-i18n="aboutDisclaimerP">Der Lizenzfinder bietet eine praxisnahe Orientierung und ersetzt keine Rechtsberatung. Für verbindliche Auskünfte im Einzelfall ist fachkundiger Rat einzuholen.</dd></div>
       </dl>
       <details class="license-text">
         <summary data-i18n="aboutLicenseText">Lizenztext anzeigen</summary>
@@ -236,6 +236,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.</pre>
+        <p class="content-license-note"><span data-i18n="contentLicenseNote">Redaktionelle Inhalte:</span> <a data-link="contentLicense" href="https://creativecommons.org/publicdomain/zero/1.0/deed.de" target="_blank" rel="noopener">CC0 1.0</a></p>
       </details>
     </div>
     <button class="sidehelp-handle" id="sidehelpHandle" type="button" onclick="toggleSideHelp()" aria-expanded="false" aria-controls="sidehelpPanel" data-i18n="sideHandle">Über diese Anwendung</button>
@@ -245,10 +246,13 @@ SOFTWARE.</pre>
     <div class="wrap">
       <div class="lic-line">
         <p>
-          <span data-i18n="footCreditA">Konzept, fachliche und redaktionelle Gestaltung:</span>
-          <a data-link="linkedin" href="https://de.linkedin.com/in/johannes-koch-1964a3240" target="_blank" rel="noopener">Johannes Koch</a><span data-i18n="footCreditB">.</span>
-          <span data-i18n="footCreditC">Technische Umsetzung mit KI-Unterstützung.</span>
-          <a data-link="appLicense" href="https://opensource.org/license/mit" target="_blank" rel="noopener">MIT License</a>
+          <span data-i18n="footCreditA">Diese Anwendung „Lizenzfinder“ wurde 2026 von</span>
+          <a data-link="linkedin" href="https://www.linkedin.com/in/johannes-koch-1964a3240" target="_blank" rel="noopener">Johannes Koch</a>
+          <span data-i18n="footCreditB">mit Unterstützung von KI (Codex/OpenAI) erstellt und darf gern geteilt und weitergegeben werden.</span>
+          <span data-i18n="footCreditC">Lizenz:</span>
+          <a data-link="appLicense" href="https://opensource.org/license/mit" target="_blank" rel="noopener">MIT</a>;
+          <span data-i18n="footContentLicense">redaktionelle Inhalte:</span>
+          <a data-link="contentLicense" href="https://creativecommons.org/publicdomain/zero/1.0/deed.de" target="_blank" rel="noopener">CC0 1.0</a>.
         </p>
       </div>
     </div>

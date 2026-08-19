@@ -1,51 +1,68 @@
 # Lizenzfinder
 
-Der Lizenzfinder ist eine schlanke, statische HTML-Anwendung zur Orientierung bei Creative-Commons-Lizenzen und zum Erstellen eines Lizenzvermerks.
+Stand: 19. August 2026 · Version 1.19.20260819-codex
 
-Die Anwendung richtet sich vor allem an Lehrende und Personen, die selbst erstellte Materialien offen teilen möchten. Sie ersetzt keine Rechtsberatung, sondern führt niedrigschwellig durch typische Entscheidungen: Namensnennung, Bearbeitung, kommerzielle Nutzung und Weitergabe unter gleicher Lizenz.
+Der Lizenzfinder ist eine schlanke Web-Anwendung, die bei der Auswahl einer passenden Creative-Commons-Lizenz hilft und anschließend einen passenden Lizenzvermerk erstellt. **Direkt online verwenden:** <https://hallojohannes.github.io/Lizenzfinder/>
 
-## Aktueller Stand
+Die Anwendung richtet sich vor allem an Lehrende und andere Personen, die selbst erstellte Materialien teilen möchten. Vorkenntnisse im Lizenzrecht sind nicht nötig: Ein kurzer Fragebogen führt durch die wichtigsten Entscheidungen, danach werden eine Empfehlung, eine mögliche Alternative und ein bewusstes Gegenbeispiel angezeigt.
 
-- Version: `1.17.20260819-codex`
-- Aktuelle App-Datei: `Lizenzfinder-App-V1_17_20260819-codex.html`
-- Quelle: `src/`
-- Status: Release Candidate nach Feedbackrunde
-- Lizenz der App: MIT
+## Was macht der Lizenzfinder?
 
-## Was die App kann
+Der Lizenzfinder:
 
-- kurze Lizenzorientierung für selbst erstellte Materialien
-- Empfehlung, Alternative und bewusstes Gegenbeispiel
-- Lizenzvermerk mit Titel, Urheber:in, Lizenzlink, Ursprungsort und Bearbeitungshinweis
-- Creative-Commons-Badges je Lizenz
-- Hinweis zur Veröffentlichung auf twillo nach passender Lizenzwahl
-- eigener Überblick zu Software-Lizenzen
-- Deutsch/Englisch-Umschaltung mit sprachsensiblen Links
-- bessere Lesbarkeit und Schriftgrößensteuerung
-- Netzwerk-Wächter gegen automatische externe Verbindungen; externe Quellenlinks öffnen erst nach bewusstem Anklicken
+- fragt knapp nach Namensnennung, Bearbeitung, kommerzieller Nutzung und Weitergabe unter gleicher Lizenz,
+- empfiehlt eine passende Creative-Commons-Lizenz und zeigt eine sinnvolle Alternative,
+- erklärt den Charakter der vorgeschlagenen Lizenzen in kurzen Sätzen,
+- erstellt einen Lizenzvermerk mit Medientyp, Titel, Urheberangabe, Jahr, Lizenz, Ursprungsort und Bearbeitungshinweis,
+- erzeugt Kurzvermerk, empfohlene Angabe, Markdown und HTML,
+- zeigt Creative-Commons-Badges beziehungsweise lokale Badge-Grafiken,
+- enthält einen Überblick über Creative-Commons- und ausgewählte Software-Lizenzen,
+- funktioniert auf Deutsch und Englisch mit sprachsensiblen Links.
 
-## Was bewusst nicht mehr enthalten ist
+Der Lizenzfinder ersetzt keine Rechtsberatung. Er ist als praktische Orientierung gedacht und verweist für vertiefende Informationen auf Creative Commons, twillo und Choose a License.
 
-Die frühere Export-/Einbettungsfunktion wurde in V1.15 entfernt, weil sie im Praxiseinsatz technisch nicht zuverlässig genug war. Die alten Exportdateien bleiben nur im lokalen Arbeitsarchiv nachvollziehbar und sind nicht Teil der öffentlichen GitHub-Fassung.
+## Direkt verwenden oder herunterladen
+
+- **Online:** <https://hallojohannes.github.io/Lizenzfinder/>
+- **Offline:** `Lizenzfinder-App-V1_19_20260819-codex.html` herunterladen und im Browser öffnen
+- **GitHub Pages:** `index.html` ist identisch mit der aktuellen App-Datei und dient als direkter Einstieg
+
+Die Anwendung ist eine einzelne statische HTML-Datei. Sie benötigt keinen Server, keine Anmeldung und keine Installation.
+
+## Datenschutz und Netzwerk
+
+Der Lizenzfinder speichert keine Antworten dauerhaft. Eingaben und Anzeigeeinstellungen bestehen nur während des aktuellen Seitenaufrufs und werden nach dem Schließen oder Neuladen verworfen.
+
+Die ausgelieferte App lädt keine externen Schriften, Skripte oder Bilder. Sichtbare Lizenz-Badges werden lokal als SVG-Data-URIs erzeugt. Externe Links, etwa zu Creative Commons, twillo oder Choose a License, öffnen sich nur nach einem bewussten Klick.
+
+Technisch wird das durch eine Content-Security-Policy mit `connect-src 'none'` und einen Netzwerk-Selbsttest begleitet. Der Selbsttest greift nicht in Browser-APIs wie `fetch`, Cookies oder `sendBeacon` ein, damit die App auch in anderen Seiten eingebettet werden kann, ohne diese zu stören.
+
+## Sicherheit und Barrierearmut
+
+Die Anwendung enthält mehrere Schutz- und Bedienbarkeitsmaßnahmen:
+
+- Quellen-URLs im Lizenzvermerk werden geprüft; nur `http(s)`-Adressen werden in Ausgaben übernommen.
+- Ungültige Quellenangaben werden sichtbar und per `aria-live` angekündigt.
+- Das Panel „Über diese Anwendung“ ist scrollbar und per Escape schließbar.
+- Schriftgröße und Lesbarkeitsmodus können direkt in der Oberfläche angepasst werden.
+- Die wichtigsten Interaktionen werden in automatisierten Browserchecks geprüft.
 
 ## Projektstruktur
 
-- `src/index.html`: HTML-Struktur der Arbeitsquelle
-- `src/styles.css`: Design, Layout, Lesbarkeitsmodus und Responsiveness
-- `src/data.js`: Texte, Lizenzdaten, Fragen, Links und Lizenzübersichten
-- `src/app.js`: Interaktion, Empfehlungslogik, Sprachumschaltung, Netzwerk-Wächter und Vermerk-Generator
-- `scripts/build-release.mjs`: baut die aktuelle Single-HTML-Datei
-- `scripts/check-release.mjs`: prüft Version, Struktur, Syntax und zentrale Logikpfade
-- `versions/aktuell/`: Spiegel der aktuellen HTML-Datei
+- `index.html`: GitHub-Pages-Einstieg, identisch mit der aktuellen App
+- `Lizenzfinder-App-V1_19_20260819-codex.html`: aktuelle versionierte Single-HTML-Datei
+- `src/`: führende Arbeitsquelle aus Struktur, Styling, Daten und Logik
+- `scripts/`: Build- und Prüfscripte
+- `docs/`: Anforderungen, Architektur, Linkmatrix und Textsystem
+- `content/`: redaktionelle Arbeitsdateien für spätere Textänderungen
+- `audits/`: Release-Audits und Prüfnotizen
+- `versions/aktuell/`: Spiegel der aktuellen versionierten HTML-Datei
 - `versions/archiv/`: gesicherte Vorversionen
-- `docs/`: Anforderungen, Architektur, Textsystem und fachliche Notizen
-- `audits/`: Prüfberichte
+- `versions/aenderungshistorie/`: Excel-Datei mit Versionen und Änderungen
 
-## Nutzung
+## Entwickeln und prüfen
 
-Die Datei `Lizenzfinder-App-V1_17_20260819-codex.html` kann direkt im Browser geöffnet werden.
-
-## Entwicklung
+Voraussetzung ist Node.js. Es gibt keine npm-Paketabhängigkeiten.
 
 ```bash
 npm run build
@@ -53,22 +70,43 @@ npm run check
 npm run check:browser
 ```
 
-Der Build erzeugt die aktuelle HTML-Datei auf oberster Ebene und spiegelt sie nach `versions/aktuell/`.
+`npm run build` erzeugt:
 
-Die Excel-Versionshistorie kann in der Codex-Workspace-Runtime regeneriert werden:
+- die versionierte HTML-Datei auf oberster Ebene,
+- `index.html` für GitHub Pages,
+- den Spiegel in `versions/aktuell/`,
+- ein kleines `dist/`-Artefakt für den GitHub-Pages-Workflow.
+
+`npm run check` prüft Version, Metadaten, Lizenzhinweise, Sicherheitsannahmen und zentrale Fragenlogik. `npm run check:browser` prüft die Anwendung mit Playwright, darunter URL-Schutz, Clipboard-Fallback, CC0-Zero-Icon, Sprachumschaltung, Lesbarkeitsmodus, sandboxed iframe und das scrollbare About-Panel.
+
+Die Excel-Versionshistorie kann in der Codex-Workspace-Runtime neu erzeugt werden:
 
 ```bash
 CODEX_NODE_MODULES=/pfad/zur/codex-runtime/node_modules npm run versions:build
 ```
 
-## Quellen
+## GitHub Pages
 
-- Creative Commons FAQ zu Software und CC-Lizenzen: https://creativecommons.org/faq/
-- Creative Commons Downloads: https://creativecommons.org/mission/downloads/
-- twillo: OER teilen: https://www.twillo.de/oer-teilen/
-- twillo: TULLU+B und OER aufbereiten: https://www.twillo.de/oer-aufbereiten/
-- Choose a License für Software-Lizenzen: https://choosealicense.com/
+Bei Änderungen auf `main` baut der Workflow `.github/workflows/pages.yml` die aktuelle Single-HTML neu und veröffentlicht das erzeugte `dist/`-Artefakt über GitHub Pages.
+
+Falls Pages im Repository noch nicht aktiviert ist, muss in den Repository-Einstellungen einmalig **Settings → Pages → Build and deployment → Source: GitHub Actions** ausgewählt werden.
+
+## Schlagworte
+
+Geeignete GitHub Topics sind:
+
+`oer`, `open-educational-resources`, `creative-commons`, `cc-license`, `attribution`, `license-finder`, `license-generator`, `education`, `teaching-materials`, `static-html`, `accessibility`, `mit-license`, `cc0`
+
+## Rückmeldungen und Beiträge
+
+Fehler, Verständnisprobleme und Ideen können über GitHub-Issues gemeldet werden. Besonders hilfreich sind Angaben zum Browser, Betriebssystem, Antwortpfad im Fragebogen und zum erwarteten Ergebnis.
+
+Konkrete Änderungen können als Pull Request vorgeschlagen werden. Fachliche Änderungen an Lizenztexten sollten nachvollziehbar begründet und nach Möglichkeit mit belastbaren Quellen versehen werden.
+
+## Entstehung und Transparenz
+
+Konzept, fachliche Auswahl, redaktionelle Gestaltung und Freigabe liegen bei [Johannes Koch](https://www.linkedin.com/in/johannes-koch-1964a3240). Die technische Umsetzung erfolgte mit Unterstützung von KI (Codex/OpenAI).
 
 ## Lizenz
 
-Der Lizenzfinder steht unter der MIT License.
+Der Quellcode steht unter der [MIT License](LICENSE). Die redaktionellen Inhalte der Anwendung, also Fragen, Erläuterungen und FAQ-Texte, stehen unter [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/deed.de). Externe Quellen, Marken, Logos und Inhalte Dritter können eigenen Rechten oder Nutzungsbedingungen unterliegen.

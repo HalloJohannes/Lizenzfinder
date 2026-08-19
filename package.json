@@ -1,15 +1,36 @@
 {
   "name": "lizenzfinder",
-  "version": "1.17.20260819-codex",
+  "version": "1.19.20260819-codex",
   "private": true,
   "type": "module",
   "description": "Schlanke HTML-Anwendung zur Orientierung bei Creative-Commons-Lizenzen und Lizenzvermerken.",
+  "homepage": "https://hallojohannes.github.io/Lizenzfinder/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HalloJohannes/Lizenzfinder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/HalloJohannes/Lizenzfinder/issues"
+  },
+  "keywords": [
+    "oer",
+    "open-educational-resources",
+    "creative-commons",
+    "cc-license",
+    "attribution",
+    "license-finder",
+    "license-generator",
+    "education",
+    "teaching-materials",
+    "static-html",
+    "accessibility"
+  ],
   "license": "MIT",
   "scripts": {
     "build": "node scripts/build-release.mjs",
     "versions:build": "node scripts/build-version-history.mjs",
     "check": "node scripts/check-release.mjs",
-    "check:browser": "node scripts/check-browser-v1-17.mjs",
+    "check:browser": "node scripts/check-browser-v1-19.mjs",
     "test": "node scripts/check-release.mjs"
   }
 }

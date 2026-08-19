@@ -2,9 +2,9 @@
 
 Stand: 2026-08-19
 
-Aktuelle Version: 1.17.20260819-codex
+Aktuelle Version: 1.19.20260819-codex
 
-Status: Release Candidate nach Feinschliff, Netzwerk-Waechter und Doku-Update
+Status: Release Candidate nach V1.19-Feinschliff, Browserpruefung und Doku-Update
 
 ## Erledigt
 
@@ -47,6 +47,22 @@ Status: Release Candidate nach Feinschliff, Netzwerk-Waechter und Doku-Update
 - [x] V1.17: Netzwerk-Waechter und CSP gegen automatische externe Verbindungen ergaenzt.
 - [x] V1.17: Badge-Anzeige auf lokale SVG-Data-URIs umgestellt.
 - [x] V1.17: Schatten im Vermerkbereich entfernt.
+- [x] V1.18: Header-Infofeld entfernt und Headerlayout ohne leere zweite Spalte korrigiert.
+- [x] V1.18: Footer- und About-Texte mit Jahr, Johannes-Koch-Link, MIT-Lizenz und CC0-Inhaltslizenz nachgezogen.
+- [x] V1.18: Persistente Speicherung entfernt; alte `lf-*`-Schluessel werden nur einmalig bereinigt.
+- [x] V1.18: Netzwerk-Waechter auf reinen Selbsttest ohne Prototype-/Global-Patching entschärft.
+- [x] V1.18: URL-Pruefung fuer Quellenangaben im Lizenzvermerk ergaenzt.
+- [x] V1.18: Kopierfunktion mit manuellem Fallback umgesetzt.
+- [x] V1.18: Reset setzt auch die Vermerk-Maske zurueck.
+- [x] V1.19: Sichtbares Copyright-Zeichen aus About- und Footer-Fliesstext entfernt; MIT-Copyright-Zeile bleibt erhalten.
+- [x] V1.19: About-Panel bei kleinen Fensterhoehen scrollbar gemacht.
+- [x] V1.19: Escape-Schliessen mit Fokusrueckgabe fuer About-Panel ergaenzt.
+- [x] V1.19: Footer benennt Codex/OpenAI konkret.
+- [x] V1.19: Jahresvorschlag im Vermerkformular dynamisch gesetzt.
+- [x] V1.19: Quellenwarnung mit `role="status"`, `aria-live` und `aria-invalid` verbessert.
+- [x] GitHub-Pages-Einstieg `index.html` und Workflow vorbereitet.
+- [x] README fuer GitHub verstaendlich und professionell ueberarbeitet.
+- [x] GitHub-Issue- und PR-Vorlagen ergaenzt.
 
 ## Vor finaler Freigabe pruefen
 
@@ -58,8 +74,14 @@ Status: Release Candidate nach Feinschliff, Netzwerk-Waechter und Doku-Update
 - [x] Deutsch/Englisch im Browser pruefen.
 - [x] Copy-Buttons und Ausgabeformate im Browser testen.
 - [x] Fragebogen mit typischen Antwortkombinationen testen.
+- [x] Sandboxed-iframe ohne `allow-same-origin` technisch pruefen.
+- [x] Keine dauerhafte Speicherung nach Durchlauf pruefen.
+- [x] Sicherheitsfix fuer `javascript:` im Quellenfeld pruefen.
+- [x] About-Panel bei 500 px Fensterhoehe pruefen.
+- [x] Escape-Schliessen und Fokusrueckgabe pruefen.
+- [x] Dynamisches Formularjahr mit simuliertem Datum 2027 pruefen.
 - [ ] Fachliche Pruefung der Lizenztexte und Hinweise dokumentieren.
-- [ ] GitHub-Repository pushen, sobald Terminal/GitHub authentifiziert ist.
+- [ ] GitHub-Repository pushen und Pages-Link pruefen.
 - [ ] Finale Freigabeversion nach Abschluss der Tests erstellen.
 
 ## Spaeter moeglich

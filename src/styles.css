@@ -99,7 +99,7 @@
 
     .intro {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(250px, 330px);
+      grid-template-columns: 1fr;
       gap: 24px;
       align-items: center;
       padding: 24px 0 25px;
@@ -131,16 +131,6 @@
       color: var(--petrol-soft);
       font-size: 1.12rem;
     }
-    .intro-panel {
-      border: 1.5px solid var(--petrol);
-      background: rgba(255, 255, 255, .72);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-hard);
-      padding: 18px;
-    }
-    .intro-panel b { display: block; color: var(--petrol); font-size: 1.05rem; margin-bottom: 8px; }
-    .intro-panel p { margin: 0; color: var(--muted); font-size: .92rem; }
-
     nav.tabs {
       position: relative;
       z-index: 2;
@@ -287,6 +277,7 @@
       padding: 10px 12px;
     }
     .field small { display: block; margin-top: 5px; color: var(--muted); font-size: .78rem; }
+    .field .field-warning { color: var(--rose); font-weight: 800; }
     .custom-medium { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) minmax(120px, .5fr); gap: 12px; }
     .software-notice {
       display: none;
@@ -406,11 +397,18 @@
       bottom: 18px;
       z-index: 80;
       width: min(340px, calc(100vw - 36px));
+      max-height: calc(100vh - 36px);
+      max-height: calc(100dvh - 36px);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: flex-end;
+      gap: 12px;
       pointer-events: none;
     }
     .sidehelp-handle {
       pointer-events: auto;
-      float: right;
+      flex: 0 0 auto;
       border: 0;
       border-radius: 999px;
       background: var(--petrol);
@@ -422,8 +420,13 @@
     .sidehelp-panel {
       display: none;
       pointer-events: auto;
-      clear: both;
-      margin-bottom: 12px;
+      width: 100%;
+      flex: 0 1 auto;
+      min-height: 0;
+      max-height: calc(100vh - 96px);
+      max-height: calc(100dvh - 96px);
+      overflow-y: auto;
+      overscroll-behavior: contain;
       border: 1.5px solid var(--petrol);
       border-radius: var(--radius);
       background: var(--surface);
@@ -439,7 +442,7 @@
     .about-meta dd { margin: 2px 0 0; color: var(--muted); font-size: .88rem; }
     .license-text { border-top: 1px solid var(--line); padding-top: 8px; }
     .license-text summary { cursor: pointer; color: var(--petrol); font-weight: 900; }
-    .license-text pre { max-height: 210px; overflow: auto; white-space: pre-wrap; font-size: .72rem; line-height: 1.35; background: var(--paper); border: 1px solid var(--line); padding: 10px; }
+    .license-text pre { overflow: auto; white-space: pre-wrap; font-size: .72rem; line-height: 1.35; background: var(--paper); border: 1px solid var(--line); padding: 10px; }
 
     footer.site {
       border-top: 1px solid var(--line);

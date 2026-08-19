@@ -1,10 +1,10 @@
 const VERSION_METADATA = {
-      version: "1.17.20260819-codex",
-      revision: 17,
+      version: "1.19.20260819-codex",
+      revision: 19,
       revisionDate: "2026-08-19",
       attribution: {
-        de: "Lizenzfinder von Johannes Koch, 2026, steht unter der MIT License.",
-        en: "License Finder by Johannes Koch, 2026, is licensed under the MIT License."
+        de: "Lizenzfinder von Johannes Koch, 2026. Quellcode: MIT License. Redaktionelle Inhalte: CC0 1.0.",
+        en: "License Finder by Johannes Koch, 2026. Source code: MIT License. Editorial content: CC0 1.0."
       }
     };
 
@@ -13,7 +13,6 @@ const VERSION_METADATA = {
         skip: "Zum Inhalt springen", readable: "Bessere Lesbarkeit", kicker: "Offene Materialien",
         heroA: "Passende Lizenz finden.", heroB: "Vermerk mitnehmen.",
         appSub: "Eine kurze, einfache Orientierung für selbst erstellte Materialien: Lizenzidee klären, Empfehlung verstehen und den passenden Vermerk erstellen.",
-        panelH: "In drei klaren Schritten", panelP: "Der Fragebogen führt zur Empfehlung. Danach bleibt die Vermerk-Maske direkt sichtbar. Für Softwarecode gibt es einen eigenen Hinweisbereich.",
         tabFinder: "Lizenz finden", tabOverview: "Lizenzen im Überblick", tabHelp: "Hilfe & Quellen",
         finderH: "Offenheit sichtbar machen", finderP: "Vom eigenen Material zur Lizenzempfehlung und direkt weiter zum passenden Vermerk.",
         flowAskH: "Passende Lizenz finden", flowAskP: "Ein kurzer Fragebogen klärt, welche Creative-Commons-Lizenz am besten passt.",
@@ -23,23 +22,22 @@ const VERSION_METADATA = {
         publishH: "Direkt weiter zu twillo", publishP: "Wenn diese Lizenz passt und die Rechte geklärt sind, kann das Material bei twillo veröffentlicht oder verlinkt werden.", publishLink: "Material auf twillo veröffentlichen",
         editAnswers: "Antworten anpassen", noticeJump: "Zum Vermerk", noticeH: "Lizenzvermerk erstellen",
         fieldMedium: "Welcher Medientyp ist es?", softwareNotice: "Für Softwarecode sind Creative-Commons-Lizenzen in der Regel nicht die passende Wahl. Nutze den Vermerk für Dokumentation, begleitende Materialien oder sichtbare Inhalte; für Quellcode helfen die Hinweise im Lizenzüberblick.",
-        fieldTitle: "Wie heißt dein Material?", fieldAuthor: "Wer soll genannt werden?", fieldYear: "Jahr", fieldLicense: "Welche Lizenz?", fieldSource: "Wo liegt das Original?", fieldSourceHint: "Optional, aber sehr hilfreich für Nachnutzung.",
+        fieldTitle: "Wie heißt dein Material?", fieldAuthor: "Wer soll genannt werden?", fieldYear: "Jahr", fieldLicense: "Welche Lizenz?", fieldSource: "Wo liegt das Original?", fieldSourceHint: "Optional, aber sehr hilfreich für Nachnutzung.", sourceInvalid: "Bitte eine vollständige Adresse mit https:// angeben.",
         fieldChanged: "Wurde etwas verändert?", changedNo: "Nein", changedYes: "Ja", fieldChangeText: "Bearbeitung kurz beschreiben",
-        outShort: "Kurzvermerk", outReuse: "Empfohlene Angabe", copy: "Kopieren", copied: "Kopiert", templatesSummary: "Markdown und HTML anzeigen",
+        outShort: "Kurzvermerk", outReuse: "Empfohlene Angabe", copy: "Kopieren", copied: "Kopiert", copyManual: "Text markiert – bitte mit Strg+C kopieren.", templatesSummary: "Markdown und HTML anzeigen",
         badgeH: "Creative-Commons-Badge", badgeP: "Nutze den Badge für Wiedererkennung. Die offizielle Downloadseite bietet weitere Formate.", badgeOpen: "Badge öffnen", badgeDownloads: "CC-Downloads",
         overviewH: "Lizenzen im Überblick", overviewP: "Kurz nachsehen, wie Creative-Commons-Lizenzen aufgebaut sind und wann Software-Lizenzen die bessere Spur sind.",
         softwareH: "Software-Lizenzen", softwareP: "Für Quellcode sind Creative-Commons-Lizenzen meist nicht gedacht. Software-Lizenzen regeln zum Beispiel Quellcode, Haftung, Patente und Weitergabe genauer.",
         helpH: "Hilfe & Quellen", helpP: "Kurz und verständlich, mit Verweisen auf vertiefende Informationen von twillo, Creative Commons und Choose a License.",
         serviceH: "Unterstützung und Vertiefung", serviceP: "Für Fragen zu Open Educational Resources, Lizenzangaben oder zur Veröffentlichung von Materialien bietet der twillo-Service weiterführende Unterstützung.", serviceHelp: "twillo-Helpcenter", serviceEvents: "twillo-Veranstaltungen",
-        sideHandle: "Über diese Anwendung", sideH: "Über diese Anwendung", aboutCreditA: "Dieses Tool Lizenzfinder von", aboutCreditB: " 2026.", aboutVersion: "Produktversion", aboutNetwork: "Netzwerk", aboutNetworkP: "Statische HTML-Anwendung mit externen Quellenlinks. Ein Netzwerk-Wächter blockiert automatische Verbindungen.", aboutFont: "Schrift", aboutFontP: "Systemschrift-Stapel: Outfit, Segoe UI und systemeigene serifenlose Schriften; keine Schriftdateien eingebettet.", aboutLicense: "Lizenz der Anwendung", aboutLicenseP: "Lizenzfinder von Johannes Koch, 2026, steht unter der MIT License. Nutzung, Bearbeitung, Weitergabe und Einbindung sind erlaubt, sofern Copyright- und Lizenzhinweis erhalten bleiben.", aboutLicenseText: "Lizenztext anzeigen", contact: "Kontakt",
-        footCreditA: "Konzept, fachliche und redaktionelle Gestaltung:", footCreditB: ".", footCreditC: "Technische Umsetzung mit KI-Unterstützung.",
+        sideHandle: "Über diese Anwendung", sideH: "Über diese Anwendung", aboutCreditA: "Der Lizenzfinder wurde entwickelt von", aboutCreditB: ", 2026.", aboutVersion: "Produktversion", aboutNetwork: "Netzwerk", aboutNetworkP: "Einzelne HTML-Datei ohne externe Ressourcen: keine Schriftdateien, Skripte oder Bilder von fremden Servern. Eine Content-Security-Policy unterbindet ausgehende Verbindungen. Externe Links öffnen sich ausschließlich nach Klick.", aboutStorage: "Speicherung", aboutStorageP: "Die Anwendung speichert nichts. Antworten und Anzeigeeinstellungen bestehen nur während des Seitenaufrufs und sind nach dem Schließen oder Neuladen verworfen. Es werden keine Cookies gesetzt und keine Analyse- oder Tracking-Dienste eingebunden.", aboutFont: "Schrift", aboutFontP: "Es werden keine Schriftdateien eingebettet oder nachgeladen. Die Darstellung nutzt lokal vorhandene Schriften (Outfit, sofern installiert, sonst Segoe UI bzw. die serifenlose Systemschrift).", aboutLicense: "Lizenz der Anwendung", aboutLicenseP: "Der Quellcode des Lizenzfinders steht unter der MIT License: Nutzung, Bearbeitung, Weitergabe und Einbindung sind erlaubt, solange der Lizenzhinweis mit Urheberangabe erhalten bleibt. Die redaktionellen Inhalte (Fragen, Erläuterungen, FAQ) stehen unter CC0 1.0 und können ohne Namensnennung nachgenutzt werden.", aboutDisclaimer: "Hinweis", aboutDisclaimerP: "Der Lizenzfinder bietet eine praxisnahe Orientierung und ersetzt keine Rechtsberatung. Für verbindliche Auskünfte im Einzelfall ist fachkundiger Rat einzuholen.", aboutLicenseText: "Lizenztext anzeigen", contentLicenseNote: "Redaktionelle Inhalte:", contact: "Kontakt",
+        footCreditA: "Diese Anwendung „Lizenzfinder“ wurde 2026 von", footCreditB: "mit Unterstützung von KI (Codex/OpenAI) erstellt und darf gern geteilt und weitergegeben werden.", footCreditC: "Lizenz:", footContentLicense: "redaktionelle Inhalte:",
         deed: "Deed", legal: "Legal Code", badge: "Badge"
       },
       en: {
         skip: "Skip to content", readable: "Readable mode", kicker: "Open materials",
         heroA: "Find a fitting license.", heroB: "Take the attribution with you.",
         appSub: "A short, simple orientation for self-created materials: clarify the license idea, understand the recommendation, and create the attribution notice.",
-        panelH: "Three clear steps", panelP: "The questionnaire leads to a recommendation. The attribution form remains directly visible. Software code has its own guidance area.",
         tabFinder: "Find a license", tabOverview: "License overview", tabHelp: "Help & sources",
         finderH: "Make openness visible", finderP: "From your material to a license recommendation and directly to the matching attribution notice.",
         flowAskH: "Find a fitting license", flowAskP: "A short questionnaire clarifies which Creative Commons license fits best.",
@@ -49,16 +47,16 @@ const VERSION_METADATA = {
         publishH: "Continue with twillo", publishP: "If this license fits and rights are cleared, the material can be published or linked on twillo.", publishLink: "Publish material on twillo",
         editAnswers: "Adjust answers", noticeJump: "To attribution", noticeH: "Create attribution notice",
         fieldMedium: "What type of material is it?", softwareNotice: "Creative Commons licenses are usually not the right choice for software code. Use the notice for documentation, accompanying materials, or visible content; for source code, see the software license notes in the overview.",
-        fieldTitle: "What is the title of your material?", fieldAuthor: "Who should be credited?", fieldYear: "Year", fieldLicense: "Which license?", fieldSource: "Where is the original?", fieldSourceHint: "Optional, but very helpful for reuse.",
+        fieldTitle: "What is the title of your material?", fieldAuthor: "Who should be credited?", fieldYear: "Year", fieldLicense: "Which license?", fieldSource: "Where is the original?", fieldSourceHint: "Optional, but very helpful for reuse.", sourceInvalid: "Please enter a complete address starting with https://.",
         fieldChanged: "Was anything changed?", changedNo: "No", changedYes: "Yes", fieldChangeText: "Briefly describe the adaptation",
-        outShort: "Short notice", outReuse: "Recommended attribution", copy: "Copy", copied: "Copied", templatesSummary: "Show Markdown and HTML",
+        outShort: "Short notice", outReuse: "Recommended attribution", copy: "Copy", copied: "Copied", copyManual: "Text selected – please copy with Ctrl+C.", templatesSummary: "Show Markdown and HTML",
         badgeH: "Creative Commons badge", badgeP: "Use the badge for recognition. The official download page offers more formats.", badgeOpen: "Open badge", badgeDownloads: "CC downloads",
         overviewH: "License overview", overviewP: "Quickly see how Creative Commons licenses are built and when software licenses are the better path.",
         softwareH: "Software licenses", softwareP: "Creative Commons licenses are usually not intended for source code. Software licenses address source code, liability, patents, and distribution more specifically.",
         helpH: "Help & sources", helpP: "Short and understandable, with links to more detailed information from twillo, Creative Commons, and Choose a License.",
         serviceH: "Support and further reading", serviceP: "For questions about Open Educational Resources, attribution notices, or publishing materials, the twillo service offers further support.", serviceHelp: "twillo help center", serviceEvents: "twillo events",
-        sideHandle: "About this app", sideH: "About this app", aboutCreditA: "This tool License Finder by", aboutCreditB: " 2026.", aboutVersion: "Product version", aboutNetwork: "Network", aboutNetworkP: "Static HTML application with external source links. A network guard blocks automatic connections.", aboutFont: "Typography", aboutFontP: "System font stack: Outfit, Segoe UI, and local sans-serif system fonts; no font files are embedded.", aboutLicense: "Application license", aboutLicenseP: "License Finder by Johannes Koch, 2026, is licensed under the MIT License. Use, modification, distribution, and embedding are allowed if the copyright and license notice are preserved.", aboutLicenseText: "Show license text", contact: "Contact",
-        footCreditA: "Concept, subject-matter and editorial design:", footCreditB: ".", footCreditC: "Technical implementation with AI support.",
+        sideHandle: "About this app", sideH: "About this app", aboutCreditA: "The License Finder was developed by", aboutCreditB: ", 2026.", aboutVersion: "Product version", aboutNetwork: "Network", aboutNetworkP: "Single HTML file with no external resources: no font files, scripts, or images from third-party servers. A Content Security Policy blocks outgoing connections. External links open only when clicked.", aboutStorage: "Storage", aboutStorageP: "The application stores nothing. Answers and display settings exist only for the duration of the page visit and are discarded on closing or reloading. No cookies are set and no analytics or tracking services are included.", aboutFont: "Typography", aboutFontP: "No font files are embedded or loaded. Rendering uses locally available fonts (Outfit if installed, otherwise Segoe UI or the system sans-serif).", aboutLicense: "Application license", aboutLicenseP: "The source code of the License Finder is licensed under the MIT License: use, modification, distribution, and embedding are permitted as long as the license notice with attribution is preserved. The editorial content (questions, explanations, FAQ) is released under CC0 1.0 and may be reused without attribution.", aboutDisclaimer: "Notice", aboutDisclaimerP: "The License Finder provides practical orientation and does not constitute legal advice. For binding guidance in individual cases, please seek qualified counsel.", aboutLicenseText: "Show license text", contentLicenseNote: "Editorial content:", contact: "Contact",
+        footCreditA: "This application “License Finder” was created in 2026 by", footCreditB: "with AI assistance (Codex/OpenAI) and may be shared and redistributed.", footCreditC: "License:", footContentLicense: "editorial content:",
         deed: "Deed", legal: "Legal code", badge: "Badge"
       }
     };

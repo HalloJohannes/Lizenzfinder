@@ -211,3 +211,24 @@ Die V1.17 nimmt abschliessende Oberflaechen- und Technikfeinheiten auf:
 - Sichtbare Lizenz-Badges werden lokal als SVG-Data-URIs erzeugt.
 - Schlagschatten im Lizenzvermerk-Bereich werden entfernt; Empfehlungskarten und Uebersichtskarten behalten den SCHAU-HIN-artigen Schatten.
 - Der twillo-Hinweis nach der Lizenzempfehlung wird ruhiger und ohne senkrechten Balken dargestellt.
+
+## Nachtrag V1.18
+
+Die V1.18 setzt eine Haertung und Textkorrektur fuer die Single-HTML-Fassung um:
+
+- Das weiße Infofeld im Header wurde entfernt; der Header bleibt leicht und ohne leere zweite Layoutspalte.
+- Die Anwendung speichert keine Antworten oder Anzeigeeinstellungen dauerhaft. Alte `lf-*`-Schluessel werden beim Start einmalig bereinigt.
+- Der fruehere Netzwerk-Waechter greift nicht mehr in `fetch`, Cookies, `sendBeacon`, XHR, WebSocket oder EventSource der Traegerseite ein. Stattdessen bleibt ein Netzwerk-Selbsttest plus CSP.
+- Das Quellenfeld fuer Lizenzvermerke akzeptiert fuer Ausgaben nur `http(s)`-Adressen und zeigt bei ungueltiger Eingabe einen dezenten Hinweis.
+- Die Kopierfunktion meldet nur dann Erfolg, wenn die Clipboard-API tatsaechlich erfolgreich war; andernfalls wird der Text markiert.
+- Das Ueber-diese-Anwendung-Feld und der Footer nennen Quellcode-Lizenz MIT sowie redaktionelle Inhaltslizenz CC0 1.0.
+
+## Nachtrag V1.19
+
+Die V1.19 nimmt einen kleinen Layoutfix und Detailkorrekturen auf:
+
+- Sichtbare Copyright-Zeichen werden aus Fliesstexten entfernt; die MIT-Copyright-Zeile bleibt im Lizenztext erhalten.
+- Das Ueber-diese-Anwendung-Panel ist bei kleinen Fensterhoehen scrollbar und per Escape schliessbar.
+- Das Formularjahr fuer neue Lizenzvermerke wird dynamisch aus dem aktuellen Kalenderjahr gesetzt.
+- Die Quellenwarnung ist fuer assistive Technologien besser erfassbar.
+- Der Footer benennt Codex/OpenAI konkret als eingesetzte KI-Unterstuetzung.

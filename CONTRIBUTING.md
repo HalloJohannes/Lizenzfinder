@@ -16,3 +16,4 @@ Bitte beachten:
 - Fachliche Änderungen an Lizenztexten sollten mit belastbaren Quellen begründet werden.
 - Sichtbare Texte liegen vorzugsweise in `src/data.js` und ergänzend in `content/`.
 - Nach Änderungen bitte `npm run build` und `npm run check` ausführen.
+- Für den optionalen Browsercheck wird Playwright benötigt: `npm install --save-dev playwright`, danach `npm run check:browser`.
