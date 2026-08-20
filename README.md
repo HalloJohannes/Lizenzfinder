@@ -91,12 +91,6 @@ Bei Änderungen auf `main` baut der Workflow `.github/workflows/pages.yml` die a
 
 Falls Pages im Repository noch nicht aktiviert ist, muss in den Repository-Einstellungen einmalig **Settings → Pages → Build and deployment → Source: GitHub Actions** ausgewählt werden.
 
-## Schlagworte
-
-Geeignete GitHub Topics sind:
-
-`oer`, `open-educational-resources`, `creative-commons`, `cc-license`, `attribution`, `license-finder`, `license-generator`, `education`, `teaching-materials`, `static-html`, `accessibility`, `mit-license`, `cc0`
-
 ## Rückmeldungen und Beiträge
 
 Fehler, Verständnisprobleme und Ideen können über GitHub-Issues gemeldet werden. Besonders hilfreich sind Angaben zum Browser, Betriebssystem, Antwortpfad im Fragebogen und zum erwarteten Ergebnis.
