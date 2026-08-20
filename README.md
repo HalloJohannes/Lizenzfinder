@@ -58,7 +58,6 @@ Die Anwendung enthält mehrere Schutz- und Bedienbarkeitsmaßnahmen:
 - `audits/`: Release-Audits und Prüfnotizen
 - `versions/aktuell/`: Spiegel der aktuellen versionierten HTML-Datei
 - `versions/archiv/`: gesicherte Vorversionen
-- `versions/aenderungshistorie/`: Excel-Datei mit Versionen und Änderungen
 
 ## Entwickeln und prüfen
 
@@ -78,12 +77,6 @@ npm run check:browser
 - ein kleines `dist/`-Artefakt für den GitHub-Pages-Workflow.
 
 `npm run check` prüft Version, Metadaten, Lizenzhinweise, Sicherheitsannahmen und zentrale Fragenlogik. `npm run check:browser` prüft die Anwendung mit Playwright, darunter URL-Schutz, Clipboard-Fallback, CC0-Zero-Icon, Sprachumschaltung, Lesbarkeitsmodus, sandboxed iframe und das scrollbare About-Panel.
-
-Die Excel-Versionshistorie kann in der Codex-Workspace-Runtime neu erzeugt werden:
-
-```bash
-CODEX_NODE_MODULES=/pfad/zur/codex-runtime/node_modules npm run versions:build
-```
 
 ## GitHub Pages
 

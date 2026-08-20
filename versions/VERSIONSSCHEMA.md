@@ -40,5 +40,5 @@ Beispiel:
 1. Aktuellen Stand in `versions/archiv/` sichern.
 2. Neue Datei in `versions/aktuell/` oder spaeter im App-Root bereitstellen.
 3. Versionsnummer und sichtbare oder unsichtbare Metadaten aktualisieren.
-4. Aenderung in `versions/aenderungshistorie/lizenzfinder_versionshistorie.xlsx` dokumentieren.
+4. Aenderung in `CHANGELOG.md` dokumentieren.
 5. Bei groesseren Aenderungen ein Audit in `audits/` ablegen.

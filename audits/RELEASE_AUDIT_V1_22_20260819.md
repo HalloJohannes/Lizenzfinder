@@ -18,14 +18,14 @@ V1.22 skaliert den Dialog "Ueber diese Anwendung" kleiner und naeher an die Dars
 - [x] Schliessen-Button kompakter gestaltet und optisch an den BITTE-STIL-Baukasten angeglichen.
 - [x] Browsercheck- und Screenshotpfade auf V1.22 umgestellt.
 - [x] README, Projektnotizen, TODO, Changelog, Architektur- und Textsystemdokumentation aktualisiert.
-- [x] Versionshistorie und Auditregister fuer V1.22 vorbereitet.
+- [x] Versionshistorie und Auditregister fuer V1.22 vorbereitet; ab Repository-Feinschliff fuehrt `CHANGELOG.md` die Versionshistorie.
 
 ## Technische Pruefung
 
 - [x] `npm run build`
 - [x] `npm run check`
 - [x] `npm run check:browser`
-- [x] `CODEX_NODE_MODULES=... npm run versions:build`
+- [x] Versionshistorie dokumentiert
 
 ## Auflagen
 

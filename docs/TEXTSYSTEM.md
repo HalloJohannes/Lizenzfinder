@@ -14,7 +14,7 @@ Die Markdown-Dateien im Ordner `content/` enthalten bewusst nur redaktionelle Te
 - `Lizenzfinder-App-V1_22_20260819-codex.html`
 - `versions/aktuell/...`
 - bei Bedarf `content/redaktionstexte.en.md`
-- Versionshistorie und Audit-Register
+- `CHANGELOG.md` und bei Bedarf Release-Audits
 
 ## Stand V1.22
 
@@ -30,7 +30,7 @@ Bei jeder Uebertragung in die App muessen mindestens diese Dateien synchronisier
 - modulare Quelle in `src/`.
 - Hauptdatei auf oberster Ebene.
 - Datei in `versions/aktuell/`.
-- Versionshistorie.
+- `CHANGELOG.md`.
 - Audit- oder TODO-Dateien, falls die Aenderung freigaberelevant ist.
 
 ## Empfohlener Ablauf

@@ -28,7 +28,6 @@
   "license": "MIT",
   "scripts": {
     "build": "node scripts/build-release.mjs",
-    "versions:build": "node scripts/build-version-history.mjs",
     "check": "node scripts/check-release.mjs",
     "check:browser": "node scripts/check-browser-v1-22.mjs",
     "test": "node scripts/check-release.mjs"

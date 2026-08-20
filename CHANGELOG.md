@@ -83,3 +83,79 @@
 ## 1.13.20260627-codex
 
 - Release Candidate mit dreistufigem Workflow, Lizenzübersicht, Vermerk-Erstellung, Darkmode, besserer Lesbarkeit und Deutsch/Englisch-Umschaltung.
+
+## 1.12.20260627-codex
+
+- Interne Hinweiszeile beim Lizenzvermerk entfernt.
+- Englische TULLU+B-Begriffe durch allgemein verständliche Attribution-Formulierungen ersetzt.
+- Englische Formular-Platzhalter sprachlich angepasst und Exportdatei synchronisiert.
+
+## 1.11.20260627-codex
+
+- Oberste HTML-Datei eindeutig als Lizenzfinder-App mit Versionsnummer benannt.
+- Export-Accordion startet vollständig eingeklappt.
+- Lizenzempfehlung klappt nach Abschluss des Fragebogens automatisch auf.
+- Textanleitung zur WordPress-/iframe-Einbettung als Download ergänzt.
+
+## 1.10.20260627-codex
+
+- Medientyp-Hinweis in der Vermerkmaske entfernt.
+- Export-Download als eingebettete HTML-Datei umgesetzt.
+- Exportfassung als kompaktes dreistufiges Ziehharmonika-Element aufgebaut.
+- Hinweis zu „alle Rechte vorbehalten“ dezent in den ersten Workflowschritt verschoben.
+
+## 1.9.20260627-codex
+
+- Kommerzielle Nutzung im Fragehinweis genauer erklärt.
+- Exportbereich mit Vorschau, direktem Download und erklärtem Einbettungscode erweitert.
+- Lizenzvermerk mit twillo-Attribution vereinheitlicht.
+- Medientypen ergänzt, eigener Medientyp mit Artikelwahl ermöglicht und Titel im Vermerk in Anführungszeichen gesetzt.
+- Sichtbare Versionsnummer im Footer ergänzt.
+
+## 1.8.20260627-codex
+
+- App innerhalb der Anwendung auf „Lizenzfinder“ verkürzt.
+- Header- und Workflow-Texte geschärft.
+- Ungenutzte Materialtyp-Frage entfernt.
+- Fragehinweise ruhiger gestaltet und mehrere Fragen zugänglicher formuliert.
+- Exportbereich mit eigenständiger Workflow-HTML und iframe-Snippet ergänzt.
+- Redaktionelle Textdateien für künftige Textarbeit angelegt.
+
+## 1.7.20260626-codex
+
+- Farbrollen nach AGB-Styleguide korrigiert: Teal für Orientierung, Grau für ruhige Flächen, Citrus für Aktionen, Rose für Risiko.
+- Seitentitel zu „Offenheit sichtbar machen“ geändert.
+- Workflow-Abstände verbessert.
+- Markdown-/HTML-Vorlagen eingeklappt.
+- Lizenzübersicht als kompakte AGB-nahe Karten mit Detailansicht umgesetzt.
+
+## 1.6.20260626-codex
+
+- Visuelle Nähe zum AGB-Tool verstärkt: Header, Navigation, Hilfe-Fenster, Footer und Workflow-Struktur angeglichen.
+- Startseite als vertikaler Drei-Schritt-Workflow aufgebaut.
+- Lizenzkarten erklären den Charakter der Lizenzen und zeigen Badges.
+
+## 1.5.20260626-codex
+
+- UI nach AGB-Tool-Referenz beruhigt.
+- Header und Footer näher angeglichen.
+- Gelber Disclaimer entfernt.
+- Schriftgrößensteuerung, sichtbare Frageinfos, schlankere Auswertung, Lizenzbaukasten, FAQ und Medientyp im Vermerk ergänzt.
+
+## 1.4.20260626-codex
+
+- Erste klickbare HTML-Fassung erstellt.
+- Fragebogen, Empfehlung, Alternative, Gegenbeispiel, Vermerk-Erstellung, Deutsch/Englisch, Darkmode, Lesbarkeit, Hilfe-Fenster, Footer und CC-Badge-Hinweise angelegt.
+
+## 1.3.20260626-codex
+
+- Projektordner in `lizenzfinder-vermerk-app` umbenannt.
+- Projektunterlagen sprachlich auf App, Anwendung und Vermerk-Erstellung umgestellt.
+
+## 1.2.20260626-codex
+
+- Allgemeine App-Anforderungen erfasst: responsive Basis, Accessibility, Darkmode, Mehrsprachigkeit, sprachsensitive Links, Hilfe/Kontakt, Footer, Metadaten und CC-Badges.
+
+## 1.1.20260626-codex
+
+- Projektbasis angelegt: Struktur, Styleguide, Audit-Template, Versionsschema und erste Fragenlogik.

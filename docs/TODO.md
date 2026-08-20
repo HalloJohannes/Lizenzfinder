@@ -16,7 +16,7 @@ Status: Release Candidate nach V1.22-Dialogskalierung
 - [x] UI-Prototyp als schlanke HTML-App umgesetzt.
 - [x] Linkmatrix fuer Deutsch/Englisch angelegt.
 - [x] Kompakte Footer-Zeile fuer Deutsch und Englisch formuliert.
-- [x] Ueber-diese-Anwendung-Fenster unten rechts umgesetzt.
+- [x] Ueber-diese-Anwendung-Dialog in der Fusszeile umgesetzt.
 - [x] Metadatenblock in Hauptdatei und Exportdatei hinterlegt.
 - [x] Creative-Commons-Badge-Flow umgesetzt.
 - [x] Bessere Lesbarkeit eingebaut.
@@ -86,7 +86,7 @@ Status: Release Candidate nach V1.22-Dialogskalierung
 - [x] Escape-Schliessen und Fokusrueckgabe pruefen.
 - [x] Dynamisches Formularjahr mit simuliertem Datum 2027 pruefen.
 - [ ] Fachliche Pruefung der Lizenztexte und Hinweise dokumentieren.
-- [ ] GitHub-Repository pushen und Pages-Link pruefen.
+- [x] GitHub-Repository veroeffentlicht und Pages-Link geprueft.
 - [ ] Finale Freigabeversion nach Abschluss der Tests erstellen.
 
 ## Spaeter moeglich
